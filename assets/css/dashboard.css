@@ -1,0 +1,267 @@
+/* ============================================================
+   ДАШБОРД — каркас
+   Графики появятся на этапе 4; сейчас на их местах серые
+   прямоугольники с подписью, что там будет.
+
+   Типографика здесь — app-шкала (t-title-*, t-body-*), а не промо:
+   дашборд должен читаться так же, как в приложении.
+   ============================================================ */
+
+.dash {
+  padding-block: var(--gap-32) var(--space-section-tight);
+  background: var(--color-bg-tetriary);
+  min-height: 100vh;
+}
+
+/* --- Шапка дашборда ------------------------------------------ */
+.dash__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--gap-16);
+  margin-bottom: var(--gap-24);
+}
+
+.dash__title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+}
+
+/* Плашка «демо-данные» — по ТЗ видна всегда, не прячется при скролле */
+.dash__demo-badge {
+  background: var(--color-bg-feedback-warning-overlay);
+  color: var(--color-fg-primary);
+}
+
+/* --- Панель фильтров ----------------------------------------- */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--gap-12);
+  padding: var(--gap-20);
+  margin-bottom: var(--gap-24);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-m);
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4);
+  min-width: 156px;
+  flex: 1 1 156px;
+}
+
+.filter__label {
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-fg-tetriary);
+}
+
+.filter__control {
+  appearance: none;
+  padding: 10px 36px 10px 14px;
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-xs);
+  background-color: var(--color-bg-primary);
+  /* стрелка селекта рисуется фоном, чтобы не тащить иконочный шрифт */
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+                    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+  color: var(--color-fg-primary);
+  cursor: pointer;
+}
+
+.filters__reset { margin-inline-start: auto; }
+
+/* --- Сетка виджетов ------------------------------------------
+   12 колонок: перекладывать блоки можно, не трогая разметку. */
+.dash__grid {
+  display: grid;
+  gap: var(--gap-20);
+  grid-template-columns: repeat(1, 1fr);
+}
+
+.widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  padding: var(--gap-24);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-m);
+}
+
+.widget__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--gap-4) var(--gap-12);
+}
+
+.widget__hint {
+  color: var(--color-fg-tetriary);
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+}
+
+.widget__body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+@media (min-width: 760px) {
+  .dash__grid { grid-template-columns: repeat(12, 1fr); }
+  .widget--score    { grid-column: span 4; }
+  .widget--donut    { grid-column: span 8; }
+  .widget--factors  { grid-column: span 6; }
+  .widget--trend    { grid-column: span 6; }
+  .widget--heatmap  { grid-column: span 12; }
+  .widget--recs     { grid-column: span 12; }
+}
+
+/* --- Общий индекс -------------------------------------------- */
+.score {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+}
+
+.score__value {
+  font-size: var(--size-stat-s);
+  line-height: var(--lh-stat-s);
+  letter-spacing: var(--ls-stat-s);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+}
+
+.score__delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-4);
+  font-size: var(--size-label-m);
+  line-height: var(--lh-label-m);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-fg-feedback-negative);
+}
+
+/* --- Легенда состояний --------------------------------------- */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-16);
+}
+
+.legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-8);
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+  color: var(--color-fg-secondary);
+}
+
+.legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--legend-color, var(--color-fg-muted));
+  flex: none;
+}
+
+.legend__item--strain   { --legend-color: var(--color-state-strain); }
+.legend__item--fragile  { --legend-color: var(--color-state-fragile); }
+.legend__item--resource { --legend-color: var(--color-state-resource); }
+
+/* --- Рекомендации -------------------------------------------- */
+.recs {
+  display: grid;
+  gap: var(--gap-16);
+  grid-template-columns: 1fr;
+}
+
+.rec {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+  padding: var(--gap-20);
+  border-radius: var(--radius-s);
+  background: var(--color-bg-secondary);
+}
+
+.rec__level {
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  letter-spacing: var(--ls-caption-s);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-fg-accent);
+}
+
+@media (min-width: 760px) {
+  .recs { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Методология (аккордеон) ---------------------------------
+   <details>/<summary> — раскрытие без единой строки JS. */
+.methodology { margin-top: var(--gap-32); }
+
+.acc {
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.acc:last-of-type { border-bottom: 1px solid var(--color-border-secondary); }
+
+.acc__summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-16);
+  padding: var(--gap-20) 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: var(--size-title-m);
+  line-height: var(--lh-title-m);
+  font-weight: var(--font-weight-bold);
+}
+
+.acc__summary::-webkit-details-marker { display: none; }
+
+.acc__summary::after {
+  content: "+";
+  font-size: var(--size-title-l);
+  line-height: 1;
+  color: var(--color-fg-tetriary);
+  flex: none;
+}
+
+.acc[open] .acc__summary::after { content: "−"; }
+
+.acc__body {
+  padding-bottom: var(--gap-24);
+  color: var(--color-fg-secondary);
+  max-width: 70ch;
+}
+
+/* --- CTA внизу дашборда -------------------------------------- */
+.dash__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap-20);
+  margin-top: var(--gap-32);
+  padding: var(--gap-32);
+  border-radius: var(--radius-l);
+  background: var(--color-bg-dark);
+  color: var(--color-fg-inverted-primary);
+}
+
+.dash__cta p { color: var(--color-fg-inverted-secondary); }

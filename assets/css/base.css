@@ -1,0 +1,447 @@
+/* ============================================================
+   БАЗА — сброс, шрифт, типографические утилиты, примитивы
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   ШРИФТ
+   Euclid Circular A — коммерческий (Swiss Typefaces), в Google Fonts
+   его нет. Веб-файлы взяты из лицензионного пакета, который лежит
+   в ~/Documents/ProSebya/Euclid Circular A (1)/.
+
+   Почему именно набор WebM: в пакете три набора символов —
+   S / M / XL. Проверено загрузкой в браузер: в WebS КИРИЛЛИЦЫ НЕТ
+   (только латиница, ~20 КБ). WebM (~30 КБ) её содержит, WebXL
+   (~45 КБ) добавляет ещё языки, которые сайту не нужны.
+   Для русскоязычного лендинга WebS брать нельзя.
+
+   local() не используем намеренно: у дизайнера шрифт установлен
+   в системе и подменил бы файл, из-за чего проблема со шрифтом
+   на его машине была бы не видна.
+   ------------------------------------------------------------ */
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url("../fonts/EuclidCircularA-Regular-WebM.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url("../fonts/EuclidCircularA-Medium-WebM.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url("../fonts/EuclidCircularA-Semibold-WebM.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+/* Italic — в системе он называется «decorative» и используется для акцентов */
+@font-face {
+  font-family: "Euclid Circular A";
+  src: url("../fonts/EuclidCircularA-SemiboldItalic-WebM.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* ------------------------------------------------------------
+   СБРОС
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  /* чтобы анкеры не уезжали под липкую шапку */
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family-base);
+  font-size: var(--size-promo-body);
+  line-height: var(--lh-promo-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-fg-primary);
+  background: var(--color-bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, h4, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+img, svg, video { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; padding: 0; }
+
+a {
+  color: var(--color-fg-accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-fg-accent);
+  outline-offset: 3px;
+  border-radius: var(--radius-xs);
+}
+
+::selection {
+  background: var(--color-bg-accent-overlay);
+  color: var(--color-fg-primary);
+}
+
+/* ------------------------------------------------------------
+   ТИПОГРАФИЧЕСКИЕ УТИЛИТЫ
+   Промо-шкала — для лендинга, app-шкала — там, где интерфейс
+   должен совпадать с приложением (дашборд, формы).
+   ------------------------------------------------------------ */
+.t-display-xl,
+.t-display-l,
+.t-display-m,
+.t-display-s {
+  font-weight: var(--font-weight-bold);
+  text-wrap: balance;
+}
+
+.t-display-xl { font-size: var(--size-display-xl); line-height: var(--lh-display-xl); letter-spacing: var(--ls-display-xl); }
+.t-display-l  { font-size: var(--size-display-l);  line-height: var(--lh-display-l);  letter-spacing: var(--ls-display-l); }
+.t-display-m  { font-size: var(--size-display-m);  line-height: var(--lh-display-m);  letter-spacing: var(--ls-display-m); }
+.t-display-s  { font-size: var(--size-display-s);  line-height: var(--lh-display-s);  letter-spacing: var(--ls-display-s); }
+
+/* Акцент внутри заголовка — только цветом.
+   Курсив не используем. */
+.t-accent {
+  color: var(--color-fg-accent);
+}
+
+.t-lead {
+  font-size: var(--size-lead);
+  line-height: var(--lh-lead);
+  color: var(--color-fg-secondary);
+  text-wrap: pretty;
+}
+
+.t-stat   { font-size: var(--size-stat);   line-height: var(--lh-stat);   letter-spacing: var(--ls-stat);   font-weight: var(--font-weight-bold); font-variant-numeric: tabular-nums; }
+.t-stat-s { font-size: var(--size-stat-s); line-height: var(--lh-stat-s); letter-spacing: var(--ls-stat-s); font-weight: var(--font-weight-bold); font-variant-numeric: tabular-nums; }
+
+.t-caption {
+  font-size: var(--size-caption-s);
+  line-height: var(--lh-caption-s);
+  letter-spacing: var(--ls-caption-s);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-fg-tetriary);
+}
+
+/* app-шкала 1:1 из Figma */
+.t-title-xl { font-size: var(--size-title-xl); line-height: var(--lh-title-xl); letter-spacing: var(--ls-title-xl); font-weight: var(--font-weight-bold); }
+.t-title-l  { font-size: var(--size-title-l);  line-height: var(--lh-title-l);  letter-spacing: var(--ls-title-l);  font-weight: var(--font-weight-bold); }
+.t-title-m  { font-size: var(--size-title-m);  line-height: var(--lh-title-m);  letter-spacing: var(--ls-title-m);  font-weight: var(--font-weight-bold); }
+.t-title-s  { font-size: var(--size-title-s);  line-height: var(--lh-title-s);  font-weight: var(--font-weight-bold); }
+.t-body-xl  { font-size: var(--size-body-xl);  line-height: var(--lh-body-xl); }
+.t-body-l   { font-size: var(--size-body-l);   line-height: var(--lh-body-l); }
+.t-body-m   { font-size: var(--size-body-m);   line-height: var(--lh-body-m); }
+.t-body-s   { font-size: var(--size-body-s);   line-height: var(--lh-body-s); }
+.t-label-m  { font-size: var(--size-label-m);  line-height: var(--lh-label-m);  font-weight: var(--font-weight-bold); }
+.t-label-s  { font-size: var(--size-label-s);  line-height: var(--lh-label-s);  font-weight: var(--font-weight-bold); }
+
+.t-secondary { color: var(--color-fg-secondary); }
+.t-tetriary  { color: var(--color-fg-tetriary); }
+.t-muted     { color: var(--color-fg-muted); }
+
+/* ------------------------------------------------------------
+   СЕТКА
+   ------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-gutter);
+}
+
+.container--narrow { max-width: var(--container-narrow); }
+
+.section { padding-block: var(--space-section); }
+.section--tight { padding-block: var(--space-section-tight); }
+.section--secondary { background: var(--color-bg-secondary); }
+.section--dark {
+  background: var(--color-bg-dark);
+  color: var(--color-fg-inverted-primary);
+}
+.section--dark .t-lead,
+.section--dark .t-secondary { color: var(--color-fg-inverted-secondary); }
+.section--dark .t-caption,
+.section--dark .t-tetriary { color: var(--color-fg-inverted-tetriary); }
+
+.section__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  max-width: 760px;
+  margin-bottom: var(--gap-48);
+}
+
+/* ------------------------------------------------------------
+   КНОПКИ — по компоненту Button из дизайн-системы Просебя
+   (prosebya.vercel.app, Storybook UI/Button)
+
+   Три варианта системы: primary / secondary / tertiary,
+   плюс модификатор inverted для тёмного фона.
+
+   primary   — заливка брендовым ЖЁЛТЫМ #FFB800, текст ЧЕРНИЛАМИ
+               #22263B. Не белым: на жёлтом белый текст нечитаем
+               (контраст 1.9:1), а чернила дают 11:1.
+   secondary — прозрачная, текст brand blue, обводка blue 20%
+   tertiary  — прозрачная, текст brand blue, без обводки
+   Скругление всегда полное, начертание 600.
+
+   Отличие от системы: горизонтальные отступы крупнее (28px против
+   16px). В приложении кнопка часто во всю ширину, на промо-странице
+   она стоит сама по себе и при системном padding выглядит мелкой.
+   Цвета, скругление и начертание — ровно как в системе.
+   ------------------------------------------------------------ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-8);
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
+  font-size: var(--size-label-l);
+  line-height: var(--lh-label-l);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: background-color var(--duration-fast) var(--ease-out),
+              border-color var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out),
+              transform var(--duration-fast) var(--ease-out);
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+  background: var(--color-bg-action);
+  color: var(--color-fg-primary);
+  border-color: transparent;
+}
+.btn--primary:hover,
+.btn--primary:active { background: var(--color-bg-button-pressed); }
+
+.btn--secondary {
+  background: transparent;
+  border-color: var(--color-border-button-secondary);
+  color: var(--color-fg-accent);
+}
+.btn--secondary:hover,
+.btn--secondary:active { background: var(--color-bg-pressed); }
+
+.btn--tertiary {
+  background: transparent;
+  border-color: transparent;
+  color: var(--color-fg-accent);
+}
+.btn--tertiary:hover,
+.btn--tertiary:active { background: var(--color-bg-pressed); }
+
+.btn[disabled],
+.btn:disabled {
+  background: var(--color-bg-disabled);
+  border-color: var(--color-bg-disabled);
+  color: var(--color-fg-muted);
+  cursor: not-allowed;
+}
+
+/* inverted — вариант для тёмного фона.
+   На тёмном синий текст не добирает контраста, поэтому белый. */
+.section--dark .btn--secondary,
+.footer .btn--secondary,
+.dash__cta .btn--secondary,
+.btn--secondary-inverted {
+  border-color: var(--color-border-button-secondary-inverted);
+  color: var(--color-fg-inverted-primary);
+}
+.section--dark .btn--secondary:hover,
+.footer .btn--secondary:hover,
+.dash__cta .btn--secondary:hover,
+.btn--secondary-inverted:hover {
+  background: var(--color-bg-overlay-light);
+}
+
+.section--dark .btn--tertiary,
+.dash__cta .btn--tertiary { color: var(--color-fg-inverted-primary); }
+
+/* Размеры: s / m / l — как в системе (label-s / label-m / label-l) */
+.btn--sm { padding: 10px 20px; font-size: var(--size-label-m); line-height: var(--lh-label-m); }
+.btn--xs { padding: 8px 16px;  font-size: var(--size-label-s); line-height: var(--lh-label-s); }
+
+/* Текстовая ссылка со стрелкой */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-8);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-fg-accent);
+  text-decoration: none;
+}
+.link-arrow::after {
+  content: "→";
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+.link-arrow:hover::after { transform: translateX(4px); }
+
+/* На тёмной поверхности акцентный синий не добирает контраста —
+   переключаем на светлые чернила. */
+.section--dark .link-arrow,
+.footer .link-arrow,
+.dash__cta .link-arrow {
+  color: var(--color-fg-inverted-primary);
+}
+
+/* ------------------------------------------------------------
+   КАРТОЧКА
+   ------------------------------------------------------------ */
+.card {
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-l);
+  padding: var(--gap-32);
+}
+
+.card--elevated {
+  border-color: transparent;
+  box-shadow: var(--shadow-elevation);
+}
+
+/* ------------------------------------------------------------
+   ЗАГЛУШКА ВМЕСТО КАРТИНКИ
+   Серый прямоугольник с подписью, что здесь будет.
+   Подпись задаётся атрибутом data-label.
+   ------------------------------------------------------------ */
+.ph {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--gap-24);
+  border-radius: var(--radius-m);
+  /* --ph-bg переопределяется там, где заглушка лежит на цветной
+     подложке и слилась бы с ней */
+  background-color: var(--ph-bg, var(--color-bg-secondary));
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0 10px,
+    rgb(var(--p-core-rgb) / 0.04) 10px 20px
+  );
+  border: 1px dashed var(--color-border-secondary);
+  color: var(--color-fg-muted);
+  overflow: hidden;
+}
+
+.ph::after {
+  content: attr(data-label);
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.ph--16x9 { aspect-ratio: 16 / 9; }
+.ph--4x3  { aspect-ratio: 4 / 3; }
+.ph--1x1  { aspect-ratio: 1 / 1; }
+.ph--logo { width: 132px; height: 40px; border-radius: var(--radius-xs); flex: none; }
+.ph--avatar { width: 72px; height: 72px; border-radius: var(--radius-full); flex: none; }
+
+/* ------------------------------------------------------------
+   СЛУЖЕБНОЕ
+   ------------------------------------------------------------ */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Плашка-бейдж */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-8);
+  padding: 6px 14px;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-accent-content);
+  /* чернила, а не жёлтый: сам жёлтый ушёл в подложку */
+  color: var(--color-fg-primary);
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  font-weight: var(--font-weight-bold);
+}
+
+.badge--neutral {
+  background: var(--color-bg-secondary);
+  color: var(--color-fg-tetriary);
+}
+
+/* Пометка «черновик» — для блоков, ждущих согласования */
+.pending {
+  border: 1px dashed var(--color-border-warning);
+  border-radius: var(--radius-s);
+  padding: var(--gap-12) var(--gap-16);
+  background: var(--color-bg-feedback-warning-overlay);
+  color: var(--color-fg-primary);
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  font-weight: var(--font-weight-medium);
+}
+
+/* ------------------------------------------------------------
+   ПОЯВЛЕНИЕ ПРИ СКРОЛЛЕ
+
+   Прятать .reveal разрешено ТОЛЬКО когда на <html> висит
+   .has-reveal — этот класс ставит assets/js/reveal.js, убедившись,
+   что умеет показать контент обратно. Если JS не загрузился,
+   отключён или упал, селектор не совпадает и страница видна целиком.
+   ------------------------------------------------------------ */
+.has-reveal .reveal {
+  opacity: 0;
+  /* сдвиг небольшой: 20px и больше на длинной странице
+     превращаются в дёрганье, а не в появление */
+  transform: translateY(14px);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+.has-reveal .reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Карточкам идёт лёгкий подъём с подмасштабированием —
+   заметнее, чем просто сдвиг, но всё ещё сдержанно. */
+.has-reveal .reveal--card { transform: translateY(18px) scale(0.985); }
+.has-reveal .reveal--card.is-visible { transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  /* селектор должен быть не слабее .has-reveal .reveal, иначе не перебьёт */
+  .has-reveal .reveal,
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

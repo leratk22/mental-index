@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Индекс ментального благополучия работающих россиян&nbsp;— ФОМ и&nbsp;Просебя</title>
+<meta name="description" content="Индекс ментального благополучия показывает состояние сотрудников шире, чем вовлечённость и удовлетворённость работой. Исследование ФОМ и Просебя, 2026.">
+
+<!-- Превью для Telegram: основной канал трафика -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Пока снаружи всё работает">
+<meta property="og:description" content="Индекс ментального благополучия работающих россиян — исследование ФОМ и Просебя, 2026.">
+<meta property="og:image" content="assets/img/og-cover.png"><!-- ЗАГЛУШКА: картинки ещё нет -->
+<meta property="og:locale" content="ru_RU">
+
+<link rel="icon" href="assets/img/prosebya-logo.svg?v=20260921m" type="image/svg+xml"><!-- ЗАГЛУШКА: нужна квадратная иконка, лого широкое -->
+<link rel="stylesheet" href="assets/css/tokens.css?v=20260921m">
+<link rel="stylesheet" href="assets/css/base.css?v=20260921m">
+<link rel="stylesheet" href="assets/css/main.css?v=20260921m">
+</head>
+<body>
+
+<!-- ============================================================
+     0. ШАПКА
+     ⚠️ Дублируется в dashboard.html и privacy.html — правки нужно
+     разносить по всем трём файлам (плата за статику без сборки).
+     ============================================================ -->
+<header class="header header--overlay">
+  <div class="container header__inner">
+    <a class="header__brand" href="index.html" aria-label="Просебя × ФОМ — на главную">
+      <img class="header__logo" src="assets/img/prosebya-logo.svg?v=20260921m" alt="Просебя" width="116" height="32">
+      <span class="header__brand-second"><svg class="fom" viewBox="0 0 539.2 167" role="img" aria-label="ФОМ" focusable="false">
+      <path class="fom__mark" d="M35.5,167v-42.7H0V42.7h38.6L81.4,0v42.7H117v81.5H78.3L35.5,167z M51.4,108.3v20.3l20.3-20.3l29.4,0V58.6H65.5 V38.4L45.1,58.6H15.9v49.7L51.4,108.3z"/>
+      <path class="fom__word" d="M227.6,121.5v12.9h-17.4v-12.9c-24,0-40.3-10.9-40.3-35.5c0-24.6,16.3-35.5,40.3-35.5V38.8h17.4v11.7 c24,0,40.1,10.9,40.1,35.5C267.7,110.6,251.6,121.5,227.6,121.5 M210.1,63.9c-13.6,0-23.3,3.5-23.3,22.1c0,18.6,9.7,22.1,23.3,22.1 V63.9z M227.6,63.9V108c13.6,0,23.3-3.5,23.3-22.1C250.9,67.4,241.2,63.9,227.6,63.9"/>
+      <path class="fom__word" d="M320.1,42.8c28.6,0,44.4,21.2,44.4,46.8c0,25.6-15.8,46.8-44.4,46.8c-28.6,0-44.4-21.2-44.4-46.8 C275.8,63.9,291.5,42.8,320.1,42.8 M320.1,122.7c15.8,0,26.9-11.9,26.9-33.1c0-21.2-11.2-32.9-26.9-32.9s-26.9,11.8-26.9,32.9 C293.2,110.7,304.4,122.7,320.1,122.7"/>
+      <polygon class="fom__word" points="459.1,134.5 456.2,66 431.9,134.5 416.9,134.5 393.3,66.1 389.8,134.5 374.7,134.5 378.9,44.7 403.9,44.7 425.4,108.3 448.3,44.7 472.5,44.7 476.6,134.5 "/>
+      <path class="fom__word" d="M518.2,85.7c-11.6,0-21-9.4-21-21c0-11.6,9.4-21,21-21c11.6,0,21,9.4,21,21C539.2,76.4,529.8,85.7,518.2,85.7 M518.2,47.5c-9.7,0-17.3,7.6-17.3,17.2c0,9.7,7.6,17.3,17.3,17.3c9.6,0,17.2-7.6,17.2-17.3C535.4,55.1,527.8,47.5,518.2,47.5 M515.8,76.9H511v-25h8.2c4.4,0,9,2.7,9,7.9c0,3.7-2.1,6-4.9,7l6.3,10.1h-5.7l-5.4-9.3h-2.7L515.8,76.9L515.8,76.9z M515.8,63.8h2.5 c3.2,0,4.8-1.5,4.8-3.9c0-2.9-1.6-4.1-4.8-4.1h-2.5V63.8z"/>
+    </svg></span>
+    </a>
+
+    <nav class="header__nav" aria-label="Разделы страницы">
+      <a href="#about">Что&nbsp;такое индекс</a>
+      <a href="#profiles">Состояния</a>
+      <a href="#stats">Цифры</a>
+      <a href="dashboard.html">Дашборд</a>
+    </nav>
+
+    <div class="header__actions">
+      <button class="btn btn--primary btn--sm" type="button" data-lead="report">Скачать доклад</button>
+      <button class="header__burger" type="button" aria-expanded="false" aria-label="Меню">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="container">
+    <nav class="header__mobile" aria-label="Мобильное меню">
+      <a href="#about">Что&nbsp;такое индекс</a>
+      <a href="#profiles">Состояния</a>
+      <a href="#stats">Цифры</a>
+      <a href="dashboard.html">Дашборд</a>
+      <button class="btn btn--primary header__mobile-cta" type="button" data-lead="report">Скачать доклад</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       1. ХИРО — HeroBlock
+       ============================================================ -->
+  <section class="hero">
+    <!-- Кадр из фотобанка Просебя, папка «Одобренные ранее».
+         Снято через стекло: людей видно, но за отражениями — ровно
+         то, о чём заголовок. Без алармизма и без стокового
+         «грустного человека у окна», который запрещён постановкой.
+         alt пустой: фотография здесь фоновая, смысл несёт заголовок. -->
+    <img class="hero__bg" src="assets/img/hero.jpg?v=20260921m" alt="" width="1600" height="2400" fetchpriority="high">
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="container hero__inner">
+      <h1 class="t-display-xl hero__title">Пока снаружи всё работает</h1>
+
+      <p class="t-lead hero__lead">
+        Индекс ментального благополучия работающих россиян&nbsp;— исследование ФОМ и&nbsp;Просебя
+      </p>
+
+      <div class="hero__actions">
+        <button class="btn btn--primary" type="button" data-lead="report">Скачать доклад</button>
+        <a class="btn btn--secondary btn--secondary-inverted" href="dashboard.html">Открыть демо дашборда</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       1a. ПЛАШКА С КЛЮЧЕВОЙ ЦИФРОЙ — Showcase
+       Отделяет хиро от первой содержательной секции и держит место
+       под будущее изображение или видео.
+       Плашка подрастает при прокрутке — см. .showcase__panel в main.css.
+       ============================================================ -->
+  <section class="showcase">
+    <div class="container">
+      <div class="showcase__panel">
+        <div class="showcase__figure reveal">
+          <span class="t-stat showcase__value" data-content="hero.figureValue">35%</span>
+          <span class="t-lead showcase__label" data-content="hero.figureLabel">работающих россиян&nbsp;— в&nbsp;состоянии скрытого напряжения</span>
+        </div>
+        <div class="ph ph--16x9 showcase__media" data-label="здесь будет изображение или видео"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. ЧТО ТАКОЕ ИНДЕКС — FeatureList
+       Сетка auto-fit: четвёртый буллет встанет сам, без правки CSS.
+       ============================================================ -->
+  <section class="section features" id="about">
+    <div class="container">
+      <div class="section__head">
+        <h2 class="t-display-l">Что&nbsp;такое индекс</h2>
+      </div>
+
+      <ul class="features__list">
+        <li class="feature">
+          <span class="feature__num">01</span>
+          <p class="t-display-s">Показывает состояние человека шире, чем&nbsp;вовлечённость и&nbsp;удовлетворённость работой</p>
+        </li>
+        <li class="feature">
+          <span class="feature__num">02</span>
+          <p class="t-display-s">Устойчивость&nbsp;— отдельная категория для&nbsp;управления, а&nbsp;не&nbsp;просто хорошее настроение</p>
+        </li>
+        <li class="feature">
+          <span class="feature__num">03</span>
+          <p class="t-display-s">Помогает увидеть, где нужны личные практики, профессиональная помощь или&nbsp;изменение условий</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. КАРТОЧКИ СОСТОЯНИЙ — ProfileCards
+       Без интерактива, это не квиз.
+       ⚠️ Тексты карточек — рыба. Настоящие 2–3 предложения на карточку
+       нужно запросить у автора доклада (часть 2), через Ивана.
+       ============================================================ -->
+  <section class="section section--secondary profiles" id="profiles">
+    <div class="container">
+      <div class="section__head reveal">
+        <h2 class="t-display-l">Состояние в&nbsp;момент опроса</h2>
+      </div>
+
+      <!-- Карточки в духе tokko.framer.website: цветная шапка
+           с названием состояния, белое тело с описанием.
+           ⚠️ Тексты описаний — рыба из части 2 доклада. -->
+      <div class="profiles__grid reveal-group reveal-group--cards">
+        <article class="profile profile--strain">
+          <div class="profile__head">
+            <span class="profile__num">01</span>
+            <h3 class="profile__title">В&nbsp;напряжении</h3>
+            <p class="profile__lead">Ресурс на&nbsp;исходе, держится на&nbsp;усилии</p>
+          </div>
+          <div class="profile__body">
+            <p class="profile__text">
+              [Рыба] Развёрнутое описание состояния на&nbsp;2–3&nbsp;предложения. Текст берётся из&nbsp;части 2&nbsp;доклада и&nbsp;пока не&nbsp;сведён в&nbsp;формат карточки.
+            </p>
+          </div>
+        </article>
+
+        <article class="profile profile--fragile">
+          <div class="profile__head">
+            <span class="profile__num">02</span>
+            <h3 class="profile__title">В&nbsp;хрупком равновесии</h3>
+            <p class="profile__lead">Справляется, но&nbsp;запас прочности мал</p>
+          </div>
+          <div class="profile__body">
+            <p class="profile__text">
+              [Рыба] Развёрнутое описание состояния на&nbsp;2–3&nbsp;предложения. Текст берётся из&nbsp;части 2&nbsp;доклада и&nbsp;пока не&nbsp;сведён в&nbsp;формат карточки.
+            </p>
+          </div>
+        </article>
+
+        <article class="profile profile--resource">
+          <div class="profile__head">
+            <span class="profile__num">03</span>
+            <h3 class="profile__title">В&nbsp;ресурсе</h3>
+            <p class="profile__lead">Есть силы и&nbsp;на&nbsp;работу, и&nbsp;на&nbsp;восстановление</p>
+          </div>
+          <div class="profile__body">
+            <p class="profile__text">
+              [Рыба] Развёрнутое описание состояния на&nbsp;2–3&nbsp;предложения. Текст берётся из&nbsp;части 2&nbsp;доклада и&nbsp;пока не&nbsp;сведён в&nbsp;формат карточки.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <p class="profiles__note t-body-l reveal">
+        Это не&nbsp;диагнозы и&nbsp;не&nbsp;оценка сотрудника. Индекс показывает, в&nbsp;каком состоянии человек находился
+        в&nbsp;момент опроса.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. ЗНАЕТЕ ЛИ ВЫ? — StatGrid
+       Цифры берутся из assets/js/content.js. Значения в HTML —
+       запасные, чтобы страница читалась без JS.
+       ============================================================ -->
+  <section class="section stats" id="stats">
+    <div class="container">
+      <div class="section__head reveal">
+        <h2 class="t-display-l">Знаете ли&nbsp;вы?</h2>
+      </div>
+
+      <!-- Полукруглые шкалы. Дуга рисуется через stroke-dasharray:
+           длина полудуги при радиусе 84 — 263.894, заполнение
+           считается от неё. Значения продублированы в style как
+           --dash, чтобы шкала была верной и без JS; скрипт
+           пересчитывает её, если цифру поменяли в content.js. -->
+      <div class="gauges reveal-group">
+        <div class="gauge" data-gauge="stats.satisfied">
+          <div class="gauge__dial">
+            <svg class="gauge__svg" viewBox="0 0 200 112" aria-hidden="true">
+            <path class="gauge__track" d="M16 100 A84 84 0 0 1 184 100"/>
+            <path class="gauge__fill" d="M16 100 A84 84 0 0 1 184 100" style="--dash: 211.12"/>
+          </svg>
+            <span class="gauge__value" data-content="stats.satisfied">80%</span>
+          </div>
+          <p class="gauge__label">удовлетворены работой</p>
+        </div>
+
+        <div class="gauge" data-gauge="stats.staying">
+          <div class="gauge__dial">
+            <svg class="gauge__svg" viewBox="0 0 200 112" aria-hidden="true">
+            <path class="gauge__track" d="M16 100 A84 84 0 0 1 184 100"/>
+            <path class="gauge__fill" d="M16 100 A84 84 0 0 1 184 100" style="--dash: 219.03"/>
+          </svg>
+            <span class="gauge__value" data-content="stats.staying">83%</span>
+          </div>
+          <p class="gauge__label">не&nbsp;планируют увольняться</p>
+        </div>
+
+        <div class="gauge" data-gauge="stats.recommend">
+          <div class="gauge__dial">
+            <svg class="gauge__svg" viewBox="0 0 200 112" aria-hidden="true">
+            <path class="gauge__track" d="M16 100 A84 84 0 0 1 184 100"/>
+            <path class="gauge__fill" d="M16 100 A84 84 0 0 1 184 100" style="--dash: 190.00"/>
+          </svg>
+            <span class="gauge__value" data-content="stats.recommend">72%</span>
+          </div>
+          <p class="gauge__label">готовы рекомендовать работодателя</p>
+        </div>
+      </div>
+
+      <!-- Перелом секции. По ТЗ четвёртая цифра несёт всю
+           драматургию, поэтому она крупнее трёх верхних и стоит
+           отдельным блоком, а не четвёртой в ряду. -->
+      <div class="turn reveal" data-gauge="stats.invisible">
+        <div class="gauge gauge--lg gauge--accent">
+          <div class="gauge__dial">
+            <svg class="gauge__svg" viewBox="0 0 200 112" aria-hidden="true">
+            <path class="gauge__track" d="M16 100 A84 84 0 0 1 184 100"/>
+            <path class="gauge__fill" d="M16 100 A84 84 0 0 1 184 100" style="--dash: 92.36"/>
+          </svg>
+            <span class="gauge__value" data-content="stats.invisible">35%</span>
+          </div>
+        </div>
+        <p class="turn__text">при&nbsp;этом «невидимые»&nbsp;— в&nbsp;состоянии скрытого напряжения</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       5. ЦИТАТА ЭКСПЕРТА — QuoteBlock
+       Компонент работает без фото: .quote__avatar можно удалить,
+       вёрстка не поедет.
+       ⚠️ Дословная цитата ожидает согласования.
+       ============================================================ -->
+  <section class="section quote">
+    <div class="container container--narrow">
+      <blockquote class="reveal">
+        <p class="quote__body">
+          «[Место для&nbsp;дословной утверждённой цитаты клинического психолога о&nbsp;том, почему состояние
+          сотрудников стоит измерять отдельно от&nbsp;вовлечённости.]»
+        </p>
+        <footer class="quote__author">
+          <span class="ph ph--avatar quote__avatar" data-label="фото"></span>
+          <span>
+            <span class="quote__author-name">Имя Фамилия</span><br>
+            <span class="quote__author-role">Клинический психолог</span>
+          </span>
+        </footer>
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       6. КЕЙС-ТИЗЕР — CaseTeaser
+       По ТЗ: лого Билайна + короткий факт или цитата об участии
+       в Индексе + ссылка «Смотреть кейс». Стоит перед CTA-блоком —
+       социальное доказательство в момент принятия решения.
+
+       ⚠️ Всё содержимое — заглушки в квадратных скобках. Точные
+       формулировки, цифры и разрешение на лого и имя компании
+       согласовываются с маркетингом Билайна ДО публикации.
+       Выключается флагом caseBeeline в assets/js/content.js.
+       ============================================================ -->
+  <section class="section section--secondary case" data-flag="caseBeeline">
+    <div class="container">
+      <div class="card card--elevated case__card reveal reveal--card">
+        <span class="ph ph--logo case__logo" data-label="лого Билайна"></span>
+        <p class="t-caption">Кейс</p>
+        <h2 class="t-display-m case__title">[Билайн в&nbsp;Индексе]</h2>
+
+        <div class="case__text">
+          <p>
+            [Короткий факт или цитата о&nbsp;том, что участие в&nbsp;Индексе дало компании:
+            узнаваемость в&nbsp;теме, упоминания в&nbsp;СМИ и&nbsp;tg-каналах.]
+          </p>
+        </div>
+
+        <div class="case__foot">
+          <button class="link-arrow" type="button" data-lead="index_2027">Смотреть кейс</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       7. CTA-БЛОК — MultiCTABlock
+       Три действия с иерархией, чтобы фокус не размывался.
+       ============================================================ -->
+  <section class="section cta" id="cta">
+    <div class="container">
+      <div class="cta__inner reveal">
+        <h2 class="t-display-l cta__title">Что&nbsp;дальше?</h2>
+        <div class="cta__actions">
+          <button class="btn btn--primary" type="button" data-lead="report">Скачать доклад</button>
+          <button class="btn btn--secondary" type="button" data-lead="team_index">Запросить индекс команды</button>
+          <a class="btn btn--secondary" href="dashboard.html">Открыть демо дашборда</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     8. ФУТЕР
+     ============================================================ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <img class="footer__logo" src="assets/img/prosebya-logo.svg?v=20260921m" alt="Просебя" width="116" height="32">
+        <p class="t-body-m">Индекс ментального благополучия&nbsp;— совместное исследование ФОМ и&nbsp;Просебя.</p>
+      </div>
+
+      <div class="footer__cols">
+        <div class="footer__col">
+          <p class="t-label-m footer__col-title">Исследование</p>
+          <ul>
+            <li><a href="#about">Что&nbsp;такое индекс</a></li>
+            <li><a href="dashboard.html">Демо дашборда</a></li>
+            <li><a href="dashboard.html#methodology">Методология</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="t-label-m footer__col-title">Участие</p>
+          <ul>
+            <li><button class="footer__link" type="button" data-lead="team_index">Индекс команды</button></li>
+            <li><button class="footer__link" type="button" data-lead="index_2027">Индекс 2027</button></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="t-label-m footer__col-title">Компания</p>
+          <ul>
+            <!-- ⚠️ ЗАГЛУШКИ: нужны реальные ссылки на сайт Просебя -->
+            <li><a href="#">Решения</a></li>
+            <li><a href="#">О&nbsp;компании</a></li>
+            <li><a href="#">Контакты</a></li>
+          </ul>
+        </div>
+        <div class="footer__col">
+          <p class="t-label-m footer__col-title">Юридическое</p>
+          <ul>
+            <li><a href="privacy.html">Обработка данных</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026&nbsp;Просебя × ФОМ</span>
+      <span>Демонстрационная сборка&nbsp;— данные и&nbsp;тексты не&nbsp;финальные</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/content.js?v=20260921m"></script>
+<script src="assets/js/site.js?v=20260921m"></script>
+<script src="assets/js/reveal.js?v=20260921m"></script>
+</body>
+</html>

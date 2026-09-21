@@ -1,0 +1,262 @@
+/* ============================================================
+   ТОКЕНЫ — Индекс ментального благополучия
+
+   Цвета взяты из живой дизайн-системы Просебя
+   (prosebya.vercel.app, Storybook UI/Button + скомпилированная
+   тема), режим LIGHT. Экспорт design-tokens.tokens.json содержал
+   только семантические ссылки на коллекцию primitives, которой
+   в нём не было, — значения подтянуты из Storybook.
+
+   Типографика, радиусы, отступы и тень — из Figma-экспорта.
+
+   Ключевое: акцент действия — ЖЁЛТЫЙ #FFB800 (он же цвет
+   логотипа), а не оранжевый. В системе токен исторически зовётся
+   brand-orange; имя сохранено, чтобы совпадало с их кодом.
+   Подробности — в docs/TOKENS.md.
+   ============================================================ */
+
+:root {
+  /* ==========================================================
+     1. PRIMITIVES — реальные значения дизайн-системы
+     Единственное место, где лежат hex. Подмена палитры —
+     правка только этого блока.
+     ========================================================== */
+
+  /* core — чернила (тёмный), core inverted — белый.
+     Названия как в системе: bg тёмной темы = core. */
+  --p-core: #22263b;
+  --p-core-rgb: 34 38 59;
+  --p-core-inverted: #ffffff;
+  --p-core-inverted-rgb: 255 255 255;
+
+  /* gray */
+  --p-gray-light: #f4f6fa;
+  --p-gray-core: #eaeff8;
+  --p-gray-muted: #e7e9ed;
+
+  /* brand */
+  --p-brand-orange: #ffb800;        /* действие: кнопки, CTA. Жёлтый */
+  --p-brand-orange-rgb: 255 184 0;
+  --p-brand-orange-hover: #f6a300;
+  --p-brand-blue: #344079;          /* акцент: ссылки, вторичные кнопки */
+  --p-brand-blue-rgb: 52 64 121;
+
+  /* feedback */
+  --p-feedback-positive: #759f45;
+  --p-feedback-negative: #f15d56;
+  /* warning в скомпилированной теме не нашёлся (класс не используется) —
+     берём брендовый жёлтый, он и по смыслу предупреждение */
+  --p-feedback-warning: var(--p-brand-orange);
+
+  /* ==========================================================
+     2. ЦВЕТА — семантический слой, режим LIGHT
+     Имена повторяют токены системы: light-bg-*, light-fg-*,
+     light-border-*.
+     ========================================================== */
+
+  /* — фон — */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: var(--p-gray-core);
+  --color-bg-tetriary: var(--p-gray-light);
+  --color-bg-disabled: var(--p-gray-muted);
+  --color-bg-dark: var(--p-core);
+  --color-bg-accent: var(--p-brand-blue);
+  --color-bg-accent-overlay: rgb(var(--p-brand-blue-rgb) / 0.1);
+  --color-bg-accent-brand: var(--p-brand-orange);
+  /* мягкая жёлтая подложка — производная от brand-orange,
+     отдельного токена в системе нет */
+  --color-bg-accent-content: rgb(var(--p-brand-orange-rgb) / 0.14);
+  --color-bg-action: var(--p-brand-orange);
+  --color-bg-button-pressed: var(--p-brand-orange-hover);
+  --color-bg-pressed: rgb(var(--p-core-rgb) / 0.05);
+  --color-bg-overlay-dark: rgb(var(--p-core-rgb) / 0.05);
+  --color-bg-overlay-light: rgb(var(--p-core-inverted-rgb) / 0.1);
+  --color-bg-overlay-full: rgb(var(--p-core-rgb) / 0.8);
+  --color-bg-overlay-video: rgb(var(--p-core-rgb) / 0.6);
+
+  --color-bg-feedback-positive: var(--p-feedback-positive);
+  --color-bg-feedback-positive-overlay: rgb(117 159 69 / 0.12);
+  --color-bg-feedback-warning: var(--p-feedback-warning);
+  --color-bg-feedback-warning-overlay: rgb(var(--p-brand-orange-rgb) / 0.14);
+  --color-bg-feedback-negative: var(--p-feedback-negative);
+  --color-bg-feedback-negative-overlay: rgb(241 93 86 / 0.12);
+
+  /* — текст и иконки — */
+  --color-fg-primary: var(--p-core);
+  --color-fg-secondary: rgb(var(--p-core-rgb) / 0.8);
+  --color-fg-tetriary: rgb(var(--p-core-rgb) / 0.6);
+  --color-fg-muted: rgb(var(--p-core-rgb) / 0.4);
+  --color-fg-accent: var(--p-brand-blue);
+  --color-fg-accent-muted: rgb(var(--p-brand-blue-rgb) / 0.7);
+
+  --color-fg-inverted-primary: var(--p-core-inverted);
+  --color-fg-inverted-secondary: rgb(var(--p-core-inverted-rgb) / 0.8);
+  --color-fg-inverted-tetriary: rgb(var(--p-core-inverted-rgb) / 0.6);
+  --color-fg-inverted-muted: rgb(var(--p-core-inverted-rgb) / 0.4);
+
+  --color-fg-feedback-positive: var(--p-feedback-positive);
+  --color-fg-feedback-warning: var(--p-feedback-warning);
+  --color-fg-feedback-negative: var(--p-feedback-negative);
+
+  /* — границы — */
+  --color-border-primary: rgb(var(--p-core-rgb) / 0.2);
+  --color-border-secondary: rgb(var(--p-core-rgb) / 0.1);
+  --color-border-disabled: rgb(var(--p-core-rgb) / 0.1);
+  --color-border-accent: var(--p-brand-blue);
+  --color-border-positive: var(--p-feedback-positive);
+  --color-border-negative: var(--p-feedback-negative);
+  --color-border-warning: var(--p-feedback-warning);
+  --color-border-button-secondary: rgb(var(--p-brand-blue-rgb) / 0.2);
+  --color-border-button-tetriary: rgb(var(--p-brand-blue-rgb) / 0.1);
+  --color-border-button-secondary-inverted: rgb(var(--p-core-inverted-rgb) / 0.1);
+  --color-border-inverted-primary: rgb(var(--p-core-inverted-rgb) / 0.2);
+
+  /* — три состояния индекса —
+     Не светофор: шкала от тёплого к прохладному.
+
+     Цвет кодирует категорию на маркере и в графиках, но НЕ в тексте:
+     заголовки карточек набраны чернилами. Причина — арифметика.
+     Чтобы цветной заголовок прошёл контраст на светлой подложке,
+     все три оттенка пришлось бы затемнить до одной светлоты, и
+     тогда они перестали бы различаться в ч/б и при дальтонизме.
+     Разведя роли, получаем и читаемый текст (14.9:1), и цвета,
+     различимые без цвета.
+
+     Проверено на белой карточке дашборда, где графики и живут:
+     контраст 6.2 / 3.0 / 4.1 (порог для нетекстовой графики — 3:1),
+     светлота 12 / 30 / 20 — далеко друг от друга.
+
+     Охра приглушена намеренно: рядом с брендовым #FFB800 яркий
+     янтарь читался бы как кнопка. */
+  --color-state-strain: #a83e28;     /* В напряжении — тёмный тёплый */
+  --color-state-strain-surface: #f7ece8;
+  --color-state-fragile: #c08a3e;    /* В хрупком равновесии — приглушённая охра */
+  --color-state-fragile-surface: #f9f0e2;
+  --color-state-resource: #3f8886;   /* В ресурсе — средний прохладный */
+  --color-state-resource-surface: #e6f1f0;
+
+  /* ==========================================================
+     3. ТИПОГРАФИКА
+     ========================================================== */
+
+  --font-family-base: "Euclid Circular A", "Inter", -apple-system,
+    BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  /* Medium вместо Semibold: на промо-кеглях 600 выглядел тяжело.
+     Файл этого начертания уже подключён, подмены браузером нет. */
+  --font-weight-bold: 500;
+
+  /* — ПРИЛОЖЕНИЕ: шкала 1:1 из Figma. Не менять: используется в дашборде
+       и везде, где интерфейс должен совпадать с приложением. — */
+  --size-title-xl: 28px;   --lh-title-xl: 32px;   --ls-title-xl: -0.02em;
+  --size-title-l: 24px;    --lh-title-l: 32px;    --ls-title-l: -0.015em;
+  --size-title-m: 20px;    --lh-title-m: 24px;    --ls-title-m: -0.01em;
+  --size-title-s: 16px;    --lh-title-s: 20px;    --ls-title-s: 0;
+
+  --size-body-xl: 20px;    --lh-body-xl: 28px;
+  --size-body-l: 16px;     --lh-body-l: 24px;
+  --size-body-m: 14px;     --lh-body-m: 20px;
+  --size-body-s: 12px;     --lh-body-s: 16px;
+
+  --size-label-l: 16px;    --lh-label-l: 24px;
+  --size-label-m: 14px;    --lh-label-m: 20px;
+  --size-label-s: 12px;    --lh-label-s: 16px;
+  --size-label-xs: 10px;   --lh-label-xs: 12px;
+
+  --size-caption-s: 12px;  --lh-caption-s: 16px;  --ls-caption-s: 1.2px;
+
+  /* — ПРОМО: добавлено для лендинга. В приложении столько не нужно,
+       на десктопе шкала до 28px выглядит мелко.
+       Продолжает ту же логику: чем крупнее кегль, тем плотнее трекинг.
+       clamp() — чтобы не плодить брейкпоинты под каждый заголовок. — */
+  --size-display-xl: clamp(40px, 6.4vw, 88px);   --lh-display-xl: 1.04; --ls-display-xl: -0.03em;
+  --size-display-l:  clamp(30px, 4.2vw, 56px);   --lh-display-l: 1.08;  --ls-display-l: -0.025em;
+  --size-display-m:  clamp(24px, 2.8vw, 40px);   --lh-display-m: 1.15;  --ls-display-m: -0.02em;
+  --size-display-s:  clamp(20px, 1.8vw, 28px);   --lh-display-s: 1.25;  --ls-display-s: -0.015em;
+
+  /* Крупная цифра для секции «Знаете ли вы?» и хиро */
+  --size-stat: clamp(48px, 7vw, 104px);          --lh-stat: 0.96;       --ls-stat: -0.04em;
+  --size-stat-s: clamp(36px, 4.4vw, 64px);       --lh-stat-s: 1;        --ls-stat-s: -0.03em;
+
+  /* Лид-абзац: подзаголовок хиро, вводные абзацы секций */
+  --size-lead: clamp(17px, 1.4vw, 22px);         --lh-lead: 1.55;
+  /* Основной текст промо-страницы — крупнее приложенческого body-l */
+  --size-promo-body: clamp(16px, 1.1vw, 18px);   --lh-promo-body: 1.6;
+
+  /* ==========================================================
+     4. РАДИУСЫ — 1:1 из Figma
+     ========================================================== */
+  --radius-null: 0px;
+  --radius-xs: 8px;
+  --radius-s: 12px;
+  --radius-m: 16px;
+  --radius-l: 24px;
+  --radius-xl: 32px;
+  --radius-full: 999px;
+  --radius-checkbox: 6px;
+
+  /* ==========================================================
+     5. ОТСТУПЫ — шкала gap 1:1 из Figma
+     ========================================================== */
+  --gap-0: 0px;    --gap-2: 2px;    --gap-4: 4px;    --gap-8: 8px;
+  --gap-12: 12px;  --gap-16: 16px;  --gap-20: 20px;  --gap-24: 24px;
+  --gap-28: 28px;  --gap-32: 32px;  --gap-36: 36px;  --gap-48: 48px;
+  --gap-64: 64px;  --gap-128: 128px;
+
+  /* Промо-добавка: вертикальный ритм между секциями лендинга */
+  --space-section: clamp(64px, 8.5vw, 140px);
+  --space-section-tight: clamp(48px, 5.5vw, 88px);
+
+  /* ==========================================================
+     6. СЕТКА
+     ========================================================== */
+  --container-max: 1200px;
+  --container-narrow: 820px;
+  --container-gutter: 16px;
+  /* высота шапки: на неё опирается подъём хиро под шапку */
+  --header-h: 72px;
+
+  /* ==========================================================
+     7. ТЕНЬ — 1:1 из Figma (effect.elevation)
+     ========================================================== */
+  --shadow-elevation: 0 12px 24px -4px rgb(var(--p-core-rgb) / 0.05);
+  --shadow-elevation-strong: 0 20px 48px -8px rgb(var(--p-core-rgb) / 0.12);
+
+  /* ==========================================================
+     7a. НАКЛОН
+     Две величины, а не «на глаз»: крупные поверхности кренятся
+     чуть-чуть, мелкие — заметно. Приём подсмотрен у tokko.framer.website,
+     там ровно эти два угла и ничего между ними.
+     Применять точечно: пилюли в хиро, позже карточка кейса
+     и обложка доклада. Плашку с видео не наклонять — наклонённое
+     видео читается как ошибка вёрстки.
+     ========================================================== */
+  --tilt-sm: 10deg;   /* мелкие элементы: пилюли, значки */
+  --tilt-lg: 3deg;    /* крупные: карточки, обложки */
+
+  /* ==========================================================
+     8. ДВИЖЕНИЕ — добавлено для лендинга, в Figma не было
+     ========================================================== */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 160ms;
+  --duration-base: 280ms;
+  --duration-slow: 620ms;
+
+  /* ==========================================================
+     9. СЛОИ
+     ========================================================== */
+  --z-header: 100;
+  --z-sidebar: 200;
+  --z-modal: 300;
+}
+
+@media (min-width: 768px) {
+  :root { --container-gutter: 24px; }
+}
+
+@media (min-width: 1024px) {
+  :root { --container-gutter: 40px; }
+}

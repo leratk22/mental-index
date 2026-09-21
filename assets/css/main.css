@@ -1,0 +1,901 @@
+/* ============================================================
+   ГЛАВНАЯ СТРАНИЦА — секции 0–8 по ТЗ
+   Каждая секция = свой неймспейс классов, чтобы блок можно было
+   вынести на отдельную страницу, не распутывая стили.
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   0. ШАПКА — Header
+   ------------------------------------------------------------ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  background: rgb(var(--p-core-inverted-rgb) / 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-base) var(--ease-out),
+              background-color var(--duration-base) var(--ease-out);
+}
+
+.header.is-scrolled {
+  border-bottom-color: var(--color-border-secondary);
+  background: rgb(var(--p-core-inverted-rgb) / 0.95);
+}
+
+/* Шапка поверх фотографии хиро (только на главной).
+   Пока страница не прокручена — прозрачная, со светлыми ссылками.
+   При первом же скролле возвращается обычная белая: класс
+   is-scrolled вешает site.js. */
+/* :not(.is-menu-open) — пока открыто мобильное меню, шапка
+   возвращается к плотному светлому виду, иначе белый текст
+   логотипа ложится на белую панель меню. */
+.header--overlay:not(.is-scrolled):not(.is-menu-open) {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.header--overlay:not(.is-scrolled):not(.is-menu-open) .header__nav a {
+  color: var(--color-fg-inverted-secondary);
+}
+
+.header--overlay:not(.is-scrolled):not(.is-menu-open) .header__nav a:hover {
+  color: var(--color-fg-inverted-primary);
+}
+
+.header--overlay:not(.is-scrolled):not(.is-menu-open) .header__burger span {
+  background: var(--color-fg-inverted-primary);
+}
+
+/* Логотип ФОМ поверх фотографии: надпись белой, знак светлее */
+.header--overlay:not(.is-scrolled):not(.is-menu-open) .header__brand { color: var(--color-fg-inverted-primary); }
+.header--overlay:not(.is-scrolled):not(.is-menu-open) .fom__mark { fill: #f2544a; }
+
+/* То же на любой тёмной поверхности */
+.section--dark .fom__word,
+.footer .fom__word { fill: var(--color-fg-inverted-primary); }
+.section--dark .fom__mark,
+.footer .fom__mark { fill: #f2544a; }
+
+.header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-32);
+  min-height: var(--header-h);
+}
+
+.header__brand {
+  display: flex;
+  align-items: center;
+  /* 20 вместо 12: логотипы двух организаций должны читаться
+     как два знака, а не как один слипшийся лок-ап */
+  gap: var(--gap-20);
+  flex: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ------------------------------------------------------------
+   ЛОГОТИП ФОМ
+
+   Вставлен инлайном, а не через <img>, ровно ради контраста:
+   надпись «ФОМ» в исходнике чёрная и на нашем тёмном фоне даёт
+   1.41:1 — пропадает полностью. Инлайн позволяет покрасить её
+   через currentColor, и она сама следует цвету текста.
+
+   Красный знак остаётся брендовым на светлом (4.32:1), а на
+   тёмном осветляется: исходный #E63323 даёт там 3.45:1 — впритык
+   к порогу для графики, осветлённый #F2544A даёт 4.36:1.
+   ------------------------------------------------------------ */
+.fom {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.fom__mark { fill: #e63323; }
+.fom__word { fill: currentColor; }
+
+.header__logo { height: 28px; width: auto; flex: none; }
+
+.header__brand { color: var(--color-fg-primary); }
+.header__brand-second { display: flex; align-items: center; }
+.footer__logo { height: 32px; width: auto; }
+
+.header__brand .ph--logo { width: 96px; height: 28px; }
+
+/* Мобильная шапка.
+   Оба логотипа обязаны быть видны, поэтому на узких экранах
+   уступает кнопка: 375px не вмещают два знака, кнопку и бургер
+   одновременно. Кнопка не пропадает — она переехала в мобильное
+   меню под пункты навигации.
+   Порог 480px посчитан от реальных ширин: два лого (~165px),
+   кнопка (~150px), бургер (44px) и отступы требуют около 400px,
+   на 480px за вычетом полей остаётся 448px. */
+@media (max-width: 479px) {
+  .header__actions .btn { display: none; }
+}
+
+.header__mobile-cta {
+  display: none;
+  align-self: flex-start;
+  margin-top: var(--gap-12);
+}
+
+@media (max-width: 479px) {
+  .header__mobile.is-open .header__mobile-cta { display: inline-flex; }
+}
+
+.header__nav {
+  display: none;
+  align-items: center;
+  gap: var(--gap-28);
+  margin-inline-start: auto;
+}
+
+.header__nav a {
+  color: var(--color-fg-secondary);
+  text-decoration: none;
+  font-size: var(--size-label-m);
+  line-height: var(--lh-label-m);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+/* без переноса: «Что такое индекс» иначе ломается на две строки
+   и шапка становится двухэтажной */
+.header__nav a { white-space: nowrap; }
+
+.header__nav a:hover { color: var(--color-fg-primary); }
+
+.header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-12);
+  margin-inline-start: auto;
+}
+
+.header__burger {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: var(--radius-xs);
+}
+
+.header__burger span {
+  display: block;
+  height: 2px;
+  background: var(--color-fg-primary);
+  border-radius: var(--radius-full);
+}
+
+/* Мобильное меню */
+.header__mobile {
+  display: none;
+  flex-direction: column;
+  gap: var(--gap-4);
+  padding-block: var(--gap-16) var(--gap-24);
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.header__mobile.is-open { display: flex; }
+
+.header__mobile a {
+  padding: var(--gap-12) 0;
+  color: var(--color-fg-secondary);
+  text-decoration: none;
+  font-size: var(--size-body-l);
+  line-height: var(--lh-body-l);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Порог 900: пунктов снова четыре (после удаления «Доклада»),
+   и они помещаются в одну строку — замер даёт 805px занятого
+   из 900 доступных. Когда было пять, порог приходилось держать
+   на 1040. */
+@media (min-width: 900px) {
+  .header__nav { display: flex; }
+  .header__actions { margin-inline-start: 0; }
+  .header__burger { display: none; }
+  .header__mobile { display: none !important; }
+}
+
+/* ------------------------------------------------------------
+   1. ХИРО — HeroBlock
+   Полноэкранный кадр, текст прижат к низу слева — приём
+   с refinerypro.framer.ai. Раньше был центрированный текст
+   на светлом градиенте, как у TELUS.
+   ------------------------------------------------------------ */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  /* svh, а не vh: на мобильных с убирающейся адресной строкой
+     100vh выше реального экрана, и нижний край текста уезжает */
+  min-height: min(100svh, 860px);
+  /* Уходим под шапку: она sticky и занимает своё место в потоке,
+     иначе над фотографией остаётся белая полоса. Класс .hero
+     есть только на главной, поэтому правило никого больше
+     не задевает. */
+  margin-top: calc(var(--header-h) * -1);
+  padding-block: calc(var(--header-h) + var(--space-section)) clamp(40px, 6vw, 80px);
+  overflow: hidden;
+  background: var(--color-bg-dark);
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Кадр вертикальный, человек — в правой части. На широком экране
+     подрезается только по высоте, поэтому 46% выбраны так, чтобы
+     лицо попадало в кадр целиком, а текст слева его не пересекал. */
+  object-position: 50% 46%;
+}
+
+/* Затемнение снизу. Без него белый текст ложится на светлые
+   участки фотографии и теряется — на кадре есть и тёмные,
+   и пересвеченные зоны. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    /* сверху — под прозрачную шапку: ссылки белые, а кадр
+       в верхней части местами пересвечен */
+    linear-gradient(
+      to bottom,
+      rgb(var(--p-core-rgb) / 0.55) 0%,
+      rgb(var(--p-core-rgb) / 0.2) calc(var(--header-h) + 40px),
+      transparent calc(var(--header-h) + 120px)
+    ),
+    /* снизу — под текстовый блок.
+       Затемнение тянется выше, чем кажется нужным на глаз:
+       замер по самым светлым пикселям кадра показал, что при
+       более мягком градиенте мелкий капшн даёт 3.07:1 — ниже
+       порога 4.5:1. С этими значениями худший случай 4.6:1. */
+    linear-gradient(
+      to top,
+      rgb(var(--p-core-rgb) / 0.95) 0%,
+      rgb(var(--p-core-rgb) / 0.88) 22%,
+      rgb(var(--p-core-rgb) / 0.7) 45%,
+      rgb(var(--p-core-rgb) / 0.3) 72%,
+      rgb(var(--p-core-rgb) / 0.12) 100%
+    );
+}
+
+.hero__inner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--gap-20);
+  color: var(--color-fg-inverted-primary);
+}
+
+.hero__caption { color: var(--color-fg-inverted-tetriary); }
+
+.hero__title {
+  max-width: 18ch;
+  color: var(--color-fg-inverted-primary);
+}
+
+.hero__lead {
+  max-width: 54ch;
+  color: var(--color-fg-inverted-secondary);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-12);
+  margin-top: var(--gap-8);
+}
+
+@media (min-width: 860px) {
+  .hero__inner { gap: var(--gap-24); }
+}
+
+/* ------------------------------------------------------------
+   1a. ПЛАШКА С КЛЮЧЕВОЙ ЦИФРОЙ — Showcase
+
+   Отдельная секция между хиро и первым содержательным блоком:
+   раньше цифра стояла прямо под кнопками хиро и слипалась
+   со следующей секцией.
+
+   Плашка — заодно место под будущее изображение или видео.
+   ------------------------------------------------------------ */
+.showcase {
+  padding-block: var(--space-section-tight);
+}
+
+.showcase__panel {
+  display: grid;
+  gap: var(--gap-32);
+  align-items: center;
+  padding: clamp(24px, 3.5vw, 56px);
+  border-radius: var(--radius-xl);
+  background: var(--color-bg-secondary);
+  /* точка масштабирования снизу: плашка «вырастает» из страницы,
+     а не расползается в обе стороны */
+  transform-origin: 50% 100%;
+}
+
+.showcase__figure {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+}
+
+.showcase__value { color: var(--color-fg-accent); }
+
+.showcase__label { max-width: 24ch; text-wrap: pretty; }
+
+/* Заглушка под медиа: на голубой подложке плашки серый фон .ph
+   совпал бы с ней, поэтому переопределяем на белый */
+.showcase__media {
+  --ph-bg: var(--color-bg-primary);
+  width: 100%;
+}
+
+@media (min-width: 860px) {
+  .showcase__panel { grid-template-columns: minmax(240px, 0.85fr) 1.15fr; }
+}
+
+/* Рост при прокрутке.
+   Scroll-driven animations: работает в браузерах, где они есть,
+   в остальных плашка просто сразу нормального размера — ничего
+   не ломается и не требует JS. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Таймлайн считается по СЕКЦИИ, а не по самой плашке.
+       Если повесить view() прямо на плашку, она становится
+       и субъектом измерения, и объектом масштабирования —
+       scale меняет её геометрию, геометрия меняет прогресс,
+       и он застревает на середине, не доходя до 100%.
+       Секция не трансформируется, поэтому меряет честно. */
+    .showcase { view-timeline-name: --showcase-panel; }
+
+    .showcase__panel {
+      /* только длинные свойства: шорткат animation сбрасывает
+         animation-duration в 0s, и прокрутка перестаёт управлять
+         прогрессом. Для scroll-таймлайна длительность — auto. */
+      animation-name: showcase-grow;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --showcase-panel;
+      /* cover, а не entry: на высоком экране плашка видна уже при
+         загрузке, и entry-диапазон оказывается пройден до того, как
+         пользователь вообще тронул колесо. cover тянется всё время,
+         пока секция пересекает экран, поэтому рост виден и тогда,
+         когда плашка появляется снизу, и тогда, когда она уже
+         на экране. */
+      animation-range: cover 0% cover 45%;
+    }
+
+    @keyframes showcase-grow {
+      from { transform: scale(0.9); }
+      to   { transform: scale(1); }
+    }
+  }
+}
+
+/* ------------------------------------------------------------
+   2. ЧТО ТАКОЕ ИНДЕКС — FeatureList
+   Компонент рассчитан на 3 или 4 буллета без переверстки.
+   ------------------------------------------------------------ */
+.features__list {
+  display: grid;
+  gap: var(--gap-32);
+  grid-template-columns: 1fr;
+}
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-12);
+  padding-top: var(--gap-24);
+  /* тонкая линия-разделитель, не жирная плашка:
+     она структурирует список, а не спорит с заголовками */
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+.feature__num {
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  letter-spacing: var(--ls-caption-s);
+  text-transform: uppercase;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-fg-accent);
+}
+
+@media (min-width: 720px) {
+  .features__list { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (min-width: 1000px) {
+  /* auto-fit — чтобы 4-й буллет встал сам, без правки CSS */
+  .features__list {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+/* ------------------------------------------------------------
+   3. КАРТОЧКИ СОСТОЯНИЙ — ProfileCards
+   Не светофор: шкала от тёплого к прохладному. Без интерактива.
+   ------------------------------------------------------------ */
+.profiles__grid {
+  display: grid;
+  gap: var(--gap-20);
+  grid-template-columns: 1fr;
+}
+
+/* Карточка состояния — паттерн с tokko.framer.website:
+   цветная шапка с названием, белое тело с описанием.
+
+   Раньше карточки были белые с крохотным цветным маркером —
+   цвет просили сделать тоньше, потому что сплошная заливка всей
+   карточки читалась как «хорошо / плохо». Здесь цвет собран
+   в отдельную панель сверху: он именует состояние, а не красит
+   текст под ним, и на светофор это уже не похоже.
+
+   Цвета панелей — затемнённые версии токенов состояний.
+   Исходные под белый текст не годятся: охра даёт 3.02:1,
+   бирюза 4.14:1 при пороге 4.5. Сами токены не трогаем —
+   на них завязаны маркеры и будущие графики дашборда. */
+.profile {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-secondary);
+}
+
+.profile__head {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-4);
+  padding: var(--gap-28) var(--gap-28) var(--gap-32);
+  background: var(--profile-panel);
+  color: var(--color-fg-inverted-primary);
+}
+
+.profile__num {
+  position: absolute;
+  top: var(--gap-20);
+  right: var(--gap-24);
+  font-size: var(--size-label-s);
+  line-height: var(--lh-label-s);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-fg-inverted-tetriary);
+}
+
+.profile__title {
+  font-size: var(--size-display-s);
+  line-height: var(--lh-display-s);
+  letter-spacing: var(--ls-display-s);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-fg-inverted-primary);
+  max-width: 14ch;
+}
+
+.profile__lead {
+  font-size: var(--size-body-l);
+  line-height: var(--lh-body-l);
+  /* чисто белый, а не 80%: на самой светлой панели
+     приглушённый не добирает контраста */
+  color: var(--color-fg-inverted-primary);
+  max-width: 24ch;
+}
+
+.profile__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-8);
+  padding: var(--gap-24) var(--gap-28) var(--gap-28);
+  flex: 1;
+}
+
+.profile__text {
+  color: var(--color-fg-secondary);
+  font-size: var(--size-body-l);
+  line-height: var(--lh-body-l);
+}
+
+/* --profile-color — цвет состояния как есть (маркеры, графики),
+   --profile-panel — затемнённый, под белый текст на панели */
+.profile--strain {
+  --profile-color: var(--color-state-strain);
+  --profile-panel: #a83e28;   /* 6.20:1 */
+}
+.profile--fragile {
+  --profile-color: var(--color-state-fragile);
+  --profile-panel: #8a6220;   /* 5.46:1 */
+}
+.profile--resource {
+  --profile-color: var(--color-state-resource);
+  --profile-panel: #33706e;   /* 5.70:1 */
+}
+
+.profiles__note {
+  margin-top: var(--gap-24);
+  color: var(--color-fg-tetriary);
+  max-width: 68ch;
+}
+
+@media (min-width: 860px) {
+  .profiles__grid { grid-template-columns: repeat(3, 1fr); }
+
+  /* Выравниваем цветные шапки по нижнему краю.
+     «В хрупком равновесии» переносится на две строки, и без этого
+     средняя панель торчит вниз на 29px — в ряду из трёх карточек
+     это сразу читается как неаккуратность.
+     subgrid: карточка занимает две строки внешней сетки, поэтому
+     все шапки получают высоту самой высокой. Где subgrid не
+     поддерживается, остаётся прежняя раскладка на flex. */
+  @supports (grid-template-rows: subgrid) {
+    .profiles__grid { grid-template-rows: auto auto; }
+
+    .profile {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+    }
+  }
+}
+
+/* ------------------------------------------------------------
+   4. ЗНАЕТЕ ЛИ ВЫ? — полукруглые шкалы
+
+   Три «спокойные» шкалы белым и одна контрастная жёлтым — в ней
+   вся драматургия секции. Четвёртая намеренно вынесена из ряда
+   и сделана крупнее: в общей сетке она читалась как ещё одна
+   цифра из четырёх, а не как перелом.
+   ------------------------------------------------------------ */
+.stats {
+  background: var(--color-bg-dark);
+  color: var(--color-fg-inverted-primary);
+}
+
+.gauges {
+  display: grid;
+  gap: var(--gap-32) var(--gap-24);
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.gauge {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 260px;
+}
+
+.gauge__svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.gauge__track,
+.gauge__fill {
+  fill: none;
+  stroke-width: 12;
+  stroke-linecap: round;
+}
+
+.gauge__track { stroke: var(--color-bg-overlay-light); }
+
+.gauge__fill {
+  stroke: var(--gauge-color, var(--color-fg-inverted-primary));
+  /* 263.894 — длина полудуги при радиусе 84.
+     По умолчанию шкала сразу заполнена: без JS она обязана быть
+     верной, а не пустой. */
+  stroke-dasharray: 263.894;
+  stroke-dashoffset: calc(263.894 - var(--dash, 0));
+  transition: stroke-dashoffset 1.1s var(--ease-out);
+}
+
+/* Пустое состояние разрешено только когда скрипт подтвердил,
+   что умеет заполнить шкалу обратно — тот же принцип, что и у .reveal.
+
+   Ключ — именно `.reveal:not(.is-visible)`, а не `.gauge:not(...)`.
+   Класс is-visible достаётся тому элементу, который анимируется:
+   у трёх верхних это сама шкала, у блока 35% — обёртка .turn.
+   Если цепляться за .gauge, его шкала никогда не получит is-visible
+   и останется пустой навсегда. */
+.has-reveal .reveal:not(.is-visible) .gauge__fill {
+  stroke-dashoffset: 263.894;
+}
+
+/* Полукруг и цифра — отдельная обёртка.
+   Позиционировать цифру от всей .gauge нельзя: туда входит ещё
+   и подпись снизу, и цифра съезжала прямо на неё. */
+.gauge__dial {
+  position: relative;
+  width: 100%;
+}
+
+/* Цифра — у основания полукруга, а не в его середине.
+   По центру она стояла в узкой части дуги и при крупном кегле
+   наезжала на сам штрих. У основания ширина максимальная —
+   и это привычный вид шкалы. */
+.gauge__value {
+  position: absolute;
+  left: 50%;
+  bottom: 12%;
+  transform: translateX(-50%);
+  font-size: var(--size-stat-s);
+  line-height: 1;
+  letter-spacing: var(--ls-stat-s);
+  font-weight: var(--font-weight-bold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.gauge__label {
+  margin-top: var(--gap-12);
+  text-align: center;
+  text-wrap: balance;
+  color: var(--color-fg-inverted-secondary);
+  font-size: var(--size-body-l);
+  line-height: var(--lh-body-l);
+}
+
+@media (min-width: 720px) {
+  .gauges { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* --- Перелом: 35% --- */
+.turn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-24);
+  margin-top: var(--space-section-tight);
+  padding-top: var(--space-section-tight);
+  border-top: 1px solid var(--color-border-inverted-primary);
+}
+
+.gauge--accent { --gauge-color: var(--color-bg-action); }
+
+.gauge--accent .gauge__value { color: var(--color-bg-action); }
+
+/* Крупнее трёх верхних — примерно в полтора раза */
+.gauge--lg {
+  max-width: 380px;
+}
+
+.gauge--lg .gauge__track,
+.gauge--lg .gauge__fill { stroke-width: 14; }
+
+.gauge--lg .gauge__value {
+  font-size: var(--size-stat);
+  letter-spacing: var(--ls-stat);
+}
+
+.turn__text {
+  font-size: var(--size-display-m);
+  line-height: var(--lh-display-m);
+  letter-spacing: var(--ls-display-m);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-fg-inverted-primary);
+  text-align: center;
+  text-wrap: balance;
+  max-width: 24ch;
+}
+
+@media (min-width: 860px) {
+  .turn {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: var(--gap-48);
+  }
+
+  .turn__text { text-align: start; }
+}
+
+/* ------------------------------------------------------------
+   6. КЕЙС-ТИЗЕР — CaseTeaser
+
+   Одна белая карточка на цветной подложке: заголовок, короткий
+   текст, внизу лого компании и ссылка на кейс. Вёрстка досталась
+   от блока «Кто делает исследование», который тут стоял раньше.
+   ------------------------------------------------------------ */
+.case__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  padding: clamp(28px, 4vw, 56px);
+  max-width: 900px;
+  margin-inline: auto;
+}
+
+.case__title { margin-bottom: var(--gap-8); }
+
+.case__text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-12);
+  color: var(--color-fg-secondary);
+  max-width: 62ch;
+}
+
+/* Логотип компании — в правый верхний угол, чтобы уравновесить
+   композицию: слева текст, справа знак. Отступ тот же clamp,
+   что и у паддинга карточки, — знак встаёт ровно по верхней
+   линии текстового блока. */
+.case__logo {
+  position: absolute;
+  top: clamp(28px, 4vw, 56px);
+  right: clamp(28px, 4vw, 56px);
+}
+
+/* На узких экранах абсолютный знак налез бы на заголовок —
+   возвращаем его в поток, над подписью. */
+@media (max-width: 639px) {
+  .case__logo {
+    position: static;
+    margin-bottom: var(--gap-8);
+  }
+}
+
+/* Заголовку и подписи оставляем место под знак */
+@media (min-width: 640px) {
+  .case__title,
+  .case__card > .t-caption { max-width: calc(100% - 160px); }
+}
+
+.case__foot {
+  margin-top: var(--gap-8);
+  padding-top: var(--gap-24);
+  border-top: 1px solid var(--color-border-secondary);
+}
+
+/* ------------------------------------------------------------
+   5. ЦИТАТА ЭКСПЕРТА — QuoteBlock
+   Обязан корректно выглядеть без фото.
+   ------------------------------------------------------------ */
+.quote__body {
+  font-size: var(--size-display-m);
+  line-height: var(--lh-display-m);
+  letter-spacing: var(--ls-display-m);
+  font-weight: var(--font-weight-medium);
+  text-wrap: pretty;
+}
+
+.quote__author {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-16);
+  margin-top: var(--gap-32);
+}
+
+/* .quote__avatar скрывается, если фото нет — разметка не ломается */
+.quote__author-name { font-weight: var(--font-weight-bold); }
+
+.quote__author-role {
+  color: var(--color-fg-tetriary);
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+}
+
+.quote__pending { margin-top: var(--gap-24); }
+
+/* ------------------------------------------------------------
+   7. CTA-БЛОК — MultiCTABlock
+   Три действия, но не три равных кнопки: иерархия primary →
+   secondary → secondary, чтобы фокус не размывался.
+   ------------------------------------------------------------ */
+.cta {
+  text-align: center;
+}
+
+.cta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--gap-20);
+  padding: clamp(40px, 6vw, 88px) var(--gap-32);
+  border-radius: var(--radius-xl);
+  background:
+    radial-gradient(80% 120% at 50% 0%, var(--color-bg-accent-content) 0%, transparent 60%),
+    var(--color-bg-tetriary);
+  border: 1px solid var(--color-border-secondary);
+}
+
+.cta__title { max-width: 18ch; }
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap-12);
+  margin-top: var(--gap-12);
+}
+
+/* ------------------------------------------------------------
+   8. ФУТЕР — Footer
+   ------------------------------------------------------------ */
+.footer {
+  background: var(--color-bg-dark);
+  color: var(--color-fg-inverted-secondary);
+  padding-block: var(--space-section-tight) var(--gap-36);
+}
+
+.footer__top {
+  display: grid;
+  gap: var(--gap-36);
+  grid-template-columns: 1fr;
+  padding-bottom: var(--gap-48);
+  border-bottom: 1px solid var(--color-border-inverted-primary);
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  align-items: flex-start;
+}
+
+.footer__cols {
+  display: grid;
+  gap: var(--gap-32);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.footer__col-title {
+  color: var(--color-fg-inverted-primary);
+  margin-bottom: var(--gap-16);
+}
+
+.footer__col ul { display: flex; flex-direction: column; gap: var(--gap-12); }
+
+/* Кнопки-лид-магниты в футере выглядят как обычные ссылки колонки:
+   это пункты списка, а не призывы к действию — стрелка и жирный
+   кегль делали их заметнее заголовка колонки. */
+.footer__col a,
+.footer__link {
+  color: var(--color-fg-inverted-secondary);
+  text-decoration: none;
+  text-align: start;
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+  font-weight: var(--font-weight-regular);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.footer__col a:hover,
+.footer__link:hover { color: var(--color-fg-inverted-primary); }
+
+.footer__bottom {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-16);
+  justify-content: space-between;
+  align-items: center;
+  padding-top: var(--gap-24);
+  color: var(--color-fg-inverted-tetriary);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}
+
+@media (min-width: 900px) {
+  .footer__top { grid-template-columns: minmax(220px, 1fr) 2fr; }
+}
+
+.case[hidden] { display: none; }
