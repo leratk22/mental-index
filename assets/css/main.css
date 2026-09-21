@@ -899,3 +899,145 @@
 }
 
 .case[hidden] { display: none; }
+
+/* ------------------------------------------------------------
+   ЛИД-МОДАЛКА
+   Открывается по любой CTA-кнопке с data-lead. Контент собирает
+   forms.js из конфига полей — здесь только оформление.
+   ------------------------------------------------------------ */
+.lead {
+  width: min(100% - 2 * var(--gap-16), 560px);
+  max-height: calc(100dvh - 2 * var(--gap-24));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-l);
+  background: var(--color-bg-primary);
+  color: var(--color-fg-primary);
+  overflow: visible;
+}
+
+.lead::backdrop {
+  background: var(--color-bg-overlay-dark);
+  backdrop-filter: blur(3px);
+}
+
+.lead__panel {
+  position: relative;
+  max-height: calc(100dvh - 2 * var(--gap-24));
+  overflow-y: auto;
+  padding: var(--gap-32);
+  border-radius: inherit;
+}
+
+.lead__close {
+  position: absolute;
+  top: var(--gap-16);
+  right: var(--gap-16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-bg-secondary);
+  color: var(--color-fg-secondary);
+  cursor: pointer;
+  transition: background var(--duration-fast) var(--ease-out),
+              color var(--duration-fast) var(--ease-out);
+}
+
+.lead__close svg { width: 16px; height: 16px; }
+.lead__close:hover { background: var(--color-bg-pressed); color: var(--color-fg-primary); }
+
+.lead__eyebrow {
+  margin-bottom: var(--gap-8);
+  color: var(--color-fg-accent);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.lead__title { margin-bottom: var(--gap-12); padding-right: var(--gap-48); }
+.lead__lead { margin-bottom: var(--gap-24); }
+
+.lead__fields {
+  display: grid;
+  gap: var(--gap-16);
+  margin-bottom: var(--gap-20);
+}
+
+.lead__field { display: flex; flex-direction: column; gap: var(--gap-4); }
+
+.lead__label { color: var(--color-fg-secondary); }
+.lead__hint { color: var(--color-fg-tetriary); font-weight: var(--font-weight-regular); }
+
+.lead__control {
+  width: 100%;
+  padding: 12px var(--gap-16);
+  border: 1px solid var(--color-border-secondary);
+  border-radius: var(--radius-xs);
+  background: var(--color-bg-primary);
+  font-size: var(--size-body-m);
+  line-height: var(--lh-body-m);
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.lead__control:focus-visible {
+  outline: none;
+  border-color: var(--color-border-accent);
+  box-shadow: 0 0 0 3px var(--color-bg-accent-overlay);
+}
+
+.is-invalid .lead__control { border-color: var(--color-border-negative); }
+
+.lead__error {
+  color: var(--color-fg-feedback-negative);
+  font-size: var(--size-body-s);
+  line-height: var(--lh-body-s);
+}
+
+.lead__consent {
+  display: flex;
+  gap: var(--gap-12);
+  align-items: flex-start;
+  margin-bottom: var(--gap-8);
+  cursor: pointer;
+}
+
+.lead__checkbox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  accent-color: var(--color-bg-accent);
+  cursor: pointer;
+}
+
+.lead__consent.is-invalid .lead__checkbox { outline: 2px solid var(--color-border-negative); outline-offset: 2px; }
+.lead__consent a { color: var(--color-fg-accent); text-decoration: underline; }
+
+.lead__error--consent { margin-bottom: var(--gap-8); }
+
+.lead__submit { width: 100%; margin-top: var(--gap-12); }
+
+/* Пока приёмника нет, посетитель обязан видеть, что форма
+   ничего не отправляет. Убирается вместе с включением отправки. */
+.lead__demo {
+  margin-top: var(--gap-16);
+  color: var(--color-fg-tetriary);
+  text-align: center;
+}
+
+.lead__thanks-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-16);
+  align-items: flex-start;
+  margin-top: var(--gap-24);
+}
+
+@media (max-width: 560px) {
+  .lead__panel { padding: var(--gap-24) var(--gap-20) var(--gap-20); }
+  .lead__title { padding-right: var(--gap-32); }
+}
