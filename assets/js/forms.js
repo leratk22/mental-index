@@ -126,7 +126,7 @@
         <p class="lead__lead t-body-m t-secondary"></p>
         <div class="lead__thanks-actions">
           <span class="pending">Ссылка на${NBSP}PDF появится, когда доклад будет свёрстан</span>
-          <a class="btn btn--secondary" href="dashboard.html">Открыть демо дашборда</a>
+          <a class="btn btn--secondary" href="dashboard.html" target="_blank" rel="noopener">Открыть демо дашборда</a>
         </div>
         <p class="lead__demo t-body-s">
           Демо-форма: письмо не${NBSP}уходит, контакт нигде не${NBSP}сохранён.
