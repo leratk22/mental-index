@@ -326,3 +326,15 @@
   .viz-dot--hollow { background: Canvas; border: 2px solid CanvasText; }
   .viz-seg { forced-color-adjust: none; border: 1px solid CanvasText; }
 }
+
+/* Внутри блока метрики уже есть заголовок раздела (18 px) —
+   вывод графика идёт строкой body/500, чтобы не спорить с ним. */
+.metric-block .viz { margin-top: .75rem; }
+.metric-block .viz__title {
+  font-size: var(--type-body, 14px); font-weight: var(--weight-ui, 500);
+  letter-spacing: 0; line-height: 1.45;
+}
+
+/* светлая середина шкалы почти сливается с белым — в ключе даём
+   ей волосяной контур, чтобы маркер было видно */
+.viz-key__mark.mark--neu { box-shadow: inset 0 0 0 1px var(--viz-axis); }
