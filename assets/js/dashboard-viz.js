@@ -121,6 +121,7 @@
       const track = el("div", "viz-row__track");
       track.style.gridRow = row++;
       track.tabIndex = 0;
+    track.setAttribute("role", "img");
 
       const present = r.values
         .map((val, i) => ({ ...val, s: data.series[i] }))
@@ -206,6 +207,7 @@
       const track = el("div", "viz-row__track");
       track.style.gridRow = row++;
       track.tabIndex = 0;
+    track.setAttribute("role", "img");
 
       const f = (v) => fmt(v, { pct: true });
       track.setAttribute("aria-label",
@@ -269,6 +271,7 @@
     const track = el("div", "viz-row__track");
     track.style.gridRow = 1;
     track.tabIndex = 0;
+    track.setAttribute("role", "img");
     track.setAttribute("aria-label", `${r.label}: ` + data.series.map((s, i) => `${s.name} ${f(vals[i])}`).join(", "));
     track.dataset.tipTitle = r.label;
     track.dataset.tip = JSON.stringify(data.series.map((s, i) => ({ name: s.name, mark: s.mark, value: f(vals[i]) })));
@@ -307,7 +310,7 @@
     if (!table || !render || fig.dataset.ready) return;
     const data = readTable(table);
     const plot = render(fig, data);
-    const title = fig.querySelector(".viz__title");
+    const title = fig.querySelector(".viz__title") || fig.querySelector(".viz__sub");
     if (title) {
       title.id = title.id || "viz-title-" + Math.random().toString(36).slice(2, 8);
       plot.setAttribute("aria-labelledby", title.id);

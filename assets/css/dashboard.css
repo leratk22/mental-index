@@ -377,3 +377,9 @@
 .viz-likert .viz-row__track,
 .viz-likert__axis { margin-inline: 2.75rem; }
 .viz-likert .viz-row__track::before { left: 50%; }
+
+/* Цель касания ≥ 44 px (чек-лист доступности): строки долей и
+   кнопка «Таблица» — видимый размер прежний, область нажатия больше. */
+.viz-likert .viz-row__track { min-height: 44px; }
+.viz__table-toggle { position: relative; }
+.viz__table-toggle::after { content: ""; position: absolute; inset: -10px -4px; }
