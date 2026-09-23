@@ -1,397 +1,229 @@
 /* ============================================================
-   ДАШБОРД — графики
-   Источник данных у каждого графика — <table> внутри
-   <figure class="viz">. Скрипт читает таблицу и рисует рядом
-   HTML-график в процентных координатах. Таблица остаётся:
-   это текстовый двойник для скринридера и режим «Таблица».
-   Если скрипт не загрузился — видна таблица, данные не теряются.
+   Дашборд: переключатель «Таблица» у каждого графика,
+   доли ответов от центральной оси, полоса поддержки.
 
-   Формы:
-     data-viz="scale"   — строки на шкале Индекса −100…+100
-                          с зонами; ряды — столбцы таблицы
-     data-viz="likert"  — доли ответов от центральной оси:
-                          столбцы «плохо / затруднились / хорошо»
-     data-viz="stack"   — одна диверджентная полоса из нескольких
-                          градаций (сводная шкала)
-
-   Ряды описываются на <th> заголовка таблицы:
-     data-mark="accent|muted|neg|mid|pos|neu"  — цвет (токен)
-     data-hollow                               — полый маркер
-                                                 (контекст, Россия)
-     data-focus                                — подпись значения
-                                                 жирнее: ряд, ради
-                                                 которого график
+   Графики остаются прежними (SVG и разметка в dashboard.html);
+   таблица к SVG собирается из тех же подписей data-tip, что
+   показывает подсказка, — отдельной копии данных нет.
    ============================================================ */
-(function dashboardViz() {
-  const NBSP = " ";
-  const MINUS = "−";
+(function () {
+  'use strict';
 
-  /* Пороги зон Индекса — те же, что в подписях шкалы на главной:
-     «Низкий ≤ 19 · Средний 20–45 · Высокий > 45». */
-  const ZONES = [
-    { from: -100, to: 19, cls: "neg", name: "Низкий", range: "≤" + NBSP + "19" },
-    { from: 19, to: 45, cls: "mid", name: "Средний", range: "20–45" },
-    { from: 45, to: 100, cls: "pos", name: "Высокий", range: ">" + NBSP + "45" },
-  ];
-  const TICKS = [-100, -50, 0, 50, 100];
-
-  /* ---------- числа ---------- */
-  // «−19,4», «17.1», «+5», «44 %» → число
-  const parse = (s) => {
-    const t = String(s).replace(/[\s %+]/g, "").replace(MINUS, "-").replace(",", ".");
-    return t === "" ? NaN : parseFloat(t);
-  };
-  // сколько знаков после запятой в исходной записи — точность источника
-  const decimals = (s) => {
-    const m = String(s).match(/[.,](\d+)/);
-    return m ? m[1].length : 0;
-  };
-  // по-русски: запятая, настоящий минус, знак «+» у положительных
-  // значений шкалы, неразрывный пробел перед %
-  const fmt = (v, { dec = 0, sign = false, pct = false } = {}) => {
-    let s = Math.abs(v).toFixed(dec).replace(".", ",");
-    if (v < 0 && Number(s.replace(",", ".")) !== 0) s = MINUS + s;
-    else if (sign && v > 0) s = "+" + s;
-    return pct ? s + NBSP + "%" : s;
-  };
-  const pos = (v) => ((v + 100) / 200) * 100; // −100…+100 → 0…100 %
-
-  /* ---------- чтение таблицы ---------- */
-  function readTable(table) {
-    const head = Array.from(table.tHead.rows[0].cells).slice(1);
-    const series = head.map((th) => ({
-      name: th.textContent.trim(),
-      mark: th.dataset.mark || "accent",
-      hollow: th.hasAttribute("data-hollow"),
-      focus: th.hasAttribute("data-focus"),
-    }));
-    const rows = Array.from(table.tBodies[0].rows).map((tr) => {
-      const [th, ...tds] = tr.cells;
-      return {
-        label: th.textContent.trim(),
-        values: tds.map((td) => {
-          const raw = td.textContent.trim();
-          return { raw, v: parse(raw), dec: decimals(raw) };
-        }),
-      };
-    });
-    return { series, rows };
-  }
+  const MINUS = '−';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let uid = 0;
 
   const el = (tag, cls, text) => {
-    const n = document.createElement(tag);
-    if (cls) n.className = cls;
-    if (text != null) n.textContent = text;
-    return n;
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
   };
+  const num = (s) => s.trim().replace(/^-/, MINUS);
 
-  /* ---------- 1. шкала Индекса ---------- */
-  // фон дорожки: зоны + линии делений + ось нуля, одним градиентом
-  function trackBackground() {
-    const layers = [];
-    TICKS.slice(1, -1).forEach((t) => {
-      const p = pos(t);
-      const c = t === 0 ? "var(--viz-axis)" : "var(--viz-grid)";
-      layers.push(`linear-gradient(90deg, transparent calc(${p}% - .5px), ${c} calc(${p}% - .5px), ${c} calc(${p}% + .5px), transparent calc(${p}% + .5px))`);
-    });
-    const stops = ZONES.map((z) => `var(--viz-${z.cls}-surface) ${pos(z.from)}% ${pos(z.to)}%`).join(", ");
-    layers.push(`linear-gradient(90deg, ${stops})`);
-    return layers.join(", ");
+  /* ── Переключатель ─────────────────────────────────────────── */
+  function makeToggle(label) {
+    const btn = el('button', 'chart-toggle', label);
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', 'false');
+    return btn;
   }
 
-  function renderScale(fig, data) {
-    const plot = el("div", "viz__plot viz-scale");
-    plot.setAttribute("role", "group");
-    fig.style.setProperty("--track-bg", trackBackground());
-
-    let row = 1;
-    const axis = el("div", "viz-scale__axis");
-    axis.setAttribute("aria-hidden", "true");
-    axis.style.gridRow = row++;
-    TICKS.forEach((t) => {
-      const tick = el("span", "viz-scale__tick", fmt(t, { sign: true }));
-      tick.style.left = pos(t) + "%";
-      axis.append(tick);
-    });
-    plot.append(axis);
-
-    data.rows.forEach((r) => {
-      const label = el("div", "viz-row__label", r.label);
-      label.style.gridRow = row;
-      const track = el("div", "viz-row__track");
-      track.style.gridRow = row++;
-      track.tabIndex = 0;
-    track.setAttribute("role", "img");
-
-      const present = r.values
-        .map((val, i) => ({ ...val, s: data.series[i] }))
-        .filter((x) => !Number.isNaN(x.v));
-      const text = present.map((x) => `${x.s.name} ${fmt(x.v, { dec: x.dec, sign: true })}`).join(", ");
-      track.setAttribute("aria-label", `${r.label}: ${text}`);
-      track.dataset.tipTitle = r.label;
-      track.dataset.tip = JSON.stringify(
-        present.map((x) => ({ name: x.s.name, mark: x.s.mark, value: fmt(x.v, { dec: x.dec, sign: true }) }))
-      );
-
-      // связка = разрыв между рядами
-      if (present.length === 2) {
-        const [a, b] = present.map((x) => pos(x.v)).sort((m, n) => m - n);
-        const link = el("span", "viz-link");
-        link.style.left = a + "%";
-        link.style.width = b - a + "%";
-        track.append(link);
-      }
-
-      // подписи — снаружи связки: левая точка подписана слева, правая справа
-      const ordered = [...present].sort((m, n) => m.v - n.v);
-      ordered.forEach((x, i) => {
-        const dot = el("span", `viz-dot mark--${x.s.mark}${x.s.hollow ? " viz-dot--hollow" : ""}`);
-        dot.style.left = pos(x.v) + "%";
-        track.append(dot);
-
-        let side = ordered.length === 1 ? "right" : i === 0 ? "left" : "right";
-        if (side === "left" && pos(x.v) < 7) side = "right";
-        if (side === "right" && pos(x.v) > 93) side = "left";
-        const val = el("span", `viz-val viz-val--${side}${x.s.focus ? " viz-val--focus" : ""}`,
-          fmt(x.v, { dec: x.dec, sign: true }));
-        val.setAttribute("aria-hidden", "true");
-        val.style.left = pos(x.v) + "%";
-        track.append(val);
-      });
-
-      plot.append(label, track);
-    });
-
-    if (fig.hasAttribute("data-zones")) {
-      const cap = el("div", "viz-scale__zones-caption");
-      cap.setAttribute("aria-hidden", "true");
-      cap.style.gridRow = row++;
-      ZONES.forEach((z) => {
-        const c = el("span", "viz-zone-cap");
-        c.style.left = (pos(z.from) + pos(z.to)) / 2 + "%";
-        c.append(el("b", null, z.name), document.createTextNode(z.range));
-        cap.append(c);
-      });
-      plot.append(cap);
+  function wire(btn, sw) {
+    const alt = sw.querySelector(':scope > [data-alt]');
+    if (alt) {
+      if (!alt.id) alt.id = 'chart-alt-' + (++uid);
+      btn.setAttribute('aria-controls', alt.id);
     }
-    return plot;
+    btn.addEventListener('click', () => {
+      const on = !sw.classList.contains('is-alt');
+      sw.classList.toggle('is-alt', on);
+      btn.setAttribute('aria-pressed', String(on));
+      if (on) redraw(sw);
+    });
   }
 
-  /* ---------- 2. доли ответов от центральной оси ----------
-     Столбцы: плохо / затруднились / хорошо (в %). «Затруднились»
-     делится пополам по обе стороны оси. Домен −100…+100 % —
-     одна шкала на все блоки, поэтому полосы сравнимы между
-     вопросами и страницами. */
-  function renderLikert(fig, data) {
-    const plot = el("div", "viz__plot viz-likert");
-    plot.setAttribute("role", "group");
-    const [sNeg, sNeu, sPos] = data.series;
-
-    let row = 1;
-    const axis = el("div", "viz-likert__axis");
-    axis.setAttribute("aria-hidden", "true");
-    axis.style.gridRow = row++;
-    [[-100, "100" + NBSP + "%"], [-50, "50"], [0, "0"], [50, "50"], [100, "100" + NBSP + "%"]].forEach(([v, t]) => {
-      const s = el("span", null, t);
-      s.style.left = pos(v) + "%";
-      if (v === -100) s.style.transform = "none";
-      if (v === 100) s.style.transform = "translateX(-100%)";
-      axis.append(s);
-    });
-    plot.append(axis);
-
-    data.rows.forEach((r) => {
-      const [neg, neu, good] = r.values.map((x) => (Number.isNaN(x.v) ? 0 : x.v));
-      const label = el("div", "viz-row__label", r.label);
-      label.style.gridRow = row;
-      const track = el("div", "viz-row__track");
-      track.style.gridRow = row++;
-      track.tabIndex = 0;
-    track.setAttribute("role", "img");
-
-      const f = (v) => fmt(v, { pct: true });
-      track.setAttribute("aria-label",
-        `${r.label}: ${sPos.name} ${f(good)}, ${sNeu.name} ${f(neu)}, ${sNeg.name} ${f(neg)}`);
-      track.dataset.tipTitle = r.label;
-      track.dataset.tip = JSON.stringify([
-        { name: sPos.name, mark: "pos", value: f(good) },
-        { name: sNeu.name, mark: "neu", value: f(neu) },
-        { name: sNeg.name, mark: "neg", value: f(neg) },
-      ]);
-
-      const half = neu / 2;
-      const segs = [
-        { cls: "neg", from: -half - neg, to: -half },
-        { cls: "neu", from: -half, to: half },
-        { cls: "pos", from: half, to: half + good },
-      ].filter((s) => s.to - s.from > 0.01);
-      segs.forEach((s, i) => {
-        const seg = el("span", `viz-seg viz-seg--${s.cls} mark--${s.cls}`);
-        seg.style.left = pos(s.from) + "%";
-        seg.style.width = pos(s.to) - pos(s.from) + "%";
-        // скругляем только внешние концы полосы
-        if (s.cls === "neu" || (s.cls === "neg" && i !== 0) || (s.cls === "pos" && i !== segs.length - 1)) {
-          seg.classList.add("is-inner");
-        }
-        track.append(seg);
-      });
-
-      // подписи снаружи: «плохо» у левого конца, «хорошо» у правого
-      if (neg > 0) {
-        const v = el("span", "viz-val viz-val--left", f(neg));
-        v.style.left = pos(-half - neg) + "%";
-        v.setAttribute("aria-hidden", "true");
-        track.append(v);
-      }
-      if (good > 0) {
-        const v = el("span", "viz-val viz-val--right", f(good));
-        v.style.left = pos(half + good) + "%";
-        v.setAttribute("aria-hidden", "true");
-        track.append(v);
-      }
-      plot.append(label, track);
-    });
-    return plot;
-  }
-
-  /* ---------- 3. одна диверджентная полоса из нескольких градаций ----------
-     Столбцы идут от самой плохой градации к самой хорошей; тот,
-     что с data-mark="neu", — середина, делится пополам по оси.
-     Значения — в ключе под полосой, не внутри сегментов. */
-  function renderStack(fig, data) {
-    const plot = el("div", "viz__plot viz-likert viz-likert--single");
-    plot.setAttribute("role", "group");
-    const r = data.rows[0];
-    const vals = r.values.map((x) => (Number.isNaN(x.v) ? 0 : x.v));
-    const iNeu = data.series.findIndex((s) => s.mark === "neu");
-    const negSum = vals.slice(0, iNeu).reduce((a, b) => a + b, 0);
-    let cursor = -(negSum + vals[iNeu] / 2);
-    const f = (v) => fmt(v, { pct: true });
-
-    const track = el("div", "viz-row__track");
-    track.style.gridRow = 1;
-    track.tabIndex = 0;
-    track.setAttribute("role", "img");
-    track.setAttribute("aria-label", `${r.label}: ` + data.series.map((s, i) => `${s.name} ${f(vals[i])}`).join(", "));
-    track.dataset.tipTitle = r.label;
-    track.dataset.tip = JSON.stringify(data.series.map((s, i) => ({ name: s.name, mark: s.mark, value: f(vals[i]) })));
-
-    vals.forEach((v, i) => {
-      const s = data.series[i];
-      const seg = el("span", `viz-seg mark--${s.mark}`);
-      seg.style.left = pos(cursor) + "%";
-      seg.style.width = pos(cursor + v) - pos(cursor) + "%";
-      if (i === 0) seg.classList.add("viz-seg--neg");
-      else if (i === vals.length - 1) seg.classList.add("viz-seg--pos");
-      else seg.classList.add("is-inner");
-      track.append(seg);
-      cursor += v;
-    });
-    plot.append(track);
-
-    // ключ в том же порядке, что сегменты: от «плохо» к «хорошо»
-    const key = el("ul", "viz-key viz-stack-key");
-    key.setAttribute("aria-hidden", "true");
-    data.series.forEach((s, i) => {
-      const li = el("li");
-      li.append(el("span", `viz-key__mark viz-key__mark--bar mark--${s.mark}`), el("b", null, f(vals[i])), document.createTextNode(s.name));
-      key.append(li);
-    });
-    plot.append(key);
-    return plot;
-  }
-
-  /* ---------- сборка фигуры ---------- */
-  const RENDER = { scale: renderScale, likert: renderLikert, stack: renderStack };
-
-  function build(fig) {
-    const table = fig.querySelector("table.viz__data");
-    const render = RENDER[fig.dataset.viz];
-    if (!table || !render || fig.dataset.ready) return;
-    const data = readTable(table);
-    const plot = render(fig, data);
-    const title = fig.querySelector(".viz__title") || fig.querySelector(".viz__sub");
-    if (title) {
-      title.id = title.id || "viz-title-" + Math.random().toString(36).slice(2, 8);
-      plot.setAttribute("aria-labelledby", title.id);
+  // Куда поставить кнопку: в легенду над графиком, иначе — в строку с заголовком.
+  function placeToggle(anchor, btn) {
+    const prev = anchor.previousElementSibling;
+    const legend = prev && (prev.matches('.legend') ? prev : prev.querySelector('.legend'));
+    if (legend) { legend.appendChild(btn); return; }
+    if (prev && prev.matches('.metric-block__title')) {
+      const bar = el('div', 'chart-bar');
+      bar.style.marginBottom = getComputedStyle(prev).marginBottom;
+      prev.replaceWith(bar);
+      bar.append(prev, btn);
+      return;
     }
-    table.classList.add("visually-hidden");
-    table.before(plot);
-    fig.dataset.ready = "1";
-
-    const toggle = fig.querySelector(".viz__table-toggle");
-    if (toggle) {
-      toggle.hidden = false;
-      toggle.addEventListener("click", () => {
-        const on = !fig.classList.contains("is-table");
-        fig.classList.toggle("is-table", on);
-        toggle.setAttribute("aria-pressed", String(on));
-        if (on) table.classList.remove("visually-hidden");
-        else table.classList.add("visually-hidden");
-      });
-    }
+    const bar = el('div', 'chart-bar chart-bar--solo');
+    bar.appendChild(btn);
+    anchor.before(bar);
   }
 
-  /* ---------- подсказка: одна на весь дашборд ----------
-     Наведение, фокус с клавиатуры, тап. Текст — только через
-     textContent. Значение ведёт, название ряда — вторично. */
-  const tip = el("div", "viz-tip");
-  tip.setAttribute("role", "tooltip");
-  tip.id = "viz-tip";
-  let current = null;
+  function wrap(node) {
+    const sw = el('div', 'chart-switch');
+    node.replaceWith(sw);
+    sw.appendChild(node);
+    return sw;
+  }
 
-  function showTip(target) {
-    let rows;
-    try { rows = JSON.parse(target.dataset.tip); } catch (e) { return; }
-    tip.textContent = "";
-    tip.append(el("span", "viz-tip__title", target.dataset.tipTitle || ""));
+  function tableFrom(caption, head, rows) {
+    const box = el('div', 'chart-table-wrap');
+    box.setAttribute('data-alt', '');
+    const t = el('table', 'chart-table');
+    const cap = el('caption', 'visually-hidden', caption);
+    const thead = el('thead');
+    const hr = el('tr');
+    head.forEach((h) => { const th = el('th', null, h); th.scope = 'col'; hr.appendChild(th); });
+    thead.appendChild(hr);
+    const tbody = el('tbody');
     rows.forEach((r) => {
-      const line = el("span", "viz-tip__row");
-      const key = el("span", `viz-tip__key mark--${r.mark}`);
-      line.append(key, el("span", "viz-tip__val", r.value), el("span", null, r.name));
-      tip.append(line);
+      const tr = el('tr');
+      r.forEach((c, i) => {
+        const cell = el(i ? 'td' : 'th', null, c);
+        if (!i) cell.scope = 'row';
+        tr.appendChild(cell);
+      });
+      tbody.appendChild(tr);
     });
-    const box = target.getBoundingClientRect();
-    const x = Math.min(Math.max(box.left + box.width / 2, 150), window.innerWidth - 150);
-    tip.style.left = x + "px";
-    tip.style.top = box.top + "px";
-    tip.classList.add("is-visible");
-    target.setAttribute("aria-describedby", tip.id);
-    current = target;
+    t.append(cap, thead, tbody);
+    box.appendChild(t);
+    return box;
   }
-  function hideTip() {
-    tip.classList.remove("is-visible");
-    if (current) current.removeAttribute("aria-describedby");
-    current = null;
-  }
-  const tipTarget = (node) => node && node.closest && node.closest("[data-tip]");
 
-  document.addEventListener("pointerover", (e) => {
-    if (e.pointerType === "touch") return;
-    const t = tipTarget(e.target);
-    if (t && t !== current) showTip(t);
-  });
-  document.addEventListener("pointerout", (e) => {
-    if (e.pointerType === "touch") return;
-    const t = tipTarget(e.target);
-    if (t && !t.contains(e.relatedTarget)) hideTip();
-  });
-  // тап: показать / спрятать повторным тапом или тапом мимо
-  document.addEventListener("pointerup", (e) => {
-    if (e.pointerType !== "touch") return;
-    const t = tipTarget(e.target);
-    if (t && t !== current) showTip(t);
-    else hideTip();
-  });
-  document.addEventListener("focusin", (e) => { const t = tipTarget(e.target); if (t) showTip(t); });
-  document.addEventListener("focusout", (e) => { if (tipTarget(e.target)) hideTip(); });
-  document.addEventListener("keydown", (e) => { if (e.key === "Escape") hideTip(); });
-  window.addEventListener("scroll", hideTip, { passive: true, capture: true });
+  function captionFor(node) {
+    const section = node.closest('section, .metric-block');
+    const t = section && section.querySelector('.metric-block__title, .section-eyebrow, .subsection-title');
+    if (t) return t.textContent.trim();
+    const screen = node.closest('.screen');
+    const title = screen && screen.querySelector('.sp-title, .subsection-title');
+    return title ? title.textContent.trim() : 'Данные графика';
+  }
+
+  /* ── SVG-графики: строки — показатели, столбцы — серии ────────
+     data-tip: «Серия · Показатель: значение»; в показателе
+     самом тоже бывает « · », поэтому режем по первому. */
+  function svgCharts() {
+    document.querySelectorAll('svg.chart-svg').forEach((svg) => {
+      const tips = [...svg.querySelectorAll('[data-tip]')].map((n) => n.getAttribute('data-tip'));
+      if (!tips.length) return;
+      const series = [];
+      const rows = new Map();
+      tips.forEach((tip) => {
+        const colon = tip.lastIndexOf(':');
+        const dot = tip.indexOf(' · ');
+        if (colon < 0 || dot < 0) return;
+        const s = tip.slice(0, dot).trim();
+        const cat = tip.slice(dot + 3, colon).trim();
+        if (!series.includes(s)) series.push(s);
+        if (!rows.has(cat)) rows.set(cat, {});
+        rows.get(cat)[s] = num(tip.slice(colon + 1));
+      });
+      const order = series.slice().sort((a, b) => (a === 'Компания' ? -1 : b === 'Компания' ? 1 : 0));
+      const anchor = svg.parentElement.classList.contains('chart-scroll') ? svg.parentElement : svg;
+      const btn = makeToggle('Таблица');
+      placeToggle(anchor, btn);             // до обёртки — чтобы найти легенду над графиком
+      const sw = wrap(anchor);
+      sw.appendChild(tableFrom(captionFor(sw), ['Показатель', ...order],
+        [...rows].map(([cat, v]) => [cat, ...order.map((s) => v[s] || '—')])));
+      wire(btn, sw);
+    });
+  }
+
+  /* ── Шкала Индекса на главной ──────────────────────────────── */
+  function indexScale() {
+    const chart = document.querySelector('.index-scale-chart');
+    if (!chart) return;
+    const zone = (v) => (v <= 19 ? 'низкий (≤19)' : v <= 45 ? 'средний (20–45)' : 'высокий (>45)');
+    const rows = [...chart.querySelectorAll('.scale-marker[aria-label]')].map((m) => {
+      const [name, value] = m.getAttribute('aria-label').split(':');
+      return [name.trim(), num(value), zone(parseFloat(value))];
+    });
+    if (!rows.length) return;
+    const btn = makeToggle('Таблица');
+    const key = document.querySelector('.result-heading .legend');
+    if (key) key.appendChild(btn); else placeToggle(chart, btn);
+    const sw = wrap(chart);
+    sw.appendChild(tableFrom('Индекс: компания и Россия', ['', 'Индекс', 'Зона'], rows));
+    wire(btn, sw);
+  }
+
+  /* ── Доли ответов: таблица уже в разметке, ставим кнопку ────── */
+  function likerts() {
+    document.querySelectorAll('.chart-switch > .likert').forEach((chart) => {
+      const sw = chart.parentElement;
+      const btn = makeToggle('Таблица');
+      placeToggle(sw, btn);
+      wire(btn, sw);
+    });
+  }
+
+  // Значение внутри полосы, а если не помещается — у внешнего конца.
+  function fit(chart) {
+    chart.querySelectorAll('.likert__seg').forEach((seg) => {
+      const val = seg.querySelector('.likert__val');
+      if (!val || !seg.clientWidth) return;
+      seg.classList.remove('is-out');
+      seg.classList.toggle('is-out', val.offsetWidth > seg.clientWidth);
+    });
+  }
+
+  /* ── Поддержка: по кнопке — полоса из пяти кусочков ────────── */
+  function support() {
+    const btn = document.querySelector('.chart-toggle[data-toggle-for="support"]');
+    const sw = document.querySelector('.chart-switch--support');
+    if (btn && sw) wire(btn, sw);
+  }
+
+  /* ── Появление и перерисовка ───────────────────────────────── */
+  function draw(node) {
+    if (reduceMotion) { node.classList.add('is-drawn'); return; }
+    node.classList.remove('is-drawn');
+    void node.offsetWidth;                       // сбросить переход, чтобы проиграть заново
+    requestAnimationFrame(() => node.classList.add('is-drawn'));
+  }
+
+  function redraw(sw) {
+    sw.querySelectorAll('.stack').forEach(draw);
+  }
+
+  function motion() {
+    const likertList = [...document.querySelectorAll('.likert')];
+    const stacks = [...document.querySelectorAll('.stack')];
+    likertList.forEach((n) => n.classList.add('likert--anim'));
+    stacks.forEach((n) => n.classList.add('stack--anim'));
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      likertList.forEach((n) => n.classList.add('is-drawn'));
+      stacks.forEach((n) => n.classList.add('is-drawn'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('is-drawn');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.2 });
+      likertList.forEach((n) => io.observe(n));
+    }
+    // Экраны дашборда скрыты через display:none — ширина появляется
+    // только при показе, поэтому подгонка подписей — по ResizeObserver.
+    if ('ResizeObserver' in window) {
+      const ro = new ResizeObserver((entries) => entries.forEach((e) => fit(e.target)));
+      likertList.forEach((n) => ro.observe(n));
+    } else {
+      likertList.forEach(fit);
+      window.addEventListener('resize', () => likertList.forEach(fit));
+    }
+  }
 
   function init() {
-    document.body.append(tip);
-    document.querySelectorAll("figure.viz[data-viz]").forEach(build);
+    indexScale();
+    svgCharts();
+    likerts();
+    support();
+    motion();
   }
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
