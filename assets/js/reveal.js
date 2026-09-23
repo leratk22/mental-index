@@ -58,10 +58,17 @@
   // С этого момента CSS имеет право прятать .reveal
   document.documentElement.classList.add("has-reveal");
 
+  /* Элемент внутри скрытого блока (display: none — например,
+     неактивный экран дашборда) отдаёт top = 0 и выглядел бы как
+     «уже на экране». Такие не показываем заранее: их проявит
+     observer, когда блок станет видимым. На лендинге скрытых
+     .reveal нет, поведение там не меняется. */
+  const rendered = (el) => el.getClientRects().length > 0;
+
   // Первый экран — сразу, без observer'а
   const pending = items.filter((el) => {
     const top = el.getBoundingClientRect().top;
-    if (top < window.innerHeight) {
+    if (rendered(el) && top < window.innerHeight) {
       showWithDelay(el);
       return false;
     }
@@ -97,6 +104,7 @@
     const stuck = items.filter(
       (el) =>
         !el.classList.contains("is-visible") &&
+        rendered(el) &&
         el.getBoundingClientRect().top < window.innerHeight
     );
     stuck.forEach(show);

@@ -1,267 +1,328 @@
 /* ============================================================
-   ДАШБОРД — каркас
-   Графики появятся на этапе 4; сейчас на их местах серые
-   прямоугольники с подписью, что там будет.
+   ДАШБОРД — графики
+   Раньше здесь лежал каркас первого этапа (серые заглушки на
+   месте графиков); dashboard.html его не подключал, рабочие
+   стили жили инлайном. Теперь здесь — общая система графиков:
+   одна шкала Индекса на весь дашборд и одна диверджентная
+   полоса для долей ответов. Цвета — только токены --viz-*
+   из tokens.css; hex в разметке и SVG не пишем.
 
-   Типографика здесь — app-шкала (t-title-*, t-body-*), а не промо:
-   дашборд должен читаться так же, как в приложении.
+   Две формы на весь дашборд:
+   1. .viz-scale  — полоса шкалы −100…+100 с зонами. Строка =
+      показатель, на ней точки рядов. Компания — закрашенная
+      точка акцентом, Россия — полое серое кольцо, между ними
+      связка = разрыв. Одна и та же шкала везде, поэтому числа
+      сравнимы между графиками.
+   2. .viz-likert — доли ответов от центральной оси: «плохо»
+      влево, «хорошо» вправо, «затруднились» — серая середина.
+      Подписи снаружи полос, чернилами: внутри узких сегментов
+      они не помещались и обрезались (8 из 90 до переделки).
+
+   Разметка: <figure class="viz"> с таблицей данных внутри.
+   Таблица — источник для скрипта и она же текстовый двойник
+   графика для скринридера и кнопки «Таблица».
    ============================================================ */
 
-.dash {
-  padding-block: var(--gap-32) var(--space-section-tight);
-  background: var(--color-bg-tetriary);
-  min-height: 100vh;
+/* ---------- служебное ---------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0);
+  white-space: nowrap; border: 0;
 }
 
-/* --- Шапка дашборда ------------------------------------------ */
-.dash__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--gap-16);
-  margin-bottom: var(--gap-24);
+/* ---------- появление: тот же reveal.js, что на лендинге ----------
+   Прятать разрешено только при .has-reveal на <html> — его ставит
+   сам скрипт, когда точно умеет показать обратно. ≤ 400 мс. */
+.has-reveal .reveal {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--viz-duration) var(--ease-out),
+              transform var(--viz-duration) var(--ease-out);
+}
+.has-reveal .reveal.is-visible { opacity: 1; transform: none; }
+
+/* Внутри графика появляются сами метки: точки и полосы растут
+   от оси. Работает от того же .is-visible на <figure>. */
+.has-reveal .viz.reveal .viz-dot,
+.has-reveal .viz.reveal .viz-link,
+.has-reveal .viz.reveal .viz-seg {
+  transition: transform var(--viz-duration) var(--ease-out),
+              opacity var(--viz-duration) var(--ease-out);
+}
+.has-reveal .viz.reveal:not(.is-visible) .viz-dot  { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+.has-reveal .viz.reveal:not(.is-visible) .viz-link { transform: scaleX(0); }
+.has-reveal .viz.reveal:not(.is-visible) .viz-seg  { transform: scaleX(0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .has-reveal .reveal,
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .has-reveal .viz.reveal .viz-dot,
+  .has-reveal .viz.reveal .viz-link,
+  .has-reveal .viz.reveal .viz-seg { transition: none; }
+  .has-reveal .viz.reveal:not(.is-visible) .viz-dot { transform: translate(-50%, -50%); opacity: 1; }
+  .has-reveal .viz.reveal:not(.is-visible) .viz-link,
+  .has-reveal .viz.reveal:not(.is-visible) .viz-seg { transform: none; }
 }
 
-.dash__title-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
+/* ---------- фигура ---------- */
+.viz { margin: 0; }
+.viz + .viz { margin-top: 1.75rem; }
+
+.viz__head {
+  display: flex; flex-wrap: wrap; align-items: flex-start;
+  justify-content: space-between; gap: .5rem 1.5rem;
+  margin-bottom: 1rem;
 }
-
-/* Плашка «демо-данные» — по ТЗ видна всегда, не прячется при скролле */
-.dash__demo-badge {
-  background: var(--color-bg-feedback-warning-overlay);
-  color: var(--color-fg-primary);
+.viz__titles { flex: 1 1 22rem; min-width: 0; }
+.viz__title {
+  font-size: var(--type-section, 18px); font-weight: var(--weight-section, 500); line-height: 1.3;
+  letter-spacing: -.2px; color: var(--viz-ink);
 }
-
-/* --- Панель фильтров ----------------------------------------- */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--gap-12);
-  padding: var(--gap-20);
-  margin-bottom: var(--gap-24);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-m);
+.viz__sub {
+  margin-top: .25rem;
+  font-size: var(--viz-label-size); line-height: 1.4;
+  color: var(--viz-label);
 }
+.viz__tools { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1rem; }
 
-.filter {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-4);
-  min-width: 156px;
-  flex: 1 1 156px;
+/* Ключ рядов. Маркер повторяет форму на графике: закрашенная
+   точка — фокус, полое кольцо — контекст. */
+.viz-key {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px;
+  margin: 0; padding: 0; list-style: none;
+  font-size: var(--viz-label-size); color: var(--viz-label);
 }
-
-.filter__label {
-  font-size: var(--size-label-s);
-  line-height: var(--lh-label-s);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-fg-tetriary);
+.viz-key li { display: inline-flex; align-items: center; gap: 6px; }
+.viz-key__mark {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--mark, var(--viz-accent)); flex: none;
 }
+.viz-key__mark--hollow { background: #fff; box-shadow: inset 0 0 0 2px var(--mark, var(--viz-muted)); }
+.viz-key__mark--bar { border-radius: 2px; width: 14px; }
 
-.filter__control {
-  appearance: none;
-  padding: 10px 36px 10px 14px;
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-xs);
-  background-color: var(--color-bg-primary);
-  /* стрелка селекта рисуется фоном, чтобы не тащить иконочный шрифт */
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
-                    linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
-  color: var(--color-fg-primary);
-  cursor: pointer;
+/* Кнопка «Таблица»: табличный двойник графика для всех, не
+   только для скринридера. */
+.viz__table-toggle {
+  font: inherit; font-size: var(--viz-label-size); font-weight: 500;
+  color: var(--viz-label); background: none;
+  border: 1px solid var(--viz-grid); border-radius: 999px;
+  padding: 3px 10px; cursor: pointer;
 }
+.viz__table-toggle:hover { color: var(--viz-ink); border-color: var(--viz-axis); }
+.viz__table-toggle[aria-pressed="true"] { color: var(--viz-ink); border-color: var(--viz-ink); }
 
-.filters__reset { margin-inline-start: auto; }
+.viz__data { width: 100%; border-collapse: collapse; font-size: var(--viz-label-size); }
+.viz__data caption { text-align: left; font-weight: 600; padding-bottom: .5rem; color: var(--viz-label); }
+.viz__data th, .viz__data td { padding: 5px 8px; border-bottom: 1px solid var(--viz-grid); text-align: right; font-variant-numeric: tabular-nums; }
+.viz__data th[scope="row"], .viz__data thead th:first-child { text-align: left; font-weight: 400; color: var(--viz-ink); }
+.viz__data thead th { font-weight: 600; color: var(--viz-label); }
+.viz.is-table .viz__plot { display: none; }
+.viz.is-table .viz__data { position: static !important; width: 100%; height: auto; margin: 0; clip: auto; overflow: visible; white-space: normal; }
 
-/* --- Сетка виджетов ------------------------------------------
-   12 колонок: перекладывать блоки можно, не трогая разметку. */
-.dash__grid {
+/* Подпись-аннотация к одной-двум ключевым точкам */
+.viz__note {
+  margin-top: .75rem;
+  font-size: var(--viz-label-size); line-height: 1.5; color: var(--viz-label);
+}
+.viz__note b { color: var(--viz-ink); font-weight: 600; }
+
+/* ============================================================
+   1. ШКАЛА ИНДЕКСА
+   Сетка: колонка подписей + колонка дорожки. Строка ставится
+   в свою строку сетки скриптом (grid-row), а не автоподбором.
+   ============================================================ */
+.viz-scale {
+  --label-col: minmax(9rem, 13rem);
+  position: relative;
   display: grid;
-  gap: var(--gap-20);
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: var(--label-col) 1fr;
+  column-gap: 1.25rem;
+}
+.viz-scale__axis,
+.viz-scale__zones-caption { grid-column: 2; position: relative; }
+
+/* подписи делений сверху */
+.viz-scale__axis { height: 18px; }
+.viz-scale__tick {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: var(--viz-label-size); line-height: 1;
+  color: var(--viz-label); font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.viz-scale__tick:first-child { transform: none; }
+.viz-scale__tick:last-child  { transform: translateX(-100%); }
+
+/* Зоны и линии делений — фоном каждой дорожки. Градиент
+   собирает скрипт из тех же порогов, что и подписи зон, и кладёт
+   в --track-bg на фигуру. Строки стоят без зазора, поэтому зоны
+   читаются сплошными колонками — и так же на мобильном. */
+/* строка */
+.viz-row {
+  display: contents;
+}
+.viz-row__label {
+  grid-column: 1;
+  align-self: center;
+  padding: 10px 0;
+  font-size: var(--type-body, 14px); line-height: 1.35; color: var(--viz-ink);
+  text-align: right;
+}
+.viz-row__track {
+  grid-column: 2;
+  position: relative;
+  min-height: 44px;           /* ≥ 24 px цель попадания + воздух */
+  background: var(--track-bg, none);
+  outline: none;
+  cursor: default;
+}
+.viz-row__track:focus-visible { box-shadow: 0 0 0 2px var(--viz-accent); }
+.viz-row__track:hover .viz-dot,
+.viz-row__track:focus-visible .viz-dot { box-shadow: 0 0 0 var(--viz-ring) #fff, 0 0 0 calc(var(--viz-ring) + 2px) rgb(34 38 59 / .18); }
+
+/* связка между точками = разрыв */
+.viz-link {
+  position: absolute; top: 50%; height: 2px; margin-top: -1px;
+  background: var(--viz-axis); transform-origin: left center;
 }
 
-.widget {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-16);
-  padding: var(--gap-24);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-m);
+/* точка ряда: 12 px + 2 px кольцо поверхности */
+.viz-dot {
+  position: absolute; top: 50%;
+  width: var(--viz-dot); height: var(--viz-dot); border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--mark, var(--viz-accent));
+  box-shadow: 0 0 0 var(--viz-ring) #fff;
+  z-index: 2;
 }
-
-.widget__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--gap-4) var(--gap-12);
+.viz-dot--hollow {
+  background: #fff;
+  box-shadow: inset 0 0 0 2px var(--mark, var(--viz-muted)), 0 0 0 var(--viz-ring) #fff;
+  z-index: 1;
 }
+.viz--hero .viz-dot { --viz-dot: 16px; }
 
-.widget__hint {
-  color: var(--color-fg-tetriary);
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
-}
-
-.widget__body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-
-@media (min-width: 760px) {
-  .dash__grid { grid-template-columns: repeat(12, 1fr); }
-  .widget--score    { grid-column: span 4; }
-  .widget--donut    { grid-column: span 8; }
-  .widget--factors  { grid-column: span 6; }
-  .widget--trend    { grid-column: span 6; }
-  .widget--heatmap  { grid-column: span 12; }
-  .widget--recs     { grid-column: span 12; }
-}
-
-/* --- Общий индекс -------------------------------------------- */
-.score {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
-}
-
-.score__value {
-  font-size: var(--size-stat-s);
-  line-height: var(--lh-stat-s);
-  letter-spacing: var(--ls-stat-s);
-  font-weight: var(--font-weight-bold);
+/* подпись значения у своей точки, снаружи связки */
+.viz-val {
+  position: absolute; top: 50%;
+  transform: translateY(-50%);
+  font-size: var(--viz-label-size); line-height: 1; white-space: nowrap;
   font-variant-numeric: tabular-nums;
+  color: var(--viz-label);
+  pointer-events: none;
 }
+.viz-val--focus { color: var(--viz-ink); font-weight: var(--viz-value-weight); }
+.viz-val--left  { transform: translate(calc(-100% - 10px), -50%); }
+.viz-val--right { transform: translate(10px, -50%); }
+.viz--hero .viz-val { font-size: var(--type-body, 14px); }
+.viz--hero .viz-row__track { min-height: 56px; }
 
-.score__delta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-4);
-  font-size: var(--size-label-m);
-  line-height: var(--lh-label-m);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-fg-feedback-negative);
+/* подписи зон под шкалой */
+.viz-scale__zones-caption { height: 30px; margin-top: 6px; }
+.viz-zone-cap {
+  position: absolute; top: 0;
+  font-size: var(--viz-label-size); line-height: 1.35; color: var(--viz-label);
+  text-align: center; transform: translateX(-50%); white-space: nowrap;
 }
+.viz-zone-cap b { display: block; font-weight: 500; color: var(--viz-ink); }
 
-/* --- Легенда состояний --------------------------------------- */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-16);
-}
+/* цвет рядов — только через токены */
+.mark--accent { --mark: var(--viz-accent); }
+.mark--muted  { --mark: var(--viz-muted); }
+.mark--neg    { --mark: var(--viz-neg); }
+.mark--mid    { --mark: var(--viz-mid); }
+.mark--pos    { --mark: var(--viz-pos); }
+.mark--neu    { --mark: var(--viz-neu); }
+.mark--neg-weak { --mark: var(--viz-neg-weak); }
+.mark--pos-weak { --mark: var(--viz-pos-weak); }
 
-.legend__item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-8);
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
-  color: var(--color-fg-secondary);
-}
-
-.legend__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: var(--radius-full);
-  background: var(--legend-color, var(--color-fg-muted));
-  flex: none;
-}
-
-.legend__item--strain   { --legend-color: var(--color-state-strain); }
-.legend__item--fragile  { --legend-color: var(--color-state-fragile); }
-.legend__item--resource { --legend-color: var(--color-state-resource); }
-
-/* --- Рекомендации -------------------------------------------- */
-.recs {
+/* ============================================================
+   2. ДОЛИ ОТВЕТОВ ОТ ЦЕНТРАЛЬНОЙ ОСИ
+   Домен −100…+100 %, одна шкала для всех блоков дашборда.
+   ============================================================ */
+.viz-likert {
   display: grid;
-  gap: var(--gap-16);
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: 1.25rem;
+}
+.viz-likert__axis { grid-column: 2; position: relative; height: 16px; }
+.viz-likert__axis span {
+  position: absolute; transform: translateX(-50%);
+  font-size: var(--viz-label-size); color: var(--viz-label); white-space: nowrap;
+}
+.viz-likert .viz-row__label {
+  text-align: left; font-size: var(--type-body, 14px); color: var(--viz-ink);
+  border-top: 1px solid var(--viz-grid);
+}
+.viz-likert .viz-row__track {
+  min-height: 40px;
+  border-top: 1px solid var(--viz-grid);
+  border-radius: 0;
+}
+.viz-likert .viz-row__track::before {       /* центральная ось */
+  content: ""; position: absolute; left: 50%; top: 6px; bottom: 6px;
+  width: 1px; background: var(--viz-axis); z-index: 1;
+}
+.viz-seg {
+  position: absolute; top: 50%; height: var(--viz-bar); margin-top: calc(var(--viz-bar) / -2);
+  background: var(--mark);
+}
+/* 2 px зазор поверхности между сегментами — рамок вокруг нет */
+.viz-seg + .viz-seg { box-shadow: -2px 0 0 #fff; }
+.viz-seg--neg { transform-origin: right center; border-radius: 4px 0 0 4px; }
+.viz-seg--pos { transform-origin: left center;  border-radius: 0 4px 4px 0; }
+.viz-seg--neu { transform-origin: center; }
+.viz-seg.is-inner { border-radius: 0; }
+.viz-likert .viz-val { color: var(--viz-ink); font-weight: var(--viz-value-weight); }
+
+/* Сводная шкала (одна полоса из пяти градаций): значения — в
+   ключе под полосой, чернилами. Внутри сегментов подписи не
+   ставим: ни белый, ни чернильный текст не даёт 4.5:1 на всех
+   пяти заливках (на бирюзовом — 4.05 и 3.68). */
+.viz-likert--single { grid-template-columns: 1fr; }
+.viz-likert--single .viz-row__track { grid-column: 1; border-top: 0; min-height: 36px; }
+.viz-likert--single .viz-row__label { display: none; }
+.viz-stack-key { margin-top: .75rem; }
+.viz-stack-key b { color: var(--viz-ink); font-weight: var(--viz-value-weight); font-variant-numeric: tabular-nums; }
+
+/* ============================================================
+   ПОДСКАЗКА — одна на весь дашборд
+   Показ: наведение, фокус с клавиатуры, тап. Всё, что в ней
+   есть, дублируется подписью или таблицей: подсказка дополняет,
+   но ничего не прячет.
+   ============================================================ */
+.viz-tip {
+  position: fixed; z-index: 500; left: 0; top: 0;
+  max-width: 280px; padding: 8px 10px; border-radius: 8px;
+  background: var(--viz-ink); color: #fff;
+  font-size: var(--viz-label-size); line-height: 1.4;
+  box-shadow: 0 6px 18px rgb(34 38 59 / .18);
+  pointer-events: none; opacity: 0;
+  transform: translate(-50%, calc(-100% - 12px));
+  transition: opacity 120ms ease;
+}
+.viz-tip.is-visible { opacity: 1; }
+.viz-tip__title { display: block; margin-bottom: 4px; color: rgb(255 255 255 / .75); }
+.viz-tip__row { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.viz-tip__key { width: 12px; height: 2px; border-radius: 1px; background: var(--mark, #fff); flex: none; }
+.viz-tip__val { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* ---------- узкие экраны: подпись над дорожкой ----------
+   Графики — HTML с процентными координатами, поэтому текст
+   остаётся в своём кегле на любой ширине, а не ужимается
+   вместе с картинкой, как было с SVG. */
+@media (max-width: 600px) {
+  .viz-scale, .viz-likert { grid-template-columns: 1fr; }
+  .viz-scale__axis, .viz-scale__zones-caption, .viz-likert__axis { grid-column: 1; }
+  .viz-row__label, .viz-likert .viz-row__label {
+    grid-column: 1; text-align: left; padding: 10px 0 0; border-top: 1px solid var(--viz-grid);
+  }
+  .viz-likert .viz-row__track, .viz-row__track { grid-column: 1; border-top: 0; }
 }
 
-.rec {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
-  padding: var(--gap-20);
-  border-radius: var(--radius-s);
-  background: var(--color-bg-secondary);
+/* принудительные цвета (Windows High Contrast): формы вместо цвета */
+@media (forced-colors: active) {
+  .viz-dot { forced-color-adjust: none; background: CanvasText; box-shadow: none; }
+  .viz-dot--hollow { background: Canvas; border: 2px solid CanvasText; }
+  .viz-seg { forced-color-adjust: none; border: 1px solid CanvasText; }
 }
-
-.rec__level {
-  font-size: var(--size-label-s);
-  line-height: var(--lh-label-s);
-  letter-spacing: var(--ls-caption-s);
-  text-transform: uppercase;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-fg-accent);
-}
-
-@media (min-width: 760px) {
-  .recs { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* --- Методология (аккордеон) ---------------------------------
-   <details>/<summary> — раскрытие без единой строки JS. */
-.methodology { margin-top: var(--gap-32); }
-
-.acc {
-  border-top: 1px solid var(--color-border-secondary);
-}
-
-.acc:last-of-type { border-bottom: 1px solid var(--color-border-secondary); }
-
-.acc__summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--gap-16);
-  padding: var(--gap-20) 0;
-  cursor: pointer;
-  list-style: none;
-  font-size: var(--size-title-m);
-  line-height: var(--lh-title-m);
-  font-weight: var(--font-weight-bold);
-}
-
-.acc__summary::-webkit-details-marker { display: none; }
-
-.acc__summary::after {
-  content: "+";
-  font-size: var(--size-title-l);
-  line-height: 1;
-  color: var(--color-fg-tetriary);
-  flex: none;
-}
-
-.acc[open] .acc__summary::after { content: "−"; }
-
-.acc__body {
-  padding-bottom: var(--gap-24);
-  color: var(--color-fg-secondary);
-  max-width: 70ch;
-}
-
-/* --- CTA внизу дашборда -------------------------------------- */
-.dash__cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--gap-20);
-  margin-top: var(--gap-32);
-  padding: var(--gap-32);
-  border-radius: var(--radius-l);
-  background: var(--color-bg-dark);
-  color: var(--color-fg-inverted-primary);
-}
-
-.dash__cta p { color: var(--color-fg-inverted-secondary); }
