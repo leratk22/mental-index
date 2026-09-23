@@ -361,3 +361,9 @@
   .kpi__meta { justify-content: flex-start; }
 }
 .viz--hero { margin-bottom: 1.5rem; }
+
+/* Таблицы «Анализа по группам»: цифры одной ширины, чтобы
+   столбцы выравнивались; первая ячейка строки — заголовок строки
+   (th scope="row") для скринридера, выглядит как раньше. */
+.analytics-card td { font-variant-numeric: tabular-nums; }
+.analytics-card tbody th { text-align: left; font-weight: inherit; }
