@@ -15,7 +15,7 @@
 :root{
   --bg:#EAEFF8;--card:#fff;--border:#DBE4F3;
   --text:#22263B;--muted:#5A6078;--hint:#5A6078;
-  --red:#F15D56;--yel:#FFD452;--grn:#759F45;
+  --red:var(--viz-neg);--yel:var(--viz-mid);--grn:var(--viz-pos);
   --venn-a:#8178D2;--venn-b:#5B6F93;--venn-v:#68A39B;
   --red-l:#FCEBEB;--yel-l:#FFF8E6;--grn-l:#EBF3E0;
   --r:12px;--font:'Euclid Circular A',sans-serif;
@@ -81,13 +81,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 
 /* Side card */
 .side-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;cursor:pointer;transition:box-shadow .2s,border-color .2s}
-.side-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:#98A0AE}
+.side-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);border-color:var(--viz-label)}
 .side-card h3{font-size:14px;font-weight:600;color:var(--text);margin-bottom:.6rem;line-height:1.3}
 .side-card ul{list-style:none;margin-bottom:.9rem}
 .side-card ul li{font-size:12px;color:var(--red);line-height:1.5;padding-left:14px;position:relative;margin-bottom:2px}
 .side-card ul li::before{content:'•';position:absolute;left:0;color:var(--border)}
 .side-card .sc-btn{font-size:12px;font-weight:500;color:var(--text);border:1px solid var(--border);border-radius:6px;padding:5px 14px;display:inline-block;background:var(--card);cursor:pointer;transition:background .15s,border-color .15s}
-.side-card:hover .sc-btn{background:var(--bg);border-color:#98A0AE}
+.side-card:hover .sc-btn{background:var(--bg);border-color:var(--viz-label)}
 
 /* Center diagram */
 .hub-center{display:flex;flex-direction:column;align-items:center;gap:1rem;position:relative}
@@ -111,7 +111,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 
 /* Center bottom btn */
 .center-btn{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:7px 22px;font-size:13px;font-weight:500;color:var(--text);cursor:pointer;transition:box-shadow .2s,border-color .2s}
-.center-btn:hover{box-shadow:0 3px 12px rgba(0,0,0,.1);border-color:#98A0AE}
+.center-btn:hover{box-shadow:0 3px 12px rgba(0,0,0,.1);border-color:var(--viz-label)}
 
 /* connector lines (decorative) */
 .connector{position:absolute;top:50%;height:1px;background:var(--border)}
@@ -144,8 +144,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .q-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)}
 .q-row:last-child{border:none}
 .q-name{font-size:12px;color:var(--muted);flex:1;line-height:1.3}
-.q-pos{height:5px;border-radius:2px;background:#759F45;min-width:2px}
-.q-neg{height:5px;border-radius:2px;background:#F15D56;min-width:2px}
+.q-pos{height:5px;border-radius:2px;background:var(--viz-pos);min-width:2px}
+.q-neg{height:5px;border-radius:2px;background:var(--viz-neg);min-width:2px}
 .q-gap{width:3px;flex-shrink:0}
 .q-pct{font-size:10px;color:var(--hint);white-space:nowrap;flex-shrink:0;min-width:60px;text-align:right}
 
@@ -160,8 +160,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .types-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:1.5rem}
 .type-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;cursor:pointer;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden}
 .type-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
-.tc-grn::before{background:#759F45} .tc-grey::before{background:#98A0AE} .tc-yel::before{background:#FFD452} .tc-red::before{background:#F15D56}
-.type-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.09);border-color:#98A0AE}
+.tc-grn::before{background:var(--viz-pos)} .tc-grey::before{background:var(--viz-muted)} .tc-yel::before{background:var(--viz-mid)} .tc-red::before{background:var(--viz-neg)}
+.type-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.09);border-color:var(--viz-label)}
 .type-pct{font-size:40px;font-weight:300;letter-spacing:-1.5px;line-height:1;margin-bottom:.25rem}
 .type-n{font-size:11px;color:var(--hint);margin-bottom:.65rem}
 .type-name{font-size:16px;font-weight:600;color:var(--text);margin-bottom:.4rem}
@@ -216,7 +216,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 
 /* ── SPOKE CARDS (выноски от диаграммы) ── */
 .spoke-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.25rem;cursor:pointer;transition:box-shadow .2s,border-color .2s;position:relative;}
-.spoke-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.09);border-color:#98A0AE;}
+.spoke-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.09);border-color:var(--viz-label);}
 .sc-label{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.3rem;}
 .sc-val{font-size:36px;font-weight:300;letter-spacing:-1.5px;line-height:1;margin-bottom:.4rem;}
 .sc-subs{display:flex;flex-direction:column;gap:3px;margin-bottom:.6rem;}
@@ -242,9 +242,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .structure-value-row{display:flex;align-items:center;gap:8px;margin-bottom:.25rem}
 .structure-component-card .sc-bench{color:var(--muted);white-space:nowrap}
 .delta-pill{display:inline-flex;align-items:center;justify-content:center;padding:.18rem .45rem;border-radius:999px;margin-left:.3rem;font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.2}
-.delta-risk{background:var(--red);color:#fff!important}
-.delta-watch{background:var(--yel);color:var(--text)!important}
-.delta-good{background:var(--grn);color:#fff!important}
+/* Дельта к России: светлая подложка зоны + чернильный текст +
+   стрелка и знак. Насыщенная заливка с белым текстом не давала
+   4.5:1 на охре и бирюзовом (3.02 и 4.05). */
+.delta-pill{gap:3px;color:var(--viz-ink)!important}
+.delta-arrow{font-weight:600;line-height:1}
+.delta-risk{background:var(--viz-neg-surface)}
+.delta-watch{background:var(--viz-mid-surface)}
+.delta-good{background:var(--viz-pos-surface)}
 
 .dashboard-structure-visual{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:3rem!important;align-items:start!important;max-width:none!important;margin:0 0 1.5rem!important;min-height:0!important}
 .structure-card-column{display:flex;flex-direction:column;gap:.85rem;min-width:0}
@@ -267,14 +272,14 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 /* ── SEGMENT CARDS ── */
 .seg-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:1.25rem 1.5rem;cursor:pointer;transition:box-shadow .2s,border-color .2s;position:relative;overflow:hidden;display:flex;flex-direction:column}
 .seg-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px}
-.seg-green::before{background:#759F45}.seg-yellow::before{background:#FFD452}
-.seg-neutral::before{background:#98A0AE}.seg-red::before{background:#F15D56}
-.seg-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.09);border-color:#98A0AE}
+.seg-green::before{background:var(--viz-pos)}.seg-yellow::before{background:var(--viz-mid)}
+.seg-neutral::before{background:var(--viz-muted)}.seg-red::before{background:var(--viz-neg)}
+.seg-card:hover{box-shadow:0 4px 18px rgba(0,0,0,.09);border-color:var(--viz-label)}
 .seg-pct{font-size:38px;font-weight:300;letter-spacing:-1.5px;line-height:1}
 .seg-pct{color:var(--text)!important}
 .seg-level-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 .35rem .1rem 0;vertical-align:middle}
 .seg-level-good{background:var(--grn)}
-.seg-level-neutral{background:#98A0AE}
+.seg-level-neutral{background:var(--viz-muted)}
 .seg-level-watch{background:var(--yel)}
 .seg-level-risk{background:var(--red)}
 .seg-n{font-size:11px;color:var(--hint)}
@@ -293,13 +298,13 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .risk-axis-column-label{align-self:end;text-align:center;padding-bottom:3px;font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;color:var(--muted);line-height:1.4;}
 .risk-axis-column-label span{font-size:var(--type-caption);color:var(--muted);font-weight:var(--weight-caption);line-height:1.4;}
 .risk-axis-y-title{display:none!important}
-.risk-axis-y-label{display:block;position:relative;padding:0;color:#98A0AE;font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4;text-align:center}
+.risk-axis-y-label{display:block;position:relative;padding:0;color:var(--viz-label);font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4;text-align:center}
 .risk-axis-y-label span{position:absolute;left:50%;max-width:none;white-space:nowrap;writing-mode:vertical-rl;direction:ltr;transform:translateX(-50%)}
 .risk-axis-y-label-top span{top:0}
 .risk-axis-y-label-top span{transform:translateX(-50%) rotate(180deg)}
 .risk-axis-y-label-bottom span{bottom:0}
 .risk-axis-y-label-bottom span{transform:translateX(-50%) rotate(180deg)}
-.risk-axis-x-footer{grid-column:2 / 4;display:flex;align-items:flex-start;justify-content:space-between;color:#98A0AE;font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4;padding-top:1px}
+.risk-axis-x-footer{grid-column:2 / 4;display:flex;align-items:flex-start;justify-content:space-between;color:var(--viz-label);font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4;padding-top:1px}
 .risk-axis-x-footer b{font-weight:var(--weight-caption)}
 .risk-axis-label-short{display:none;font-weight:500}
 .risk-axis-grid .seg-card{z-index:1;margin:0!important}
@@ -340,10 +345,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 /* Шапка сектора: та же цветная полоса сверху, что у карточек матрицы на главной. */
 .seg-hero{position:relative}
 .seg-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:6px}
-.seg-hero--green::before{background:#759F45}
-.seg-hero--yellow::before{background:#FFD452}
-.seg-hero--red::before{background:#F15D56}
-.seg-hero--neutral::before{background:#98A0AE}
+.seg-hero--green::before{background:var(--viz-pos)}
+.seg-hero--yellow::before{background:var(--viz-mid)}
+.seg-hero--red::before{background:var(--viz-neg)}
+.seg-hero--neutral::before{background:var(--viz-muted)}
 .seg-hero__grid{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:start}
 .seg-hero__title{margin-bottom:.5rem}
 .seg-hero__desc{margin-top:0!important;margin-bottom:0!important;max-width:520px!important}
@@ -365,7 +370,7 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .support-legend .legend-square{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
 .support-employer-panel [style*="border-bottom:1px solid #DBE4F3"]{border-bottom-color:var(--border)!important}
 .support-employer-panel [style*="background:#DBE4F3"]{background:var(--bg)!important}
-.support-employer-panel [style*="background:#98A0AE"]{background:#98A0AE!important}
+.support-employer-panel [style*="background:var(--viz-muted)"]{background:var(--viz-muted)!important}
 
 /* ── SEGMENT DETAIL ── */
 .sd-wrap{max-width:1100px;margin:0 auto;padding:2.5rem 2.5rem 4rem}
@@ -405,37 +410,8 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .td-insight{font-size:var(--type-body)!important;font-weight:var(--weight-body)!important;line-height:1.55!important;letter-spacing:0!important}
 
 /* Index scale: wider, quieter container with hover-only value labels */
-.index-scale-chart{background:transparent!important;border-color:transparent!important;border-radius:0!important;box-shadow:none!important;padding:1rem .25rem 0!important;margin:0 -.75rem 1.5rem!important}
-.index-scale-chart .scale-chart-head{justify-content:flex-end!important;margin-bottom:.75rem!important}
-.index-scale-chart .scale-chart-key{font-size:var(--type-caption)!important;color:var(--muted)!important}
-.index-scale-chart .scale-ticks{margin:0 0 8px!important}
-.index-scale-chart .scale-ticks{color:#A3ACBB!important}
-.index-scale-chart .scale-bar{height:32px!important;border-radius:16px!important;margin-bottom:0!important}
-.index-scale-chart .scale-marker{top:-8px!important;height:50px;z-index:2;cursor:default}
-.index-scale-chart .scale-marker > div:first-child{height:48px!important}
-.index-scale-chart .scale-marker-dot{position:absolute;top:24px;left:50%;width:16px;height:16px;transform:translate(-50%,-50%);border-radius:50%;background:var(--muted);border:2px solid #fff;box-sizing:border-box}
-.index-scale-chart .scale-marker-russia .scale-marker-dot{background:#fff;border-color:#6B9BCC}
-.index-scale-chart .scale-chart-head{height:28px;position:relative}
-.index-scale-chart .scale-chart-key{position:relative;display:block!important;width:100%;height:100%;pointer-events:none}
-.index-scale-chart .scale-chart-key > span{position:absolute;top:0;display:flex;align-items:center;white-space:nowrap}
-.index-scale-chart .scale-chart-key > span:first-child{left:58.6%;transform:translateX(-100%)}
-.index-scale-chart .scale-chart-key > span:last-child{left:65%;transform:translateX(0)}
-.index-scale-chart .scale-chart-key > span:first-child > span{background:var(--muted)!important}
-.index-scale-chart .scale-value-label{opacity:0;visibility:hidden;transition:opacity .16s ease,visibility .16s ease;z-index:4;pointer-events:none}
-.index-scale-chart .scale-marker:hover + .scale-value-label,.index-scale-chart .scale-marker:focus + .scale-value-label,.index-scale-chart .scale-value-label:hover{opacity:1;visibility:visible;pointer-events:auto}
-.index-scale-chart .scale-value-label > div{font-size:var(--type-caption)!important;padding:4px 10px!important;border-radius:9px!important;box-shadow:0 2px 8px rgba(34,38,59,.08)}
-.index-scale-chart .scale-value-company > div{background:var(--muted)!important}
-.index-scale-chart .scale-zone-labels{margin-top:10px!important;gap:0!important}
-.index-scale-chart .scale-zone{padding-top:7px;border-top:2px solid #D8E0EC;color:#8993A6!important;position:relative}
-.index-scale-chart .scale-zone::before,.index-scale-chart .scale-zone::after{content:'';position:absolute;top:0;width:1px;height:6px;background:#D8E0EC}
-.index-scale-chart .scale-zone::before{left:0}.index-scale-chart .scale-zone::after{right:0}
-.index-scale-chart .scale-zone span{color:#8993A6!important;opacity:1}
-.index-scale-chart .scale-zone-low,.index-scale-chart .scale-zone-middle,.index-scale-chart .scale-zone-high{color:#8993A6!important}
 .index-scale-description{max-width:none!important;width:100%!important}
-.index-scale-chart .scale-zone{border-top-width:1px!important}
-.index-scale-chart .scale-zone::before,.index-scale-chart .scale-zone::after{height:5px}
-.result-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem}
-.result-chart-key{white-space:nowrap;padding-bottom:.2rem}
+.result-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:1.5rem}
 .insight-card h3{font-size:var(--type-section)!important;font-weight:var(--weight-section)!important;line-height:1.3!important;letter-spacing:-.2px!important;color:var(--text)!important;text-transform:none!important}
 .subsection-title,.section-title{font-size:var(--type-subsection)!important;font-weight:var(--weight-section)!important;line-height:1.25!important;letter-spacing:-.3px!important;color:var(--text)!important}
 .dashboard-section .section-title,.dashboard-section .subsection-title{font-size:22px!important;font-weight:var(--weight-section)!important;line-height:1.25!important;letter-spacing:-.3px!important;color:var(--text)!important}
@@ -446,8 +422,8 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .dashboard-support-content > div:first-child{margin-bottom:1.25rem!important}
 .dashboard-section > .section-description{margin-bottom:1.25rem!important}
 .dashboard-section > .support-description{width:100%!important;max-width:none!important;margin-top:1.5rem!important;margin-bottom:0!important}
-@media (max-width:760px){.index-scale-chart{margin-left:-.25rem!important;margin-right:-.25rem!important;padding-left:0!important;padding-right:0!important}.index-scale-chart .scale-chart-head{display:block!important}.index-scale-chart .scale-chart-key{margin-top:.5rem!important;display:flex!important;gap:12px!important}.index-scale-chart .scale-zone-labels{font-size:var(--type-caption)!important}}
-@media (max-width:760px){.result-heading{display:block}.result-chart-key{margin-top:.65rem;padding-bottom:0}}
+
+@media (max-width:760px){.result-heading{display:block}}
 @media (max-width:760px){.home,.subpage,.sd-wrap{padding:1.5rem 1rem 3rem}}
 @media (max-width:760px){
   .dashboard-structure-visual{grid-template-columns:1fr!important;gap:1.5rem!important}
@@ -544,9 +520,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .bar-val,.delta-pill{font-weight:600!important}
 .t-em{font-weight:500!important}
 .big-num{font-size:var(--type-factoid);font-weight:var(--weight-factoid);letter-spacing:-1.5px;line-height:1;color:var(--text)}
-.scale-ticks{font-size:var(--type-caption);color:var(--hint)}
-.scale-zone-labels{font-size:var(--type-caption);color:var(--muted)}
-.scale-badge{font-size:var(--type-caption);font-weight:600;padding:2px 7px;border-radius:10px;white-space:nowrap}
 .bar-val{font-size:var(--type-caption);font-weight:600;color:#fff}
 .q-text{font-size:var(--type-caption);color:var(--muted);line-height:1.4}
 .metric-note{font-size:var(--type-caption);color:var(--muted);line-height:1.55;margin-top:.6rem}
@@ -565,7 +538,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .legend{display:flex;align-items:center;flex-wrap:wrap;gap:16px;color:var(--muted)}
 .legend-item{display:inline-flex;align-items:center;gap:6px}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex-shrink:0}
-.legend-dot--outline{background:#fff;border:2px solid #6B9BCC;box-sizing:border-box}
+.legend-dot--outline{background:#fff;border:2px solid var(--viz-muted);box-sizing:border-box}
 </style>
 <link rel="stylesheet" href="assets/css/dashboard.css?v=20260923a">
 </head>
@@ -597,63 +570,40 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="home-meta">{Employee count} сотрудников · {Coverage}% охват</div>
 
 <section class="dashboard-section" aria-labelledby="section-result-title">
-<div class="result-heading" style="margin-bottom:1rem;">
+<div class="result-heading" style="margin-bottom:1.25rem;">
   <div>
     <div id="section-result-title" class="section-eyebrow">Общий результат</div>
-    <div class="subsection-title" style="margin-bottom:.35rem">Где находится компания на&nbsp;шкале Индекс</div>
+    <div class="subsection-title" style="margin-bottom:.35rem">Индекс в зоне риска и ниже среднего по России</div>
   </div>
-  <div class="legend result-chart-key" aria-label="Обозначения маркеров">
-    <span class="legend-item"><span class="legend-dot" style="background:var(--muted)" aria-hidden="true"></span>Компания</span>
-    <span class="legend-item"><span class="legend-dot legend-dot--outline" aria-hidden="true"></span>Россия</span>
-  </div>
-</div>
-    <!-- Градусник Индекс -->
-  <div class="index-scale-chart" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.75rem;margin-bottom:1.5rem;">
-    <!-- Шкала -->
-    <div style="position:relative;margin:0 8px;">
-
-      <!-- Числовые метки шкалы -->
-      <div class="scale-ticks" style="display:flex;justify-content:space-between;margin-top:4px">
-        <span>−100</span><span>−50</span><span>0</span><span>+50</span><span>+100</span>
-      </div>
-
-      <!-- Цветовые зоны -->
-      <div class="scale-bar" style="display:flex;height:16px;border-radius:8px;overflow:hidden;margin-bottom:6px;">
-        <div style="width:59.5%;background:linear-gradient(90deg,#F15D56,#F15D56);" title="Низкий ≤19"></div>
-        <div style="width:13.0%;background:linear-gradient(90deg,#FFD452,#FFD452);" title="Средний 20–45"></div>
-        <div style="width:27.5%;background:linear-gradient(90deg,#759F45,#759F45);" title="Высокий >45"></div>
-      </div>
-
-      <!-- Маркер Компания -->
-      <div class="scale-marker scale-marker-company" tabindex="0" aria-label="Компания: 17.1" style="position:absolute;top:-6px;left:58.6%;transform:translateX(-50%);">
-        <div style="width:2px;height:28px;background:#22263B;margin:0 auto;"></div>
-        <div class="scale-marker-dot" aria-hidden="true"></div>
-      </div>
-      <!-- Значение Компания -->
-      <div class="scale-value-label scale-value-company" style="position:absolute;top:-42px;left:58.6%;transform:translateX(-50%);">
-        <div class="scale-badge" style="background:#F15D56;color:#fff">Компания 17.1</div>
-      </div>
-
-      <!-- Маркер РФ -->
-      <div class="scale-marker scale-marker-russia" tabindex="0" aria-label="Россия: 30" style="position:absolute;top:-6px;left:65.0%;transform:translateX(-50%);">
-        <div style="width:2px;height:28px;background:#6B9BCC;margin:0 auto;"></div>
-        <div class="scale-marker-dot" aria-hidden="true"></div>
-      </div>
-      <!-- Значение РФ -->
-      <div class="scale-value-label scale-value-russia" style="position:absolute;top:-42px;left:65.0%;transform:translateX(-50%);">
-        <div class="scale-badge" style="background:#fff;border:1.5px solid #6B9BCC;color:#6B9BCC">Россия 30</div>
-      </div>
-
-      <!-- Подписи зон -->
-      <div class="scale-zone-labels" style="display:flex;margin-top:36px">
-        <div class="scale-zone scale-zone-low" style="width:59.5%;text-align:center;">Низкий<br><span style="color:var(--hint);">≤19</span></div>
-        <div class="scale-zone scale-zone-middle" style="width:13.0%;text-align:center;">Средний<br><span style="color:var(--hint);">20–45</span></div>
-        <div class="scale-zone scale-zone-high" style="width:27.5%;text-align:center;">Высокий<br><span style="color:var(--hint);">&gt;45</span></div>
-      </div>
+  <div class="kpi" aria-label="Индекс компании 17,1: зона риска, на 12,9 ниже среднего по России">
+    <div class="kpi__value">17,1</div>
+    <div class="kpi__meta">
+      <span class="kpi__state"><span class="kpi__dot mark--neg" aria-hidden="true"></span>зона риска</span>
+      <span class="delta-pill delta-risk"><span class="delta-arrow" aria-hidden="true">↓</span>−12,9</span><span class="kpi__ref">к России (30)</span>
     </div>
   </div>
+</div>
+  <figure class="viz viz--hero reveal" data-viz="scale" data-zones>
+    <figcaption class="viz__head">
+      <div class="viz__titles">
+        <div class="viz__sub">Индекс ментального благополучия компании и среднее по России · n = 99 · шкала −100…+100</div>
+      </div>
+      <div class="viz__tools">
+        <ul class="viz-key" aria-hidden="true">
+          <li><span class="viz-key__mark mark--accent"></span>Компания</li>
+          <li><span class="viz-key__mark viz-key__mark--hollow mark--muted"></span>Россия</li>
+        </ul>
+        <button class="viz__table-toggle" type="button" aria-pressed="false" hidden>Таблица</button>
+      </div>
+    </figcaption>
+    <table class="viz__data">
+      <caption>Индекс компании и среднее по России, шкала −100…+100</caption>
+      <thead><tr><th scope="col">Показатель</th><th scope="col" data-mark="accent" data-focus>Компания</th><th scope="col" data-mark="muted" data-hollow>Россия</th></tr></thead>
+      <tbody><tr><th scope="row">Индекс</th><td>+17,1</td><td>+30</td></tr></tbody>
+    </table>
+  </figure>
 
-  <div class="section-description index-scale-description" style="margin-bottom:1.25rem;">Индекс ментального благополучия (Индекс) измеряется по&nbsp;шкале от −100&nbsp;до +100. Значения ниже 20&nbsp;указывают на&nbsp;зону риска, 20–45&nbsp;— норма, выше 45&nbsp;— позитивная зона. Серая точка показывает среднее по&nbsp;России.</div>
+  <div class="section-description index-scale-description" style="margin-bottom:1.25rem;">Индекс ментального благополучия (Индекс) измеряется по&nbsp;шкале от −100&nbsp;до +100. Значения ниже 20&nbsp;указывают на&nbsp;зону риска, 20–45&nbsp;— норма, выше 45&nbsp;— позитивная зона. Серое кольцо показывает среднее по&nbsp;России.</div>
 
 <div class="insight-card" style="margin-bottom:0;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Индекс 17.1&nbsp;— зона риска (≤19).</strong> Компания ниже среднего по&nbsp;России на&nbsp;12.9&nbsp;пункта (РФ=30). Без&nbsp;вмешательства тренд продолжится.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Все три компонента ниже российского бенчмарка.</strong> Наибольшее отставание по&nbsp;Ментальное состояние (−21.0) и&nbsp;Внутренние факторы (−17.0), минимальное по&nbsp;Внешние факторы (−0.6).</div></li><li style="--marker-color:#FFD452;"><div class="ins-text"><strong>Единственный субиндекс ниже нуля&nbsp;— Стресс-статус (Стресс-статус = −19.4).</strong> Он тянет компонент А&nbsp;вниз и&nbsp;через него&nbsp;— весь Индекс.</div></li></ol></div>
 </section>
@@ -668,7 +618,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="dashboard-structure-visual">
     <div class="structure-card-column">
       <div class="spoke-card structure-component-card" data-component="a" data-goto="subA" onclick="go('subA')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">А · Ментальное состояние</div><div class="structure-value-row"><div class="sc-val">5.0</div><div class="sc-bench"><span class="delta-pill delta-risk">−21.0</span><span>РФ=26</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">А · Ментальное состояние</div><div class="structure-value-row"><div class="sc-val">5.0</div><div class="sc-bench"><span class="delta-pill delta-risk"><span class="delta-arrow" aria-hidden="true">↓</span>−21,0</span><span>РФ=26</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>А1 · Стресс-статус</span><span>−19.4</span></div>
           <div class="sc-sub-row"><span>А2 · Симптомы Индекс</span><span>29.4</span></div>
@@ -677,7 +627,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
 
       <div class="spoke-card structure-component-card" data-component="b" data-goto="subB" onclick="go('subB')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">Б · Внутренние факторы</div><div class="structure-value-row"><div class="sc-val">19.0</div><div class="sc-bench"><span class="delta-pill delta-risk">−17.0</span><span>РФ=36</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">Б · Внутренние факторы</div><div class="structure-value-row"><div class="sc-val">19.0</div><div class="sc-bench"><span class="delta-pill delta-risk"><span class="delta-arrow" aria-hidden="true">↓</span>−17,0</span><span>РФ=36</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>Б1 · Психол. профиль</span><span>13.4</span></div>
           <div class="sc-sub-row"><span>Б2 · Устойчивость</span><span>24.7</span></div>
@@ -686,7 +636,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
 
       <div class="spoke-card structure-component-card" data-component="v" data-goto="subV" onclick="go('subV')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">В · Внешние факторы</div><div class="structure-value-row"><div class="sc-val">27.4</div><div class="sc-bench"><span class="delta-pill delta-watch">−0.6</span><span>РФ=28</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">В · Внешние факторы</div><div class="structure-value-row"><div class="sc-val">27.4</div><div class="sc-bench"><span class="delta-pill delta-watch"><span class="delta-arrow" aria-hidden="true">↓</span>−0,6</span><span>РФ=28</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>В1 · Профессиональные</span><span>37.4</span></div>
           <div class="sc-sub-row"><span>В2 · Личностные</span><span>31.3</span></div>
@@ -935,7 +885,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
     <div class="subpage-hero__figure">
       <div class="seg-pct">+5.0</div>
-      <div class="seg-n">РФ: 26 &nbsp;·&nbsp; <span class="delta-pill delta-risk">−21.0</span> от&nbsp;России</div>
+      <div class="seg-n">РФ: 26 &nbsp;·&nbsp; <span class="delta-pill delta-risk"><span class="delta-arrow" aria-hidden="true">↓</span>−21,0</span> от&nbsp;России</div>
     </div>
   </div>
   <section class="dashboard-section">
@@ -1038,7 +988,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
     <div class="subpage-hero__figure">
       <div class="seg-pct">+19.0</div>
-      <div class="seg-n">РФ: 36 &nbsp;·&nbsp; <span class="delta-pill delta-risk">−17.0</span> от&nbsp;России</div>
+      <div class="seg-n">РФ: 36 &nbsp;·&nbsp; <span class="delta-pill delta-risk"><span class="delta-arrow" aria-hidden="true">↓</span>−17,0</span> от&nbsp;России</div>
     </div>
   </div>
   <section class="dashboard-section">
@@ -1140,7 +1090,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
     <div class="subpage-hero__figure">
       <div class="seg-pct">+27.4</div>
-      <div class="seg-n">РФ: 28 &nbsp;·&nbsp; <span class="delta-pill delta-watch">−0.6</span> от&nbsp;России</div>
+      <div class="seg-n">РФ: 28 &nbsp;·&nbsp; <span class="delta-pill delta-watch"><span class="delta-arrow" aria-hidden="true">↓</span>−0,6</span> от&nbsp;России</div>
     </div>
   </div>
   <section class="dashboard-section">
