@@ -361,9 +361,6 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .support-employer-metric:last-child{padding-right:0}
 .support-employer-metric+.support-employer-metric{border-left:1px solid var(--border)}
 .support-employer-metric .support-metric-label{font-size:var(--type-body)!important;color:var(--muted);line-height:1.4}
-.support-legend{display:flex;gap:12px;margin-top:1rem!important;margin-bottom:.5rem!important;color:var(--hint);font-size:var(--type-caption)!important}
-.support-legend span{display:inline-flex;align-items:center}
-.support-legend .legend-square{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
 .support-employer-panel [style*="border-bottom:1px solid #DBE4F3"]{border-bottom-color:var(--border)!important}
 .support-employer-panel [style*="background:#DBE4F3"]{background:var(--bg)!important}
 .support-employer-panel [style*="background:#98A0AE"]{background:#98A0AE!important}
@@ -399,7 +396,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .home-kicker,.section-eyebrow,.sp-eyebrow,.sub-card-ey,.sd-eyebrow,.td-mini-ey,.td-n,.qs-head,.sc-label,.sd-m-ey,.seg-tag,.type-tag,.sc-bench,.sp-bench,.dc-lbl,.dc-sub,.dp-label,.dp-header-cell,.dp-leg-item,.td-mini,.td-tag,.sd-m-name,.sd-m-ey{font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4!important;letter-spacing:normal!important;color:var(--muted)!important}
 .nav-logo,.nav-tab,.back-btn,.center-btn,.sc-btn,.sc-btn-sm,.seg-hint,.type-hint,.td-action,.td-actions-head,.ph-title,.ph-icon{font-size:var(--type-body)!important;font-weight:var(--weight-ui)!important;line-height:1.3!important;letter-spacing:0!important}
 .dc-val,.sp-big,.sub-card-val,.seg-pct,.type-pct,.td-pct,.sd-m-val,.sd-metric,.td-num,.td-hero,.sd-hero{font-size:var(--type-factoid)!important;font-weight:var(--weight-factoid)!important;line-height:1!important;letter-spacing:-1.5px!important}
-.bar-ends,.q-pct,.type-n,.td-n,.td-mini-name,.dp-delta,.seg-n,.sd-groups-title,.sd-g-label,.sd-g-pct,.sd-sub-name,.sd-sub-val,.support-legend{font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4!important;letter-spacing:normal!important;color:var(--muted)!important}
+.bar-ends,.q-pct,.type-n,.td-n,.td-mini-name,.dp-delta,.seg-n,.sd-groups-title,.sd-g-label,.sd-g-pct,.sd-sub-name,.sd-sub-val{font-size:var(--type-caption)!important;font-weight:var(--weight-caption)!important;line-height:1.4!important;letter-spacing:normal!important;color:var(--muted)!important}
 .sc-val,.td-mini-val{font-size:var(--type-factoid)!important;font-weight:var(--weight-factoid)!important;line-height:1!important;letter-spacing:-1.5px!important}
 .dp-dot{font-size:var(--type-body)!important;font-weight:var(--weight-ui)!important;line-height:1.3!important}
 .type-btn,.side-card .sc-btn{font-size:var(--type-body)!important;font-weight:var(--weight-ui)!important;line-height:1.3!important}
@@ -482,7 +479,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   .support-rows > div[style*="grid-template-columns:1fr 240px"]{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:6px!important;padding:8px 0!important}
   .support-rows > div[style*="grid-template-columns:1fr 240px"] > div{min-width:0!important;width:100%!important}
   .support-rows > div[style*="grid-template-columns:1fr 240px"] > div:nth-child(2){margin-top:1px}
-  .support-employer-panel .support-legend{flex-wrap:wrap;gap:8px 12px}
 
   /* On a small phone the matrix stays a compact overview; long explanations open in the sheet below. */
   .risk-axis-grid{grid-template-columns:32px minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:30px 136px 136px 28px!important;column-gap:8px!important;row-gap:6px!important;min-height:0!important;margin-right:0!important}
@@ -601,7 +597,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20260923b">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20260923c">
 </head>
 <body>
 
@@ -850,7 +846,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
 
     <div class="support-employer-panel" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
-      <div class="support-block-head"><h3 class="support-block-title">Работодатель предпринимает достаточно усилий для&nbsp;поддержания психологического благополучия сотрудников?</h3><button type="button" class="chart-toggle" data-toggle-for="support" aria-pressed="false">Диаграмма</button></div>
+      <div class="support-block-head"><h3 class="support-block-title">Работодатель предпринимает достаточно усилий для&nbsp;поддержания психологического благополучия сотрудников?</h3><button type="button" class="chart-toggle" data-toggle-for="support" data-label-back="Таблица">Диаграмма</button></div>
       <div class="support-employer-summary">
         <div class="support-employer-metric">
           <div class="big-num">55%</div>
@@ -883,10 +879,10 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="q-text">Безусловно недостаточно или&nbsp;никаких усилий</div>
       <div style="height:20px;border-radius:3px;overflow:hidden;display:flex;"><div style="width:11%;background:#F15D56;height:100%;display:flex;align-items:center;justify-content:center;"><span class="bar-val">11%</span></div><div style="width:89%;background:#DBE4F3;height:100%;"></div></div>
     </div>
-      <div class="support-legend" aria-label="Легенда таблицы">
-        <span><span class="legend-square" style="background:#759F45;"></span>позитивный</span>
-        <span><span class="legend-square" style="background:#F15D56;"></span>негативный</span>
-        <span><span class="legend-square" style="background:#98A0AE;"></span>затруднились</span>
+      <div class="legend" style="margin-top:1rem">
+        <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
+        <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
+        <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
       </div>
       </div>
       <div class="support-stack" data-alt>
@@ -952,13 +948,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   </div>
   <section class="dashboard-section"><div class="legend" style="margin-bottom:.4rem"><span>Компания</span><span class="legend-item"><span class="legend-dot" style="background:#759F45"></span>&gt;45</span><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>20–45</span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>≤19</span><span class="legend-item"><span class="legend-dot legend-dot--outline"></span>Россия</span></div><svg class="chart-svg" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"><line x1="34" y1="164.0" x2="880" y2="164.0" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="30" y="168.0" text-anchor="end" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-100</text><line x1="34" y1="127.0" x2="880" y2="127.0" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="30" y="131.0" text-anchor="end" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-50</text><line x1="34" y1="90.0" x2="880" y2="90.0" stroke="#A3ACBB" stroke-width="1.5"/><text x="30" y="94.0" text-anchor="end" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+0</text><line x1="34" y1="53.0" x2="880" y2="53.0" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="30" y="57.0" text-anchor="end" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+50</text><line x1="34" y1="16.0" x2="880" y2="16.0" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="30" y="20.0" text-anchor="end" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+100</text><polyline points="175.0,70.8 457.0,87.8 739.0,53.7" fill="none" stroke="#6B9BCC" stroke-width="1.5" opacity=".7" stroke-dasharray="5 3" stroke-linejoin="round"/><polyline points="175.0,86.3 457.0,104.1 739.0,68.5" fill="none" stroke="#98A0AE" stroke-width="2" opacity=".4" stroke-linejoin="round"/><circle cx="175.0" cy="70.8" r="13" fill="#fff" stroke="#6B9BCC" stroke-width="2" data-tip="Россия · А Ментальное состояние: +26"/><text x="175.0" y="74.8" text-anchor="middle" font-size="10" font-weight="600" fill="#6B9BCC" font-family="Euclid Circular A,sans-serif">+26</text><circle cx="175.0" cy="86.3" r="20" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Компания · А Ментальное состояние: +5"/><text x="175.0" y="90.3" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Euclid Circular A,sans-serif">+5</text><circle cx="457.0" cy="87.8" r="13" fill="#fff" stroke="#6B9BCC" stroke-width="2" data-tip="Россия · А1 Стресс-статус: +3"/><text x="457.0" y="91.8" text-anchor="middle" font-size="10" font-weight="600" fill="#6B9BCC" font-family="Euclid Circular A,sans-serif">+3</text><circle cx="457.0" cy="104.1" r="17" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Компания · А1 Стресс-статус: -19"/><text x="457.0" y="108.1" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-19</text><circle cx="739.0" cy="53.7" r="13" fill="#fff" stroke="#6B9BCC" stroke-width="2" data-tip="Россия · А2 Симптомы МБ: +49"/><text x="739.0" y="57.7" text-anchor="middle" font-size="10" font-weight="600" fill="#6B9BCC" font-family="Euclid Circular A,sans-serif">+49</text><circle cx="739.0" cy="68.5" r="17" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Компания · А2 Симптомы МБ: +29"/><text x="739.0" y="72.5" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+29</text><text x="175.0" y="178" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А</text><text x="175.0" y="190" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Ментальное состояние</text><text x="457.0" y="178" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А1</text><text x="457.0" y="190" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Стресс-статус</text><text x="739.0" y="178" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А2</text><text x="739.0" y="190" text-anchor="middle" font-size="10" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Симптомы МБ</text></svg></section>
   <section class="dashboard-section">
-  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А1 · Стресс-статус</div><div class="metric-block__val">-19.4</div></div><div class="legend chart-legend">
+  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А1 · Стресс-статус</div><div class="metric-block__val">-19.4</div></div><div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Как&nbsp;часто у&nbsp;Вас случаются стрессы? (редко / никогда)</div><div class="likert__track" role="img" aria-label="Как часто у Вас случаются стрессы? (редко / никогда): негативный 41%, затруднились 2%, позитивный 57%"><span class="likert__seg likert__seg--neg" style="left:29%;width:20.5%"><span class="likert__val">41%</span></span><span class="likert__seg likert__seg--neu" style="left:49.5%;width:1%"></span><span class="likert__seg likert__seg--pos" style="left:50.5%;width:28.5%"><span class="likert__val">57%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">За&nbsp;последний месяц у&nbsp;Вас бывали стрессы?</div><div class="likert__track" role="img" aria-label="За последний месяц у Вас бывали стрессы?: негативный 72%, затруднились 1%, позитивный 27%"><span class="likert__seg likert__seg--neg" style="left:13.75%;width:36%"><span class="likert__val">72%</span></span><span class="likert__seg likert__seg--neu" style="left:49.75%;width:0.5%"></span><span class="likert__seg likert__seg--pos" style="left:50.25%;width:13.5%"><span class="likert__val">27%</span></span></div></div>
         </div>
@@ -969,13 +965,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="metric-note">72% испытывали стресс в&nbsp;последний месяц&nbsp;— главная точка уязвимости.</div></div>
-  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А2 · Симптомы МБ</div><div class="metric-block__val">+29.4</div></div><div class="legend chart-legend">
+  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А2 · Симптомы МБ</div><div class="metric-block__val">+29.4</div></div><div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Ничего не&nbsp;получается, всё валится из&nbsp;рук</div><div class="likert__track" role="img" aria-label="Ничего не получается, всё валится из рук: негативный 6%, затруднились 1%, позитивный 93%"><span class="likert__seg likert__seg--neg" style="left:46.75%;width:3%"><span class="likert__val">6%</span></span><span class="likert__seg likert__seg--neu" style="left:49.75%;width:0.5%"></span><span class="likert__seg likert__seg--pos" style="left:50.25%;width:46.5%"><span class="likert__val">93%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Внезапные приступы сильной тревоги, страха</div><div class="likert__track" role="img" aria-label="Внезапные приступы сильной тревоги, страха: негативный 10%, затруднились 1%, позитивный 89%"><span class="likert__seg likert__seg--neg" style="left:44.75%;width:5%"><span class="likert__val">10%</span></span><span class="likert__seg likert__seg--neu" style="left:49.75%;width:0.5%"></span><span class="likert__seg likert__seg--pos" style="left:50.25%;width:44.5%"><span class="likert__val">89%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Ощущение одиночества, покинутости</div><div class="likert__track" role="img" aria-label="Ощущение одиночества, покинутости: негативный 21%, затруднились 0%, позитивный 79%"><span class="likert__seg likert__seg--neg" style="left:39.5%;width:10.5%"><span class="likert__val">21%</span></span><span class="likert__seg likert__seg--pos" style="left:50%;width:39.5%"><span class="likert__val">79%</span></span></div></div>
@@ -1035,13 +1031,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">Б1 · Психологический профиль</div><div class="metric-block__val">+13.4</div>
       </div>
-      <div class="legend chart-legend">
+      <div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Обычно у&nbsp;меня достаточно сил и&nbsp;энергии</div><div class="likert__track" role="img" aria-label="Обычно у меня достаточно сил и энергии: негативный 21%, затруднились 8%, позитивный 71%"><span class="likert__seg likert__seg--neg" style="left:37.5%;width:10.5%"><span class="likert__val">21%</span></span><span class="likert__seg likert__seg--neu" style="left:48%;width:4%"></span><span class="likert__seg likert__seg--pos" style="left:52%;width:35.5%"><span class="likert__val">71%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Меня не&nbsp;пугают перемены</div><div class="likert__track" role="img" aria-label="Меня не пугают перемены: негативный 35%, затруднились 2%, позитивный 63%"><span class="likert__seg likert__seg--neg" style="left:32%;width:17.5%"><span class="likert__val">35%</span></span><span class="likert__seg likert__seg--neu" style="left:49.5%;width:1%"></span><span class="likert__seg likert__seg--pos" style="left:50.5%;width:31.5%"><span class="likert__val">63%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Я уверенный в&nbsp;себе человек</div><div class="likert__track" role="img" aria-label="Я уверенный в себе человек: негативный 34%, затруднились 8%, позитивный 58%"><span class="likert__seg likert__seg--neg" style="left:31%;width:17%"><span class="likert__val">34%</span></span><span class="likert__seg likert__seg--neu" style="left:48%;width:4%"></span><span class="likert__seg likert__seg--pos" style="left:52%;width:29%"><span class="likert__val">58%</span></span></div></div>
@@ -1059,13 +1055,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">Б2 · Психологическая устойчивость</div><div class="metric-block__val">+24.7</div>
       </div>
-      <div class="legend chart-legend">
+      <div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Вы стрессоустойчивый человек?</div><div class="likert__track" role="img" aria-label="Вы стрессоустойчивый человек?: негативный 24%, затруднились 22%, позитивный 54%"><span class="likert__seg likert__seg--neg" style="left:32.5%;width:12%"><span class="likert__val">24%</span></span><span class="likert__seg likert__seg--neu" style="left:44.5%;width:11%"></span><span class="likert__seg likert__seg--pos" style="left:55.5%;width:27%"><span class="likert__val">54%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Как&nbsp;часто бывает плохое настроение? (редко, 1–3&nbsp;балла из&nbsp;9)</div><div class="likert__track" role="img" aria-label="Как часто бывает плохое настроение? (редко, 1–3 балла из 9): негативный 13%, затруднились 44%, позитивный 42%"><span class="likert__seg likert__seg--neg" style="left:32.5%;width:6.5%"><span class="likert__val">13%</span></span><span class="likert__seg likert__seg--neu" style="left:39%;width:22%"></span><span class="likert__seg likert__seg--pos" style="left:61%;width:21%"><span class="likert__val">42%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Психологическое состояние за&nbsp;год: улучшилось / ухудшилось</div><div class="likert__track" role="img" aria-label="Психологическое состояние за год: улучшилось / ухудшилось: негативный 26%, затруднились 53%, позитивный 21%"><span class="likert__seg likert__seg--neg" style="left:23.75%;width:13%"><span class="likert__val">26%</span></span><span class="likert__seg likert__seg--neu" style="left:36.75%;width:26.5%"></span><span class="likert__seg likert__seg--pos" style="left:63.25%;width:10.5%"><span class="likert__val">21%</span></span></div></div>
@@ -1110,13 +1106,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В1 · Профессиональные факторы</div><div class="metric-block__val">+37.4</div>
       </div>
-      <div class="legend chart-legend">
+      <div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Рабочее место, физические условия труда</div><div class="likert__track" role="img" aria-label="Рабочее место, физические условия труда: негативный 4%, затруднились 4%, позитивный 92%"><span class="likert__seg likert__seg--neg" style="left:47%;width:2%"><span class="likert__val">4%</span></span><span class="likert__seg likert__seg--neu" style="left:49%;width:2%"></span><span class="likert__seg likert__seg--pos" style="left:51%;width:46%"><span class="likert__val">92%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Отношения с&nbsp;коллегами</div><div class="likert__track" role="img" aria-label="Отношения с коллегами: негативный 4%, затруднились 5%, позитивный 91%"><span class="likert__seg likert__seg--neg" style="left:46.75%;width:2%"><span class="likert__val">4%</span></span><span class="likert__seg likert__seg--neu" style="left:48.75%;width:2.5%"></span><span class="likert__seg likert__seg--pos" style="left:51.25%;width:45.5%"><span class="likert__val">91%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Отношения с&nbsp;руководством</div><div class="likert__track" role="img" aria-label="Отношения с руководством: негативный 6%, затруднились 5%, позитивный 89%"><span class="likert__seg likert__seg--neg" style="left:45.75%;width:3%"><span class="likert__val">6%</span></span><span class="likert__seg likert__seg--neu" style="left:48.75%;width:2.5%"></span><span class="likert__seg likert__seg--pos" style="left:51.25%;width:44.5%"><span class="likert__val">89%</span></span></div></div>
@@ -1139,13 +1135,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В2 · Личностные факторы</div><div class="metric-block__val">+31.3</div>
       </div>
-      <div class="legend chart-legend">
+      <div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Отношения с&nbsp;близкими родственниками</div><div class="likert__track" role="img" aria-label="Отношения с близкими родственниками: негативный 10%, затруднились 0%, позитивный 90%"><span class="likert__seg likert__seg--neg" style="left:45%;width:5%"><span class="likert__val">10%</span></span><span class="likert__seg likert__seg--pos" style="left:50%;width:45%"><span class="likert__val">90%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Отношения с&nbsp;друзьями</div><div class="likert__track" role="img" aria-label="Отношения с друзьями: негативный 8%, затруднились 3%, позитивный 89%"><span class="likert__seg likert__seg--neg" style="left:45.25%;width:4%"><span class="likert__val">8%</span></span><span class="likert__seg likert__seg--neu" style="left:49.25%;width:1.5%"></span><span class="likert__seg likert__seg--pos" style="left:50.75%;width:44.5%"><span class="likert__val">89%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Жилищные условия</div><div class="likert__track" role="img" aria-label="Жилищные условия: негативный 24%, затруднились 2%, позитивный 74%"><span class="likert__seg likert__seg--neg" style="left:37.5%;width:12%"><span class="likert__val">24%</span></span><span class="likert__seg likert__seg--neu" style="left:49.5%;width:1%"></span><span class="likert__seg likert__seg--pos" style="left:50.5%;width:37%"><span class="likert__val">74%</span></span></div></div>
@@ -1167,13 +1163,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В3 · Социальные факторы</div><div class="metric-block__val">+13.4</div>
       </div>
-      <div class="legend chart-legend">
+      <div class="chart-switch">
+        <div class="likert">
+        <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
         <span class="legend-item"><span class="legend-dot" style="background:var(--grn)"></span>позитивный</span>
-      </div>
-      <div class="chart-switch">
-        <div class="likert">
+        </div>
         <div class="likert__row"><div class="likert__label">Я не&nbsp;переживаю по&nbsp;поводу положения дел в&nbsp;моём районе</div><div class="likert__track" role="img" aria-label="Я не переживаю по поводу положения дел в моём районе: негативный 18%, затруднились 6%, позитивный 76%"><span class="likert__seg likert__seg--neg" style="left:39.5%;width:9%"><span class="likert__val">18%</span></span><span class="likert__seg likert__seg--neu" style="left:48.5%;width:3%"></span><span class="likert__seg likert__seg--pos" style="left:51.5%;width:38%"><span class="likert__val">76%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Я не&nbsp;переживаю по&nbsp;поводу положения дел в&nbsp;моей области</div><div class="likert__track" role="img" aria-label="Я не переживаю по поводу положения дел в моей области: негативный 23%, затруднились 6%, позитивный 71%"><span class="likert__seg likert__seg--neg" style="left:37%;width:11.5%"><span class="likert__val">23%</span></span><span class="likert__seg likert__seg--neu" style="left:48.5%;width:3%"></span><span class="likert__seg likert__seg--pos" style="left:51.5%;width:35.5%"><span class="likert__val">71%</span></span></div></div>
         <div class="likert__row"><div class="likert__label">Я не&nbsp;переживаю по&nbsp;поводу состояния экономики страны</div><div class="likert__track" role="img" aria-label="Я не переживаю по поводу состояния экономики страны: негативный 44%, затруднились 7%, позитивный 48%"><span class="likert__seg likert__seg--neg" style="left:26.25%;width:22%"><span class="likert__val">44%</span></span><span class="likert__seg likert__seg--neu" style="left:48.25%;width:3.5%"></span><span class="likert__seg likert__seg--pos" style="left:51.75%;width:24%"><span class="likert__val">48%</span></span></div></div>
@@ -2028,6 +2024,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script src="assets/js/dashboard-viz.js?v=20260923b" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20260923c" defer></script>
 </body>
 </html>

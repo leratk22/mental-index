@@ -22,10 +22,12 @@
   const num = (s) => s.trim().replace(/^-/, MINUS);
 
   /* ── Переключатель ─────────────────────────────────────────── */
-  function makeToggle(label) {
+  // Подпись кнопки — то, что откроется по нажатию: на графике «Таблица»,
+  // на таблице — «График» (или «Диаграмма» в блоке поддержки).
+  function makeToggle(label, back) {
     const btn = el('button', 'chart-toggle', label);
     btn.type = 'button';
-    btn.setAttribute('aria-pressed', 'false');
+    btn.dataset.labelBack = back;
     return btn;
   }
 
@@ -35,10 +37,12 @@
       if (!alt.id) alt.id = 'chart-alt-' + (++uid);
       btn.setAttribute('aria-controls', alt.id);
     }
+    const label = btn.textContent;
+    const back = btn.dataset.labelBack || label;
     btn.addEventListener('click', () => {
       const on = !sw.classList.contains('is-alt');
       sw.classList.toggle('is-alt', on);
-      btn.setAttribute('aria-pressed', String(on));
+      btn.textContent = on ? back : label;
       if (on) redraw(sw);
     });
   }
@@ -121,7 +125,7 @@
       });
       const order = series.slice().sort((a, b) => (a === 'Компания' ? -1 : b === 'Компания' ? 1 : 0));
       const anchor = svg.parentElement.classList.contains('chart-scroll') ? svg.parentElement : svg;
-      const btn = makeToggle('Таблица');
+      const btn = makeToggle('Таблица', 'График');
       placeToggle(anchor, btn);             // до обёртки — чтобы найти легенду над графиком
       const sw = wrap(anchor);
       sw.appendChild(tableFrom(captionFor(sw), ['Показатель', ...order],
@@ -140,7 +144,7 @@
       return [name.trim(), num(value), zone(parseFloat(value))];
     });
     if (!rows.length) return;
-    const btn = makeToggle('Таблица');
+    const btn = makeToggle('Таблица', 'График');
     const key = document.querySelector('.result-heading .legend');
     if (key) key.appendChild(btn); else placeToggle(chart, btn);
     const sw = wrap(chart);
@@ -152,8 +156,11 @@
   function likerts() {
     document.querySelectorAll('.chart-switch > .likert').forEach((chart) => {
       const sw = chart.parentElement;
-      const btn = makeToggle('Таблица');
-      placeToggle(sw, btn);
+      const btn = makeToggle('Таблица', 'График');
+      // Кнопка — в строке с названием и значением субиндекса.
+      const head = sw.closest('.metric-block') && sw.closest('.metric-block').firstElementChild;
+      if (head && head !== sw) { head.classList.add('metric-block__head'); head.appendChild(btn); }
+      else placeToggle(sw, btn);
       wire(btn, sw);
     });
   }
