@@ -222,7 +222,7 @@
     const tip = el('div', 'chart-tip');
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
-    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip]';
+    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th[data-tip]';
     const show = (node) => {
       tip.textContent = node.dataset.tip.replace(/: (-)/, ': ' + MINUS);
       const r = node.getBoundingClientRect();
