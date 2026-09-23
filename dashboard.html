@@ -533,22 +533,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   .mobile-seg-detail-button{width:100%;padding:.75rem 1rem;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--text);font:inherit;font-size:13px;font-weight:600;cursor:pointer}
 }
 
-/* Анимация появления графиков (линия/точки): линия дорисовывается,
-   точки-маркеры и подписи-значения появляются по очереди при
-   попадании графика во вьюпорт. Триггерится один раз через JS
-   (.is-visible), который считает реальную длину линии — dasharray
-   в CSS не совпал бы для каждого графика. Ориентир:
-   research.sberuniversity.ru/dashboard. */
-.chart-svg polyline,
-.chart-svg line[stroke-width="2.5"]{transition:stroke-dashoffset 1s cubic-bezier(.25,.1,.25,1)}
-.chart-svg circle[stroke-width="2"]{opacity:0;transform:scale(.5);transform-box:fill-box;transform-origin:center;transition:opacity .35s ease,transform .45s cubic-bezier(.34,1.56,.64,1)}
-.chart-svg text[font-weight]{opacity:0;transition:opacity .3s ease}
-.chart-svg.is-visible circle[stroke-width="2"]{opacity:1;transform:scale(1)}
-.chart-svg.is-visible text[font-weight]{opacity:1}
-@media (prefers-reduced-motion:reduce){
-  .chart-svg polyline,.chart-svg line[stroke-width="2.5"],.chart-svg circle[stroke-width="2"],.chart-svg text[font-weight]{transition:none!important;opacity:1!important;transform:none!important;stroke-dashoffset:0!important}
-}
-
 /* «Анализ по группам»: три таблицы на одной белой подложке вместо
    трёх отдельных карточек; значения подсвечены фоном ячейки, а не
    цветом цифры — жёлтый и красный текст на белом не проходили по
@@ -582,22 +566,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .legend-item{display:inline-flex;align-items:center;gap:6px}
 .legend-dot{display:inline-block;width:10px;height:10px;border-radius:50%;flex-shrink:0}
 .legend-dot--outline{background:#fff;border:2px solid #6B9BCC;box-sizing:border-box}
-
-/* Дотплот тянется на всю ширину карточки (viewBox = ширине
-   контейнера, поэтому кружки и подписи остаются в своём размере,
-   растёт только шкала). На узком экране график ужимается целиком:
-   горизонтальную прокрутку пробовали — подписи строк уезжают из
-   видимой области, и точки остаются без имён. */
-.chart-scroll{overflow-x:auto}
-
-/* Подсказка при наведении на точку графика: серия · подпись — значение.
-   Цифра внутри круга — отдельный <text>, лежит поверх circle, поэтому
-   без pointer-events:none наведение на центр (где чаще всего курсор
-   и оказывается) не долетало бы до самого circle. */
-.chart-svg circle[data-tip]{cursor:default}
-.chart-svg text[font-weight]{pointer-events:none}
-.chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:11px;font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
-.chart-tip.is-visible{opacity:1}
 </style>
 <link rel="stylesheet" href="assets/css/dashboard.css?v=20260923a">
 </head>
@@ -1477,8 +1445,23 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   </section>
 
   <section class="dashboard-section">
-    <div class="metric-block__title" style="margin-bottom:1rem">Субиндексы 2-го уровня · сравнение подгрупп</div>
-    <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 964 472" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"><rect x="0" y="30" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="142" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="254" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="366" width="964" height="56" fill="#F5F8FD"/><line x1="180.0" y1="30" x2="180.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="180.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-100</text><line x1="373.5" y1="30" x2="373.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="373.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-50</text><line x1="567.0" y1="30" x2="567.0" y2="422" stroke="#A3ACBB" stroke-width="1.5"/><text x="567.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+0</text><line x1="760.5" y1="30" x2="760.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="760.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+50</text><line x1="954.0" y1="30" x2="954.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="954.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+100</text><line x1="520.6" y1="58" x2="714.1" y2="114" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="714.1" y1="114" x2="644.4" y2="170" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="644.4" y1="170" x2="690.8" y2="226" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="690.8" y1="226" x2="768.2" y2="282" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="768.2" y1="282" x2="721.8" y2="338" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="721.8" y1="338" x2="636.7" y2="394" stroke="#759F45" stroke-width="2.5" opacity=".7"/><line x1="458.6" y1="58" x2="652.1" y2="114" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="652.1" y1="114" x2="598.0" y2="170" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="598.0" y1="170" x2="621.2" y2="226" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="621.2" y1="226" x2="652.1" y2="282" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="652.1" y1="282" x2="628.9" y2="338" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="628.9" y1="338" x2="590.2" y2="394" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><circle cx="520.6" cy="58" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · А1 · Стресс-статус: -12"/><text x="520.6" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-12</text><circle cx="458.6" cy="58" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · А1 · Стресс-статус: -28"/><text x="458.6" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-28</text><circle cx="714.1" cy="114" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · А2 · Симптомы: +38"/><text x="714.1" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+38</text><circle cx="652.1" cy="114" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · А2 · Симптомы: +22"/><text x="652.1" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+22</text><circle cx="644.4" cy="170" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · Б1 · Психол. профиль: +20"/><text x="644.4" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+20</text><circle cx="598.0" cy="170" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · Б1 · Психол. профиль: +8"/><text x="598.0" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+8</text><circle cx="690.8" cy="226" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · Б2 · Устойчивость: +32"/><text x="690.8" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+32</text><circle cx="621.2" cy="226" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · Б2 · Устойчивость: +14"/><text x="621.2" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+14</text><circle cx="768.2" cy="282" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · В1 · Профессиональные: +52"/><text x="768.2" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+52</text><circle cx="652.1" cy="282" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · В1 · Профессиональные: +22"/><text x="652.1" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+22</text><circle cx="721.8" cy="338" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · В2 · Личностные: +40"/><text x="721.8" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+40</text><circle cx="628.9" cy="338" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · В2 · Личностные: +16"/><text x="628.9" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+16</text><circle cx="636.7" cy="394" r="16" fill="#759F45" stroke="#fff" stroke-width="2" data-tip="Доволен работой · В3 · Социальные: +18"/><text x="636.7" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+18</text><circle cx="590.2" cy="394" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Недоволен работой · В3 · Социальные: +6"/><text x="590.2" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+6</text><text x="170" y="62" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А1 · Стресс-статус</text><text x="170" y="118" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А2 · Симптомы</text><text x="170" y="174" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б1 · Психол. профиль</text><text x="170" y="230" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б2 · Устойчивость</text><text x="170" y="286" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В1 · Профессиональные</text><text x="170" y="342" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В2 · Личностные</text><text x="170" y="398" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В3 · Социальные</text><circle cx="295.2" cy="454" r="5" fill="#759F45"/><text x="313.3" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Доволен работой</text><circle cx="572.4" cy="454" r="5" fill="#98A0AE"/><text x="590.5" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Недоволен работой</text></svg></div>
+    <figure class="viz reveal" data-viz="scale" data-zones>
+      <figcaption class="viz__head">
+        <div class="viz__titles">
+          <div class="viz__title">Субиндексы 2-го уровня · сравнение подгрупп</div>
+          <div class="viz__sub">Значения субиндексов по подгруппам сектора · сектор n = 44 · шкала −100…+100</div>
+        </div>
+        <div class="viz__tools">
+          <ul class="viz-key" aria-hidden="true"><li><span class="viz-key__mark mark--pos"></span>Доволен работой</li><li><span class="viz-key__mark viz-key__mark--hollow mark--muted"></span>Недоволен работой</li></ul>
+          <button class="viz__table-toggle" type="button" aria-pressed="false" hidden>Таблица</button>
+        </div>
+      </figcaption>
+      <table class="viz__data">
+        <caption>Субиндексы 2-го уровня по подгруппам сектора</caption>
+        <thead><tr><th scope="col">Субиндекс</th><th scope="col" data-mark="pos" data-focus>Доволен работой</th><th scope="col" data-mark="muted" data-hollow>Недоволен работой</th></tr></thead>
+        <tbody><tr><th scope="row">А1 · Стресс-статус</th><td>−12</td><td>−28</td></tr><tr><th scope="row">А2 · Симптомы</th><td>+38</td><td>+22</td></tr><tr><th scope="row">Б1 · Психол. профиль</th><td>+20</td><td>+8</td></tr><tr><th scope="row">Б2 · Устойчивость</th><td>+32</td><td>+14</td></tr><tr><th scope="row">В1 · Профессиональные</th><td>+52</td><td>+22</td></tr><tr><th scope="row">В2 · Личностные</th><td>+40</td><td>+16</td></tr><tr><th scope="row">В3 · Социальные</th><td>+18</td><td>+6</td></tr></tbody>
+      </table>
+    </figure>
   </section>
   <section class="dashboard-section">
   <div class="insight-card" style="margin-bottom:0;">
@@ -1530,8 +1513,24 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div></div>
   </section>
   <section class="dashboard-section">
-    <div class="metric-block__title" style="margin-bottom:1rem">Субиндексы 2-го уровня · сравнение подгрупп</div>
-    <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 964 472" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"><rect x="0" y="30" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="142" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="254" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="366" width="964" height="56" fill="#F5F8FD"/><line x1="180.0" y1="30" x2="180.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="180.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-100</text><line x1="373.5" y1="30" x2="373.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="373.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-50</text><line x1="567.0" y1="30" x2="567.0" y2="422" stroke="#A3ACBB" stroke-width="1.5"/><text x="567.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+0</text><line x1="760.5" y1="30" x2="760.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="760.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+50</text><line x1="954.0" y1="30" x2="954.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="954.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+100</text><line x1="315.5" y1="58" x2="636.7" y2="114" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="636.7" y1="114" x2="551.5" y2="170" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="551.5" y1="170" x2="636.7" y2="226" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="636.7" y1="226" x2="729.5" y2="282" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="729.5" y1="282" x2="675.4" y2="338" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="675.4" y1="338" x2="605.7" y2="394" stroke="#FFD452" stroke-width="2.5" opacity=".7"/><line x1="389.0" y1="58" x2="621.2" y2="114" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="621.2" y1="114" x2="520.6" y2="170" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="520.6" y1="170" x2="536.0" y2="226" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="536.0" y1="226" x2="590.2" y2="282" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="590.2" y1="282" x2="652.1" y2="338" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="652.1" y1="338" x2="598.0" y2="394" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><circle cx="315.5" cy="58" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · А1 · Стресс-статус: -65"/><text x="315.5" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-65</text><circle cx="389.0" cy="58" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · А1 · Стресс-статус: -46"/><text x="389.0" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-46</text><circle cx="636.7" cy="114" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · А2 · Симптомы: +18"/><text x="636.7" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+18</text><circle cx="621.2" cy="114" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · А2 · Симптомы: +14"/><text x="621.2" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+14</text><circle cx="551.5" cy="170" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · Б1 · Психол. профиль: -4"/><text x="551.5" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-4</text><circle cx="520.6" cy="170" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · Б1 · Психол. профиль: -12"/><text x="520.6" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-12</text><circle cx="636.7" cy="226" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · Б2 · Устойчивость: +18"/><text x="636.7" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+18</text><circle cx="536.0" cy="226" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · Б2 · Устойчивость: -8"/><text x="536.0" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-8</text><circle cx="729.5" cy="282" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · В1 · Профессиональные: +42"/><text x="729.5" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+42</text><circle cx="590.2" cy="282" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · В1 · Профессиональные: +6"/><text x="590.2" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+6</text><circle cx="675.4" cy="338" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · В2 · Личностные: +28"/><text x="675.4" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+28</text><circle cx="652.1" cy="338" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · В2 · Личностные: +22"/><text x="652.1" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+22</text><circle cx="605.7" cy="394" r="16" fill="#FFD452" stroke="#fff" stroke-width="2" data-tip="Уязв. лоялист (доволен) · В3 · Социальные: +10"/><text x="605.7" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+10</text><circle cx="598.0" cy="394" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Тихий выгорающий (недоволен) · В3 · Социальные: +8"/><text x="598.0" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+8</text><text x="170" y="62" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А1 · Стресс-статус</text><text x="170" y="118" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А2 · Симптомы</text><text x="170" y="174" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б1 · Психол. профиль</text><text x="170" y="230" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б2 · Устойчивость</text><text x="170" y="286" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В1 · Профессиональные</text><text x="170" y="342" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В2 · Личностные</text><text x="170" y="398" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В3 · Социальные</text><circle cx="295.2" cy="454" r="5" fill="#FFD452"/><text x="313.3" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Уязв. лоялист (доволен)</text><circle cx="572.4" cy="454" r="5" fill="#F15D56"/><text x="590.5" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Тихий выгорающий (недоволен)</text></svg></div>
+    <figure class="viz reveal" data-viz="scale" data-zones>
+      <figcaption class="viz__head">
+        <div class="viz__titles">
+          <div class="viz__title">Субиндексы 2-го уровня · сравнение подгрупп</div>
+          <div class="viz__sub">Значения субиндексов по подгруппам сектора · сектор n = 36 · шкала −100…+100</div>
+        </div>
+        <div class="viz__tools">
+          <ul class="viz-key" aria-hidden="true"><li><span class="viz-key__mark mark--mid"></span>Уязв. лоялист (доволен)</li><li><span class="viz-key__mark mark--neg"></span>Тихий выгорающий (недоволен)</li></ul>
+          <button class="viz__table-toggle" type="button" aria-pressed="false" hidden>Таблица</button>
+        </div>
+      </figcaption>
+      <table class="viz__data">
+        <caption>Субиндексы 2-го уровня по подгруппам сектора</caption>
+        <thead><tr><th scope="col">Субиндекс</th><th scope="col" data-mark="mid" data-focus>Уязв. лоялист (доволен)</th><th scope="col" data-mark="neg" data-focus>Тихий выгорающий (недоволен)</th></tr></thead>
+        <tbody><tr><th scope="row">А1 · Стресс-статус</th><td>−65</td><td>−46</td></tr><tr><th scope="row">А2 · Симптомы</th><td>+18</td><td>+14</td></tr><tr><th scope="row">Б1 · Психол. профиль</th><td>−4</td><td>−12</td></tr><tr><th scope="row">Б2 · Устойчивость</th><td>+18</td><td>−8</td></tr><tr><th scope="row">В1 · Профессиональные</th><td>+42</td><td>+6</td></tr><tr><th scope="row">В2 · Личностные</th><td>+28</td><td>+22</td></tr><tr><th scope="row">В3 · Социальные</th><td>+10</td><td>+8</td></tr></tbody>
+      </table>
+      <p class="viz__note">У Уязвимых лоялистов <b>Стресс-статус −65</b> — критический: рабочая среда (В1 +42) маскирует дистресс.</p>
+    </figure>
   </section>
   <section class="dashboard-section">
   <div class="insight-card" style="margin-bottom:0;">
@@ -1606,8 +1605,23 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div class="section-description" style="margin-top:1.25rem!important;margin-bottom:0!important">Все 6&nbsp;человек <strong class="t-em">затруднились ответить</strong> на&nbsp;вопрос о&nbsp;намерении уйти&nbsp;— никто не&nbsp;сказал «уйду» явно. Это группа неопределённости, а&nbsp;не&nbsp;активной текучести.</div>
   </section>
   <section class="dashboard-section">
-    <div class="metric-block__title" style="margin-bottom:1rem">Субиндексы 2-го уровня · сравнение подгрупп</div>
-    <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 964 472" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"><rect x="0" y="30" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="142" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="254" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="366" width="964" height="56" fill="#F5F8FD"/><line x1="180.0" y1="30" x2="180.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="180.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-100</text><line x1="373.5" y1="30" x2="373.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="373.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-50</text><line x1="567.0" y1="30" x2="567.0" y2="422" stroke="#A3ACBB" stroke-width="1.5"/><text x="567.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+0</text><line x1="760.5" y1="30" x2="760.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="760.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+50</text><line x1="954.0" y1="30" x2="954.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="954.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+100</text><line x1="512.8" y1="58" x2="690.8" y2="114" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="690.8" y1="114" x2="636.7" y2="170" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="636.7" y1="170" x2="667.6" y2="226" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="667.6" y1="226" x2="729.5" y2="282" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="729.5" y1="282" x2="714.1" y2="338" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="714.1" y1="338" x2="621.2" y2="394" stroke="#98A0AE" stroke-width="2.5" opacity=".7"/><line x1="458.6" y1="58" x2="628.9" y2="114" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="628.9" y1="114" x2="598.0" y2="170" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="598.0" y1="170" x2="621.2" y2="226" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="621.2" y1="226" x2="628.9" y2="282" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="628.9" y1="282" x2="636.7" y2="338" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="636.7" y1="338" x2="590.2" y2="394" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><circle cx="512.8" cy="58" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · А1 · Стресс-статус: -14"/><text x="512.8" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-14</text><circle cx="458.6" cy="58" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · А1 · Стресс-статус: -28"/><text x="458.6" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-28</text><circle cx="690.8" cy="114" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · А2 · Симптомы: +32"/><text x="690.8" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+32</text><circle cx="628.9" cy="114" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · А2 · Симптомы: +16"/><text x="628.9" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+16</text><circle cx="636.7" cy="170" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · Б1 · Психол. профиль: +18"/><text x="636.7" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+18</text><circle cx="598.0" cy="170" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · Б1 · Психол. профиль: +8"/><text x="598.0" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+8</text><circle cx="667.6" cy="226" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · Б2 · Устойчивость: +26"/><text x="667.6" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+26</text><circle cx="621.2" cy="226" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · Б2 · Устойчивость: +14"/><text x="621.2" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+14</text><circle cx="729.5" cy="282" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · В1 · Профессиональные: +42"/><text x="729.5" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+42</text><circle cx="628.9" cy="282" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · В1 · Профессиональные: +16"/><text x="628.9" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+16</text><circle cx="714.1" cy="338" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · В2 · Личностные: +38"/><text x="714.1" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+38</text><circle cx="636.7" cy="338" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · В2 · Личностные: +18"/><text x="636.7" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+18</text><circle cx="621.2" cy="394" r="16" fill="#98A0AE" stroke="#fff" stroke-width="2" data-tip="Доволен, сомневается · В3 · Социальные: +14"/><text x="621.2" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+14</text><circle cx="590.2" cy="394" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="Недоволен, сомневается · В3 · Социальные: +6"/><text x="590.2" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+6</text><text x="170" y="62" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А1 · Стресс-статус</text><text x="170" y="118" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А2 · Симптомы</text><text x="170" y="174" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б1 · Психол. профиль</text><text x="170" y="230" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б2 · Устойчивость</text><text x="170" y="286" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В1 · Профессиональные</text><text x="170" y="342" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В2 · Личностные</text><text x="170" y="398" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В3 · Социальные</text><circle cx="295.2" cy="454" r="5" fill="#98A0AE"/><text x="313.3" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Доволен, сомневается</text><circle cx="572.4" cy="454" r="5" fill="#F15D56"/><text x="590.5" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Недоволен, сомневается</text></svg></div>
+    <figure class="viz reveal" data-viz="scale" data-zones>
+      <figcaption class="viz__head">
+        <div class="viz__titles">
+          <div class="viz__title">Субиндексы 2-го уровня · сравнение подгрупп</div>
+          <div class="viz__sub">Значения субиндексов по подгруппам сектора · сектор n = 6 · шкала −100…+100</div>
+        </div>
+        <div class="viz__tools">
+          <ul class="viz-key" aria-hidden="true"><li><span class="viz-key__mark viz-key__mark--hollow mark--muted"></span>Доволен, сомневается</li><li><span class="viz-key__mark mark--neg"></span>Недоволен, сомневается</li></ul>
+          <button class="viz__table-toggle" type="button" aria-pressed="false" hidden>Таблица</button>
+        </div>
+      </figcaption>
+      <table class="viz__data">
+        <caption>Субиндексы 2-го уровня по подгруппам сектора</caption>
+        <thead><tr><th scope="col">Субиндекс</th><th scope="col" data-mark="muted" data-hollow>Доволен, сомневается</th><th scope="col" data-mark="neg" data-focus>Недоволен, сомневается</th></tr></thead>
+        <tbody><tr><th scope="row">А1 · Стресс-статус</th><td>−14</td><td>−28</td></tr><tr><th scope="row">А2 · Симптомы</th><td>+32</td><td>+16</td></tr><tr><th scope="row">Б1 · Психол. профиль</th><td>+18</td><td>+8</td></tr><tr><th scope="row">Б2 · Устойчивость</th><td>+26</td><td>+14</td></tr><tr><th scope="row">В1 · Профессиональные</th><td>+42</td><td>+16</td></tr><tr><th scope="row">В2 · Личностные</th><td>+38</td><td>+18</td></tr><tr><th scope="row">В3 · Социальные</th><td>+14</td><td>+6</td></tr></tbody>
+      </table>
+    </figure>
   </section>
   <section class="dashboard-section">
   <div class="insight-card" style="margin-bottom:0;">
@@ -1659,8 +1673,23 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div></div>
   </section>
   <section class="dashboard-section">
-    <div class="metric-block__title" style="margin-bottom:1rem">Субиндексы 2-го уровня · сравнение подгрупп</div>
-    <div class="chart-scroll"><svg class="chart-svg" viewBox="0 0 964 472" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible;"><rect x="0" y="30" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="142" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="254" width="964" height="56" fill="#F5F8FD"/><rect x="0" y="366" width="964" height="56" fill="#F5F8FD"/><line x1="180.0" y1="30" x2="180.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="180.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-100</text><line x1="373.5" y1="30" x2="373.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="373.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">-50</text><line x1="567.0" y1="30" x2="567.0" y2="422" stroke="#A3ACBB" stroke-width="1.5"/><text x="567.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+0</text><line x1="760.5" y1="30" x2="760.5" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="760.5" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+50</text><line x1="954.0" y1="30" x2="954.0" y2="422" stroke="#DBE4F3" stroke-width="1" stroke-dasharray="3 3"/><text x="954.0" y="22" text-anchor="middle" font-size="9" fill="#98A0AE" font-family="Euclid Circular A,sans-serif">+100</text><line x1="288.4" y1="58" x2="605.7" y2="114" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="605.7" y1="114" x2="497.3" y2="170" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="497.3" y1="170" x2="512.8" y2="226" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="512.8" y1="226" x2="536.0" y2="282" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="536.0" y1="282" x2="659.9" y2="338" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><line x1="659.9" y1="338" x2="590.2" y2="394" stroke="#F15D56" stroke-width="2.5" opacity=".7"/><circle cx="288.4" cy="58" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · А1 · Стресс-статус: -72"/><text x="288.4" y="62" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-72</text><circle cx="605.7" cy="114" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · А2 · Симптомы: +10"/><text x="605.7" y="118" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+10</text><circle cx="497.3" cy="170" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · Б1 · Психол. профиль: -18"/><text x="497.3" y="174" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-18</text><circle cx="512.8" cy="226" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · Б2 · Устойчивость: -14"/><text x="512.8" y="230" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-14</text><circle cx="536.0" cy="282" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · В1 · Профессиональные: -8"/><text x="536.0" y="286" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">-8</text><circle cx="659.9" cy="338" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · В2 · Личностные: +24"/><text x="659.9" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+24</text><circle cx="590.2" cy="394" r="16" fill="#F15D56" stroke="#fff" stroke-width="2" data-tip="13 человек (вся группа) · В3 · Социальные: +6"/><text x="590.2" y="398" text-anchor="middle" font-size="11" font-weight="600" fill="#fff" font-family="Euclid Circular A,sans-serif">+6</text><text x="170" y="62" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А1 · Стресс-статус</text><text x="170" y="118" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">А2 · Симптомы</text><text x="170" y="174" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б1 · Психол. профиль</text><text x="170" y="230" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">Б2 · Устойчивость</text><text x="170" y="286" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В1 · Профессиональные</text><text x="170" y="342" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В2 · Личностные</text><text x="170" y="398" text-anchor="end" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">В3 · Социальные</text><circle cx="295.2" cy="454" r="5" fill="#F15D56"/><text x="313.3" y="458" font-size="11" fill="#5A6078" font-family="Euclid Circular A,sans-serif">13&nbsp;человек (вся группа)</text></svg></div>
+    <figure class="viz reveal" data-viz="scale" data-zones>
+      <figcaption class="viz__head">
+        <div class="viz__titles">
+          <div class="viz__title">Субиндексы 2-го уровня · сравнение подгрупп</div>
+          <div class="viz__sub">13 человек (вся группа) · значения субиндексов · шкала −100…+100</div>
+        </div>
+        <div class="viz__tools">
+          
+          <button class="viz__table-toggle" type="button" aria-pressed="false" hidden>Таблица</button>
+        </div>
+      </figcaption>
+      <table class="viz__data">
+        <caption>Субиндексы 2-го уровня по подгруппам сектора</caption>
+        <thead><tr><th scope="col">Субиндекс</th><th scope="col" data-mark="neg" data-focus>13 человек (вся группа)</th></tr></thead>
+        <tbody><tr><th scope="row">А1 · Стресс-статус</th><td>−72</td></tr><tr><th scope="row">А2 · Симптомы</th><td>+10</td></tr><tr><th scope="row">Б1 · Психол. профиль</th><td>−18</td></tr><tr><th scope="row">Б2 · Устойчивость</th><td>−14</td></tr><tr><th scope="row">В1 · Профессиональные</th><td>−8</td></tr><tr><th scope="row">В2 · Личностные</th><td>+24</td></tr><tr><th scope="row">В3 · Социальные</th><td>+6</td></tr></tbody>
+      </table>
+    </figure>
   </section>
   <section class="dashboard-section">
   <div class="insight-card" style="margin-bottom:0;">
@@ -2037,85 +2066,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script>
-(function(){
-  var svgs = document.querySelectorAll('.chart-svg');
-  if(!svgs.length) return;
-
-  if(!('IntersectionObserver' in window)){
-    svgs.forEach(function(svg){ svg.classList.add('is-visible'); });
-    return;
-  }
-
-  function animate(svg){
-    var lines = svg.querySelectorAll('polyline, line[stroke-width="2.5"]');
-    lines.forEach(function(line){
-      var len;
-      try{ len = line.getTotalLength(); }catch(e){ return; }
-      line.style.strokeDasharray = len;
-      line.style.strokeDashoffset = len;
-    });
-    void svg.getBoundingClientRect();
-
-    svg.querySelectorAll('circle[stroke-width="2"]').forEach(function(dot,i){
-      dot.style.transitionDelay = (i * 45) + 'ms';
-    });
-    svg.querySelectorAll('text[font-weight]').forEach(function(label,i){
-      label.style.transitionDelay = (i * 45 + 120) + 'ms';
-    });
-
-    requestAnimationFrame(function(){
-      requestAnimationFrame(function(){
-        lines.forEach(function(line){ line.style.strokeDashoffset = 0; });
-        svg.classList.add('is-visible');
-      });
-    });
-  }
-
-  var io = new IntersectionObserver(function(entries,obs){
-    entries.forEach(function(entry){
-      if(entry.isIntersecting){
-        animate(entry.target);
-        obs.unobserve(entry.target);
-      }
-    });
-  }, {threshold:.2});
-
-  svgs.forEach(function(svg){ io.observe(svg); });
-})();
-</script>
-
-<script>
-(function(){
-  var points = document.querySelectorAll('.chart-svg circle[data-tip]');
-  if(!points.length) return;
-
-  var tip = document.createElement('div');
-  tip.className = 'chart-tip';
-  document.body.appendChild(tip);
-
-  function show(el){
-    var text = el.getAttribute('data-tip');
-    if(!text) return;
-    tip.textContent = text;
-    var r = el.getBoundingClientRect();
-    tip.style.left = (r.left + r.width / 2) + 'px';
-    tip.style.top = r.top + 'px';
-    tip.classList.add('is-visible');
-  }
-  function hide(){ tip.classList.remove('is-visible'); }
-
-  document.addEventListener('mouseover', function(e){
-    var el = e.target.closest && e.target.closest('.chart-svg circle[data-tip]');
-    if(el) show(el);
-  });
-  document.addEventListener('mouseout', function(e){
-    var el = e.target.closest && e.target.closest('.chart-svg circle[data-tip]');
-    if(el) hide();
-  });
-  document.addEventListener('scroll', hide, true);
-})();
-</script>
 
 <script src="assets/js/dashboard-viz.js?v=20260923a"></script>
 <script src="assets/js/reveal.js?v=20260923a"></script>
