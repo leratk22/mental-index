@@ -1,267 +1,297 @@
 /* ============================================================
-   ДАШБОРД — каркас
-   Графики появятся на этапе 4; сейчас на их местах серые
-   прямоугольники с подписью, что там будет.
+   ДАШБОРД — графики поверх основных стилей из dashboard.html
+   Цвета — те же, что в дашборде и на лендинге: --red (#F15D56),
+   --grn (#759F45), серый «затруднились» #98A0AE. Шрифт — шкала
+   дашборда (--type-body 14 px), мельче подписи не опускаются.
 
-   Типографика здесь — app-шкала (t-title-*, t-body-*), а не промо:
-   дашборд должен читаться так же, как в приложении.
+   1. Переключатель «Таблица» / «Диаграмма» — у каждого графика
+   2. Таблица данных графика
+   3. Доли ответов от центральной оси (страницы компонентов)
+   4. Полоса из пяти кусочков (блок поддержки на главной)
+   5. Сравнение на шкале Индекса — строки-гантели (компоненты, секторы)
    ============================================================ */
 
-.dash {
-  padding-block: var(--gap-32) var(--space-section-tight);
-  background: var(--color-bg-tetriary);
-  min-height: 100vh;
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 
-/* --- Шапка дашборда ------------------------------------------ */
-.dash__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--gap-16);
-  margin-bottom: var(--gap-24);
-}
-
-.dash__title-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
-}
-
-/* Плашка «демо-данные» — по ТЗ видна всегда, не прячется при скролле */
-.dash__demo-badge {
-  background: var(--color-bg-feedback-warning-overlay);
-  color: var(--color-fg-primary);
-}
-
-/* --- Панель фильтров ----------------------------------------- */
-.filters {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-end;
-  gap: var(--gap-12);
-  padding: var(--gap-20);
-  margin-bottom: var(--gap-24);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-m);
-}
-
-.filter {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-4);
-  min-width: 156px;
-  flex: 1 1 156px;
-}
-
-.filter__label {
-  font-size: var(--size-label-s);
-  line-height: var(--lh-label-s);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-fg-tetriary);
-}
-
-.filter__control {
-  appearance: none;
-  padding: 10px 36px 10px 14px;
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-xs);
-  background-color: var(--color-bg-primary);
-  /* стрелка селекта рисуется фоном, чтобы не тащить иконочный шрифт */
-  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
-                    linear-gradient(135deg, currentColor 50%, transparent 50%);
-  background-position: calc(100% - 18px) 52%, calc(100% - 13px) 52%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
-  color: var(--color-fg-primary);
+/* ── 1. Переключатель ──────────────────────────────────────── */
+.chart-toggle {
+  position: relative;
+  flex-shrink: 0;
+  min-height: 32px;
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font: inherit;
+  font-size: var(--type-body);
+  font-weight: var(--weight-ui);
+  line-height: 1.3;
+  white-space: nowrap;
   cursor: pointer;
+  transition: background .15s, border-color .15s, color .15s;
+}
+.chart-toggle::after { content: ""; position: absolute; inset: -6px -4px; } /* цель касания ≥ 44 px */
+.chart-toggle:hover { border-color: #98A0AE; }
+.chart-toggle:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+
+/* Легенда и кнопка — в одной строке; легенда видна только вместе с графиком
+   (в таблице её обозначений нет), кнопка при этом остаётся справа. */
+.chart-tools { display: flex; align-items: center; gap: .75rem 1rem; flex-wrap: wrap; }
+.chart-tools > .legend { margin-bottom: 0 !important; }
+.chart-tools > .legend[hidden] { display: none; }
+.chart-tools > .chart-toggle { margin-left: auto; }
+.legend .chart-toggle { margin-left: auto; }
+/* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
+@media (max-width: 600px) {
+  :has(> .chart-tools) { flex-wrap: wrap; row-gap: .5rem; }
+  :has(> .chart-tools) > .chart-tools { flex-basis: 100%; }
+}
+.metric-block__head .chart-toggle { margin-left: auto; align-self: center; }
+.chart-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.chart-bar > .metric-block__title { margin-bottom: 0 !important; }
+.chart-bar--solo { justify-content: flex-end; margin-bottom: .75rem; }
+
+/* Переключение видов: по умолчанию виден график, по кнопке — альтернатива. */
+.chart-switch > [data-alt] { display: none; }
+.chart-switch.is-alt > [data-alt] { display: block; }
+.chart-switch.is-alt > table[data-alt] { display: table; }
+.chart-switch.is-alt > :not([data-alt]) { display: none !important; } /* у SVG инлайновый display:block */
+
+/* ── 2. Таблица ────────────────────────────────────────────── */
+.chart-table-wrap { overflow-x: auto; margin-bottom: 1.25rem; }
+.chart-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--type-body);
+  line-height: 1.4;
+  color: var(--text);
+}
+.chart-table th,
+.chart-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border);
+  text-align: right;
+  vertical-align: top;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.chart-table tr > :first-child { padding-left: 0; text-align: left; white-space: normal; }
+.chart-table tr > :last-child { padding-right: 0; }
+.chart-table thead th { font-weight: var(--weight-ui); color: var(--muted); }
+.chart-table tbody th { font-weight: 400; color: var(--muted); }
+.chart-table tbody tr:last-child > * { border-bottom: 0; }
+.chart-switch.is-alt { overflow-x: auto; }
+/* На телефоне таблица листается вбок, а не ломает слова в заголовках. */
+@media (max-width: 600px) {
+  .chart-table th, .chart-table td { padding: 8px 8px; }
+  .chart-table tr > :first-child { min-width: 9.5rem; }
+  .metric-block__head { flex-wrap: wrap; row-gap: 4px !important; }
+  .metric-block__head .metric-block__title { flex-basis: 100%; }
 }
 
-.filters__reset { margin-inline-start: auto; }
-
-/* --- Сетка виджетов ------------------------------------------
-   12 колонок: перекладывать блоки можно, не трогая разметку. */
-.dash__grid {
+/* ── 3. Доли ответов от центральной оси ────────────────────────
+   Дорожка — домен −100…+100 %: слева негативные, справа
+   позитивные, «затруднились» делятся пополам вокруг нуля.
+   Значение стоит внутри полосы; если не помещается — снаружи,
+   у внешнего конца (это решает скрипт по реальной ширине). */
+.likert {
   display: grid;
-  gap: var(--gap-20);
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  column-gap: 1.25rem;
 }
-
-.widget {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-16);
-  padding: var(--gap-24);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-secondary);
-  border-radius: var(--radius-m);
+.likert__row { display: contents; }
+.likert__label {
+  display: flex; align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+  font-size: var(--type-body);
+  line-height: 1.35;
+  color: var(--muted);
 }
-
-.widget__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: var(--gap-4) var(--gap-12);
+.likert__track {
+  position: relative;
+  min-height: 44px;
+  border-top: 1px solid var(--border);
 }
-
-.widget__hint {
-  color: var(--color-fg-tetriary);
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
+.likert__legend + .likert__row > * { border-top: 0; }
+/* Легенда — над дорожками, по центру оси: негативный слева, позитивный справа. */
+.likert__legend { grid-column: 2; justify-content: center; margin-bottom: .25rem; }
+.likert__track::before {                 /* ноль */
+  content: ""; position: absolute; left: 50%; top: 6px; bottom: 6px;
+  width: 1px; margin-left: -.5px; background: #A3ACBB; z-index: 1;
 }
-
-.widget__body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
-
-@media (min-width: 760px) {
-  .dash__grid { grid-template-columns: repeat(12, 1fr); }
-  .widget--score    { grid-column: span 4; }
-  .widget--donut    { grid-column: span 8; }
-  .widget--factors  { grid-column: span 6; }
-  .widget--trend    { grid-column: span 6; }
-  .widget--heatmap  { grid-column: span 12; }
-  .widget--recs     { grid-column: span 12; }
+.likert__seg {
+  position: absolute; top: 50%;
+  height: 24px; margin-top: -12px;
+  display: flex; align-items: center; justify-content: center;
 }
-
-/* --- Общий индекс -------------------------------------------- */
-.score {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
-}
-
-.score__value {
-  font-size: var(--size-stat-s);
-  line-height: var(--lh-stat-s);
-  letter-spacing: var(--ls-stat-s);
-  font-weight: var(--font-weight-bold);
+.likert__seg + .likert__seg { box-shadow: -2px 0 0 var(--card); }  /* 2 px зазор между кусками */
+.likert__seg--neg { background: var(--red); border-radius: 4px 0 0 4px; transform-origin: right center; }
+.likert__seg--neu { background: #98A0AE; transform-origin: center; }
+.likert__seg--pos { background: var(--grn); border-radius: 0 4px 4px 0; transform-origin: left center; }
+.likert__val {
+  padding: 0 6px;
+  font-size: var(--type-body);
+  font-weight: 600;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
   font-variant-numeric: tabular-nums;
 }
+.likert__seg.is-out .likert__val { position: absolute; top: 50%; transform: translateY(-50%); color: var(--text); }
+.likert__seg--neg.is-out .likert__val { right: 100%; }
+.likert__seg--pos.is-out .likert__val { left: 100%; }
 
-.score__delta {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-4);
-  font-size: var(--size-label-m);
-  line-height: var(--lh-label-m);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-fg-feedback-negative);
+/* Появление: полосы растут от нуля, когда блок попадает в экран. */
+.likert--anim .likert__seg { transform: scaleX(0); transition: transform .36s cubic-bezier(.2, .7, .3, 1); }
+.likert--anim .likert__val { opacity: 0; transition: opacity .2s ease .22s; }
+.likert--anim.is-drawn .likert__seg { transform: none; }
+.likert--anim.is-drawn .likert__val { opacity: 1; }
+
+@media (max-width: 600px) {
+  .likert { display: block; }
+  .likert__row { display: block; border-top: 1px solid var(--border); }
+  .likert__legend + .likert__row { border-top: 0; }
+  .likert__legend { margin-bottom: .5rem; justify-content: flex-start; gap: 4px 14px; }
+  .likert__label { border-top: 0; padding: 10px 0 2px; }
+  .likert__track { border-top: 0; min-height: 36px; }
 }
 
-/* --- Легенда состояний --------------------------------------- */
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--gap-16);
-}
+/* ── 4. Полоса из пяти кусочков (поддержка) ────────────────── */
+.support-block-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
+.support-block-head .support-block-title { margin: 0 !important; }
+.support-stack { padding: .5rem 0 .25rem; }
+.stack { position: relative; height: 32px; }
+.stack__seg { position: absolute; top: 0; bottom: 0; transform-origin: left center; }
+.stack__seg + .stack__seg { box-shadow: -2px 0 0 var(--card); }
+.stack__seg:first-child { border-radius: 8px 0 0 8px; }
+.stack__seg:last-child { border-radius: 0 8px 8px 0; }
+.stack__seg--pos { background: var(--grn); }
+.stack__seg--pos-soft { background: #ACC58F; }   /* --grn, 60 % на белом */
+.stack__seg--neu { background: #98A0AE; }
+.stack__seg--neg-soft { background: #F79E9A; }   /* --red, 60 % на белом */
+.stack__seg--neg { background: var(--red); }
 
-.legend__item {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--gap-8);
-  font-size: var(--size-body-m);
-  line-height: var(--lh-body-m);
-  color: var(--color-fg-secondary);
-}
-
-.legend__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: var(--radius-full);
-  background: var(--legend-color, var(--color-fg-muted));
-  flex: none;
-}
-
-.legend__item--strain   { --legend-color: var(--color-state-strain); }
-.legend__item--fragile  { --legend-color: var(--color-state-fragile); }
-.legend__item--resource { --legend-color: var(--color-state-resource); }
-
-/* --- Рекомендации -------------------------------------------- */
-.recs {
-  display: grid;
-  gap: var(--gap-16);
-  grid-template-columns: 1fr;
-}
-
-.rec {
-  display: flex;
-  flex-direction: column;
-  gap: var(--gap-8);
-  padding: var(--gap-20);
-  border-radius: var(--radius-s);
-  background: var(--color-bg-secondary);
-}
-
-.rec__level {
-  font-size: var(--size-label-s);
-  line-height: var(--lh-label-s);
-  letter-spacing: var(--ls-caption-s);
-  text-transform: uppercase;
-  font-weight: var(--font-weight-bold);
-  color: var(--color-fg-accent);
-}
-
-@media (min-width: 760px) {
-  .recs { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* --- Методология (аккордеон) ---------------------------------
-   <details>/<summary> — раскрытие без единой строки JS. */
-.methodology { margin-top: var(--gap-32); }
-
-.acc {
-  border-top: 1px solid var(--color-border-secondary);
-}
-
-.acc:last-of-type { border-bottom: 1px solid var(--color-border-secondary); }
-
-.acc__summary {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--gap-16);
-  padding: var(--gap-20) 0;
-  cursor: pointer;
+/* Ключ — столбиком на любой ширине: подписи не выдают себя за
+   подписи кусков над ними (ширины кусков и колонок не совпадают). */
+.stack__key {
   list-style: none;
-  font-size: var(--size-title-m);
-  line-height: var(--lh-title-m);
-  font-weight: var(--font-weight-bold);
+  display: grid;
+  gap: .5rem;
+  max-width: 440px;
+  margin-top: 1rem;
+}
+.stack__key li {
+  position: relative;
+  display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+  padding-left: 18px;
+  font-size: var(--type-body); line-height: 1.35; color: var(--muted);
+}
+.stack__key b { font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums; }
+/* Маркер — кружок, как в остальных легендах дашборда. */
+.stack__swatch { position: absolute; left: 0; top: 4px; width: 10px; height: 10px; border-radius: 50%; }
+
+.stack--anim .stack__seg { transform: scaleX(0); transition: transform .36s cubic-bezier(.2, .7, .3, 1); transition-delay: calc(var(--i, 0) * 60ms); }
+.stack--anim.is-drawn .stack__seg { transform: none; }
+
+@media (max-width: 600px) {
+  .support-block-head { flex-direction: column; }
 }
 
-.acc__summary::-webkit-details-marker { display: none; }
+/* ── 5. Строки-гантели ─────────────────────────────────────────
+   Показатель — строка; точки серий стоят на одной линии шкалы
+   −100…+100 и соединены отрезком (разрыв). Подписи — снаружи пары:
+   меньшее значение слева от своей точки, большее — справа, поэтому
+   близкие значения не наползают друг на друга. */
+.db {
+  display: grid;
+  grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr);
+  column-gap: 1.25rem;
+}
+.db__axis { grid-column: 2; position: relative; height: 22px; }
+.db__axis span {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: var(--type-caption); line-height: 1; color: var(--hint);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.db__axis span:first-child { transform: none; }
+.db__axis span:last-child { transform: translateX(-100%); }
+.db__row { display: contents; }
+.db__label {
+  display: flex; align-items: center; justify-content: flex-end; text-align: right;
+  padding: 8px 0;
+  font-size: var(--type-body); line-height: 1.35; color: var(--muted);
+}
+.db__row--total .db__label { color: var(--text); font-weight: var(--weight-ui); }
+.db__track {
+  position: relative;
+  min-height: 48px;
+  background:
+    linear-gradient(to right, transparent calc(50% - .5px), #A3ACBB calc(50% - .5px), #A3ACBB calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(to right, transparent calc(25% - .5px), var(--border) calc(25% - .5px), var(--border) calc(25% + .5px), transparent calc(25% + .5px)),
+    linear-gradient(to right, transparent calc(75% - .5px), var(--border) calc(75% - .5px), var(--border) calc(75% + .5px), transparent calc(75% + .5px)),
+    var(--zones, none);
+}
+/* Зоны Индекса фоном — как на шкале на главной: ≤19 / 20–45 / >45. */
+.db--zones .db__track { --zones: linear-gradient(to right, var(--red-l) 59.5%, var(--yel-l) 59.5% 72.5%, var(--grn-l) 72.5%); }
+.db__link {
+  position: absolute; top: 50%; height: 2px; margin-top: -1px;
+  background: #A3ACBB; transform-origin: left center;
+}
+.db__dot {
+  position: absolute; top: 50%; z-index: 2;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%;
+  background: var(--c); box-shadow: 0 0 0 2px var(--card);
+  cursor: default;
+}
+.db__row--total .db__dot { width: 20px; height: 20px; margin: -10px 0 0 -10px; }
+/* Россия — кольцо поверх, крупнее точки: при равных значениях видны обе. */
+.db__dot--ring {
+  z-index: 3; width: 20px; height: 20px; margin: -10px 0 0 -10px;
+  background: transparent; box-shadow: inset 0 0 0 2px var(--c);
+}
+.db__row--total .db__dot--ring { width: 24px; height: 24px; margin: -12px 0 0 -12px; }
+.db__dot::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; } /* цель наведения */
+.db__val {
+  position: absolute; top: 50%;
+  font-size: var(--type-body); line-height: 1; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap; pointer-events: none;
+}
+.db__val--strong { color: var(--text); font-weight: 600; }
+/* Ореол фона: подпись остаётся читаемой, если под ней линия нуля или сетки. */
+.db__val { text-shadow: 0 0 2px var(--card), 0 0 2px var(--card), 0 0 4px var(--card); }
+.db__val--left  { transform: translate(calc(-100% - 16px), -50%); }
+.db__val--right { transform: translate(16px, -50%); }
 
-.acc__summary::after {
-  content: "+";
-  font-size: var(--size-title-l);
-  line-height: 1;
-  color: var(--color-fg-tetriary);
-  flex: none;
+.db--anim .db__dot { transform: scale(0); transition: transform .32s cubic-bezier(.34, 1.4, .64, 1); }
+.db--anim .db__link { transform: scaleX(0); transition: transform .36s cubic-bezier(.2, .7, .3, 1) .12s; }
+.db--anim .db__val { opacity: 0; transition: opacity .2s ease .28s; }
+.db--anim.is-drawn .db__dot, .db--anim.is-drawn .db__link { transform: none; }
+.db--anim.is-drawn .db__val { opacity: 1; }
+
+@media (max-width: 600px) {
+  .db { display: block; }
+  .db__axis { margin-bottom: 2px; }
+  .db__row { display: block; }
+  .db__label { justify-content: flex-start; text-align: left; padding: 10px 0 0; }
+  .db__track { min-height: 40px; }
 }
 
-.acc[open] .acc__summary::after { content: "−"; }
-
-.acc__body {
-  padding-bottom: var(--gap-24);
-  color: var(--color-fg-secondary);
-  max-width: 70ch;
+@media (prefers-reduced-motion: reduce) {
+  .db--anim .db__dot, .db--anim .db__link { transform: none; transition: none; }
+  .db--anim .db__val { opacity: 1; transition: none; }
+  .likert--anim .likert__seg, .stack--anim .stack__seg { transform: none; transition: none; }
+  .likert--anim .likert__val { opacity: 1; transition: none; }
 }
 
-/* --- CTA внизу дашборда -------------------------------------- */
-.dash__cta {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--gap-20);
-  margin-top: var(--gap-32);
-  padding: var(--gap-32);
-  border-radius: var(--radius-l);
-  background: var(--color-bg-dark);
-  color: var(--color-fg-inverted-primary);
+@media (forced-colors: active) {
+  .likert__seg, .stack__seg, .stack__swatch, .db__dot { forced-color-adjust: none; border: 1px solid CanvasText; }
 }
 
-.dash__cta p { color: var(--color-fg-inverted-secondary); }
+/* Коды субиндексов в заголовках таблиц срезов: расшифровка — подсказкой при наведении. */
+.analytics-card th[data-tip] { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: #A3ACBB; }
