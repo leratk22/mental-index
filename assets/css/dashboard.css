@@ -8,6 +8,7 @@
    2. Таблица данных графика
    3. Доли ответов от центральной оси (страницы компонентов)
    4. Полоса из пяти кусочков (блок поддержки на главной)
+   5. Сравнение на шкале Индекса — строки-гантели (компоненты, секторы)
    ============================================================ */
 
 .visually-hidden {
@@ -38,8 +39,18 @@
 .chart-toggle:hover { border-color: #98A0AE; }
 .chart-toggle:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
-/* Кнопка встаёт в строку легенды справа; если легенды нет — в строку с заголовком. */
+/* Легенда и кнопка — в одной строке; легенда видна только вместе с графиком
+   (в таблице её обозначений нет), кнопка при этом остаётся справа. */
+.chart-tools { display: flex; align-items: center; gap: .75rem 1rem; flex-wrap: wrap; }
+.chart-tools > .legend { margin-bottom: 0 !important; }
+.chart-tools > .legend[hidden] { display: none; }
+.chart-tools > .chart-toggle { margin-left: auto; }
 .legend .chart-toggle { margin-left: auto; }
+/* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
+@media (max-width: 600px) {
+  :has(> .chart-tools) { flex-wrap: wrap; row-gap: .5rem; }
+  :has(> .chart-tools) > .chart-tools { flex-basis: 100%; }
+}
 .metric-block__head .chart-toggle { margin-left: auto; align-self: center; }
 .chart-bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .chart-bar > .metric-block__title { margin-bottom: 0 !important; }
@@ -52,7 +63,7 @@
 .chart-switch.is-alt > :not([data-alt]) { display: none !important; } /* у SVG инлайновый display:block */
 
 /* ── 2. Таблица ────────────────────────────────────────────── */
-.chart-table-wrap { overflow-x: auto; }
+.chart-table-wrap { overflow-x: auto; margin-bottom: 1.25rem; }
 .chart-table {
   width: 100%;
   border-collapse: collapse;
@@ -192,11 +203,92 @@
   .support-block-head { flex-direction: column; }
 }
 
+/* ── 5. Строки-гантели ─────────────────────────────────────────
+   Показатель — строка; точки серий стоят на одной линии шкалы
+   −100…+100 и соединены отрезком (разрыв). Подписи — снаружи пары:
+   меньшее значение слева от своей точки, большее — справа, поэтому
+   близкие значения не наползают друг на друга. */
+.db {
+  display: grid;
+  grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr);
+  column-gap: 1.25rem;
+}
+.db__axis { grid-column: 2; position: relative; height: 22px; }
+.db__axis span {
+  position: absolute; top: 0; transform: translateX(-50%);
+  font-size: var(--type-caption); line-height: 1; color: var(--hint);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.db__axis span:first-child { transform: none; }
+.db__axis span:last-child { transform: translateX(-100%); }
+.db__row { display: contents; }
+.db__label {
+  display: flex; align-items: center; justify-content: flex-end; text-align: right;
+  padding: 8px 0;
+  font-size: var(--type-body); line-height: 1.35; color: var(--muted);
+}
+.db__row--total .db__label { color: var(--text); font-weight: var(--weight-ui); }
+.db__track {
+  position: relative;
+  min-height: 48px;
+  background:
+    linear-gradient(to right, transparent calc(50% - .5px), #A3ACBB calc(50% - .5px), #A3ACBB calc(50% + .5px), transparent calc(50% + .5px)),
+    linear-gradient(to right, transparent calc(25% - .5px), var(--border) calc(25% - .5px), var(--border) calc(25% + .5px), transparent calc(25% + .5px)),
+    linear-gradient(to right, transparent calc(75% - .5px), var(--border) calc(75% - .5px), var(--border) calc(75% + .5px), transparent calc(75% + .5px)),
+    var(--zones, none);
+}
+/* Зоны Индекса фоном — как на шкале на главной: ≤19 / 20–45 / >45. */
+.db--zones .db__track { --zones: linear-gradient(to right, var(--red-l) 59.5%, var(--yel-l) 59.5% 72.5%, var(--grn-l) 72.5%); }
+.db__link {
+  position: absolute; top: 50%; height: 2px; margin-top: -1px;
+  background: #A3ACBB; transform-origin: left center;
+}
+.db__dot {
+  position: absolute; top: 50%; z-index: 2;
+  width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%;
+  background: var(--c); box-shadow: 0 0 0 2px var(--card);
+  cursor: default;
+}
+.db__row--total .db__dot { width: 20px; height: 20px; margin: -10px 0 0 -10px; }
+/* Россия — кольцо поверх, крупнее точки: при равных значениях видны обе. */
+.db__dot--ring {
+  z-index: 3; width: 20px; height: 20px; margin: -10px 0 0 -10px;
+  background: transparent; box-shadow: inset 0 0 0 2px var(--c);
+}
+.db__row--total .db__dot--ring { width: 24px; height: 24px; margin: -12px 0 0 -12px; }
+.db__dot::after { content: ""; position: absolute; inset: -8px; border-radius: 50%; } /* цель наведения */
+.db__val {
+  position: absolute; top: 50%;
+  font-size: var(--type-body); line-height: 1; color: var(--muted);
+  font-variant-numeric: tabular-nums; white-space: nowrap; pointer-events: none;
+}
+.db__val--strong { color: var(--text); font-weight: 600; }
+/* Ореол фона: подпись остаётся читаемой, если под ней линия нуля или сетки. */
+.db__val { text-shadow: 0 0 2px var(--card), 0 0 2px var(--card), 0 0 4px var(--card); }
+.db__val--left  { transform: translate(calc(-100% - 16px), -50%); }
+.db__val--right { transform: translate(16px, -50%); }
+
+.db--anim .db__dot { transform: scale(0); transition: transform .32s cubic-bezier(.34, 1.4, .64, 1); }
+.db--anim .db__link { transform: scaleX(0); transition: transform .36s cubic-bezier(.2, .7, .3, 1) .12s; }
+.db--anim .db__val { opacity: 0; transition: opacity .2s ease .28s; }
+.db--anim.is-drawn .db__dot, .db--anim.is-drawn .db__link { transform: none; }
+.db--anim.is-drawn .db__val { opacity: 1; }
+
+@media (max-width: 600px) {
+  .db { display: block; }
+  .db__axis { margin-bottom: 2px; }
+  .db__row { display: block; }
+  .db__label { justify-content: flex-start; text-align: left; padding: 10px 0 0; }
+  .db__track { min-height: 40px; }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .db--anim .db__dot, .db--anim .db__link { transform: none; transition: none; }
+  .db--anim .db__val { opacity: 1; transition: none; }
   .likert--anim .likert__seg, .stack--anim .stack__seg { transform: none; transition: none; }
   .likert--anim .likert__val { opacity: 1; transition: none; }
 }
 
 @media (forced-colors: active) {
-  .likert__seg, .stack__seg, .stack__swatch { forced-color-adjust: none; border: 1px solid CanvasText; }
+  .likert__seg, .stack__seg, .stack__swatch, .db__dot { forced-color-adjust: none; border: 1px solid CanvasText; }
 }

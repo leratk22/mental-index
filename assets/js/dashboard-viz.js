@@ -2,9 +2,9 @@
    Дашборд: переключатель «Таблица» у каждого графика,
    доли ответов от центральной оси, полоса поддержки.
 
-   Графики остаются прежними (SVG и разметка в dashboard.html);
-   таблица к SVG собирается из тех же подписей data-tip, что
-   показывает подсказка, — отдельной копии данных нет.
+   Разметка графиков — в dashboard.html; таблица к строкам-гантелям
+   собирается из тех же подписей data-tip, что показывает
+   подсказка, — отдельной копии данных нет.
    ============================================================ */
 (function () {
   'use strict';
@@ -43,15 +43,27 @@
       const on = !sw.classList.contains('is-alt');
       sw.classList.toggle('is-alt', on);
       btn.textContent = on ? back : label;
+      // Легенда графика в таблице ничего не обозначает — прячем её.
+      const tools = btn.closest('.chart-tools');
+      const legend = tools && tools.querySelector(':scope > .legend');
+      if (legend) legend.hidden = on;
       if (on) redraw(sw);
     });
   }
 
-  // Куда поставить кнопку: в легенду над графиком, иначе — в строку с заголовком.
+  // Куда поставить кнопку: рядом с легендой над графиком (общей строкой
+  // .chart-tools), иначе — в строку с заголовком.
+  function withLegend(legend, btn) {
+    const tools = el('div', 'chart-tools');
+    tools.style.marginBottom = getComputedStyle(legend).marginBottom;
+    legend.replaceWith(tools);
+    tools.append(legend, btn);
+  }
+
   function placeToggle(anchor, btn) {
     const prev = anchor.previousElementSibling;
     const legend = prev && (prev.matches('.legend') ? prev : prev.querySelector('.legend'));
-    if (legend) { legend.appendChild(btn); return; }
+    if (legend) { withLegend(legend, btn); return; }
     if (prev && prev.matches('.metric-block__title')) {
       const bar = el('div', 'chart-bar');
       bar.style.marginBottom = getComputedStyle(prev).marginBottom;
@@ -104,12 +116,12 @@
     return title ? title.textContent.trim() : 'Данные графика';
   }
 
-  /* ── SVG-графики: строки — показатели, столбцы — серии ────────
+  /* ── Строки-гантели: в таблице строки — показатели, столбцы — серии ──
      data-tip: «Серия · Показатель: значение»; в показателе
      самом тоже бывает « · », поэтому режем по первому. */
-  function svgCharts() {
-    document.querySelectorAll('svg.chart-svg').forEach((svg) => {
-      const tips = [...svg.querySelectorAll('[data-tip]')].map((n) => n.getAttribute('data-tip'));
+  function dumbbells() {
+    document.querySelectorAll('.db').forEach((chart) => {
+      const tips = [...chart.querySelectorAll('[data-tip]')].map((n) => n.getAttribute('data-tip'));
       if (!tips.length) return;
       const series = [];
       const rows = new Map();
@@ -121,15 +133,16 @@
         const cat = tip.slice(dot + 3, colon).trim();
         if (!series.includes(s)) series.push(s);
         if (!rows.has(cat)) rows.set(cat, {});
+        // та же подпись строки, что на графике: «А1 Стресс-статус» → «А1 · Стресс-статус»
         rows.get(cat)[s] = num(tip.slice(colon + 1));
       });
       const order = series.slice().sort((a, b) => (a === 'Компания' ? -1 : b === 'Компания' ? 1 : 0));
-      const anchor = svg.parentElement.classList.contains('chart-scroll') ? svg.parentElement : svg;
+      const anchor = chart;
       const btn = makeToggle('Таблица', 'График');
       placeToggle(anchor, btn);             // до обёртки — чтобы найти легенду над графиком
       const sw = wrap(anchor);
       sw.appendChild(tableFrom(captionFor(sw), ['Показатель', ...order],
-        [...rows].map(([cat, v]) => [cat, ...order.map((s) => v[s] || '—')])));
+        [...rows].map(([cat, v]) => [cat.includes(' · ') ? cat : cat.replace(/^(\S+) /, '$1 · '), ...order.map((s) => v[s] || '—')])));
       wire(btn, sw);
     });
   }
@@ -146,7 +159,7 @@
     if (!rows.length) return;
     const btn = makeToggle('Таблица', 'График');
     const key = document.querySelector('.result-heading .legend');
-    if (key) key.appendChild(btn); else placeToggle(chart, btn);
+    if (key) withLegend(key, btn); else placeToggle(chart, btn);
     const sw = wrap(chart);
     sw.appendChild(tableFrom('Индекс: компания и Россия', ['', 'Индекс', 'Зона'], rows));
     wire(btn, sw);
@@ -180,6 +193,54 @@
     const btn = document.querySelector('.chart-toggle[data-toggle-for="support"]');
     const sw = document.querySelector('.chart-switch--support');
     if (btn && sw) wire(btn, sw);
+    // Подсказка у каждого куска — подпись и доля из ключа под полосой.
+    document.querySelectorAll('.support-stack').forEach((box) => {
+      const items = box.querySelectorAll('.stack__key li');
+      box.querySelectorAll('.stack__seg').forEach((seg, i) => {
+        const li = items[i];
+        if (li) seg.dataset.tip = li.textContent.replace(/(\d+%)$/, ' — $1').trim();
+      });
+    });
+  }
+
+  /* ── Подсказки у кусков долей: вопрос не нужен, он в строке ─── */
+  function likertTips() {
+    document.querySelectorAll('.likert__track').forEach((track) => {
+      const parts = {};
+      (track.getAttribute('aria-label') || '').split(': ').slice(1).join(': ')
+        .split(', ').forEach((p) => { const m = p.match(/^(.+) (\d+%)$/); if (m) parts[m[1]] = m[2]; });
+      const names = { neg: 'негативный', neu: 'затруднились', pos: 'позитивный' };
+      track.querySelectorAll('.likert__seg').forEach((seg) => {
+        const k = Object.keys(names).find((n) => seg.classList.contains('likert__seg--' + n));
+        if (k && parts[names[k]]) seg.dataset.tip = `${names[k]} — ${parts[names[k]]}`;
+      });
+    });
+  }
+
+  /* ── Подсказка: одна на весь дашборд ─────────────────────────── */
+  function tooltip() {
+    const tip = el('div', 'chart-tip');
+    tip.setAttribute('role', 'tooltip');
+    document.body.appendChild(tip);
+    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip]';
+    const show = (node) => {
+      tip.textContent = node.dataset.tip.replace(/: (-)/, ': ' + MINUS);
+      const r = node.getBoundingClientRect();
+      tip.style.left = (r.left + r.width / 2) + 'px';
+      tip.style.top = r.top + 'px';
+      tip.classList.add('is-visible');
+    };
+    const hide = () => tip.classList.remove('is-visible');
+    document.addEventListener('pointerover', (e) => {
+      const n = e.target.closest && e.target.closest(SEL);
+      if (n) show(n);
+    });
+    document.addEventListener('pointerout', (e) => {
+      const n = e.target.closest && e.target.closest(SEL);
+      if (n && !n.contains(e.relatedTarget)) hide();
+    });
+    document.addEventListener('scroll', hide, true);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
   }
 
   /* ── Появление и перерисовка ───────────────────────────────── */
@@ -196,12 +257,13 @@
 
   function motion() {
     const likertList = [...document.querySelectorAll('.likert')];
+    const dbs = [...document.querySelectorAll('.db')];
     const stacks = [...document.querySelectorAll('.stack')];
     likertList.forEach((n) => n.classList.add('likert--anim'));
+    dbs.forEach((n) => n.classList.add('db--anim'));
     stacks.forEach((n) => n.classList.add('stack--anim'));
     if (reduceMotion || !('IntersectionObserver' in window)) {
-      likertList.forEach((n) => n.classList.add('is-drawn'));
-      stacks.forEach((n) => n.classList.add('is-drawn'));
+      [...likertList, ...dbs, ...stacks].forEach((n) => n.classList.add('is-drawn'));
     } else {
       const io = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
@@ -210,7 +272,7 @@
           io.unobserve(e.target);
         });
       }, { threshold: 0.2 });
-      likertList.forEach((n) => io.observe(n));
+      [...likertList, ...dbs].forEach((n) => io.observe(n));
     }
     // Экраны дашборда скрыты через display:none — ширина появляется
     // только при показе, поэтому подгонка подписей — по ResizeObserver.
@@ -225,9 +287,11 @@
 
   function init() {
     indexScale();
-    svgCharts();
+    dumbbells();
     likerts();
+    likertTips();
     support();
+    tooltip();
     motion();
   }
 
