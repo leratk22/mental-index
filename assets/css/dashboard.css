@@ -312,12 +312,15 @@
    остаётся в своём кегле на любой ширине, а не ужимается
    вместе с картинкой, как было с SVG. */
 @media (max-width: 600px) {
-  .viz-scale, .viz-likert { grid-template-columns: 1fr; }
-  .viz-scale__axis, .viz-scale__zones-caption, .viz-likert__axis { grid-column: 1; }
+  /* Не сетка, а поток: подпись строки, под ней дорожка. В сетке
+     скрипт ставит подпись и дорожку в одну строку (grid-row), и
+     в одну колонку они легли бы друг на друга. */
+  .viz-scale, .viz-likert { display: block; }
   .viz-row__label, .viz-likert .viz-row__label {
-    grid-column: 1; text-align: left; padding: 10px 0 0; border-top: 1px solid var(--viz-grid);
+    text-align: left; padding: 10px 0 2px; border-top: 1px solid var(--viz-grid);
   }
-  .viz-likert .viz-row__track, .viz-row__track { grid-column: 1; border-top: 0; }
+  .viz-row__label:first-of-type { border-top: 0; }
+  .viz-likert .viz-row__track, .viz-row__track { border-top: 0; }
 }
 
 /* принудительные цвета (Windows High Contrast): формы вместо цвета */
@@ -367,3 +370,10 @@
    (th scope="row") для скринридера, выглядит как раньше. */
 .analytics-card td { font-variant-numeric: tabular-nums; }
 .analytics-card tbody th { text-align: left; font-weight: inherit; }
+
+/* Поле под подписи по краям шкалы долей: у 89–93 % подпись
+   стоит за концом полосы и без поля выходила за край графика. Ось
+   и дорожки сдвинуты одинаково — деления совпадают с полосами. */
+.viz-likert .viz-row__track,
+.viz-likert__axis { margin-inline: 2.75rem; }
+.viz-likert .viz-row__track::before { left: 50%; }
