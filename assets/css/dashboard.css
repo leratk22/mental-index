@@ -39,12 +39,15 @@
 .chart-toggle:hover { border-color: #98A0AE; }
 .chart-toggle:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
 
-/* Легенда и кнопка — в одной строке; легенда видна только вместе с графиком
-   (в таблице её обозначений нет), кнопка при этом остаётся справа. */
-.chart-tools { display: flex; align-items: center; gap: .75rem 1rem; flex-wrap: wrap; }
-.chart-tools > .legend { margin-bottom: 0 !important; }
+/* Шапка графика: заголовок слева, справа — кнопка, под ней легенда
+   (прижата вправо). Легенда видна только вместе с графиком — в таблице
+   её обозначений нет. */
+.chart-head { display: flex; align-items: flex-start; justify-content: space-between; gap: .75rem 1.5rem; margin-bottom: .75rem; }
+.chart-head > .metric-block__title { margin: 0 !important; padding-top: 4px; }
+.chart-tools { display: flex; flex-direction: column; align-items: flex-end; gap: .5rem; margin-left: auto; }
+.chart-tools > .chart-toggle { order: -1; }
+.chart-tools > .legend { margin-bottom: 0 !important; justify-content: flex-end; }
 .chart-tools > .legend[hidden] { display: none; }
-.chart-tools > .chart-toggle { margin-left: auto; }
 .legend .chart-toggle { margin-left: auto; }
 /* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
 @media (max-width: 600px) {
@@ -102,12 +105,12 @@
 .likert {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  column-gap: 1.25rem;
+  column-gap: 0;            /* разделитель строки идёт сплошной линией от вопроса к полосе */
 }
 .likert__row { display: contents; }
 .likert__label {
   display: flex; align-items: center;
-  padding: 10px 0;
+  padding: 10px 1.25rem 10px 0;
   border-top: 1px solid var(--border);
   font-size: var(--type-body);
   line-height: 1.35;
@@ -119,8 +122,8 @@
   border-top: 1px solid var(--border);
 }
 .likert__legend + .likert__row > * { border-top: 0; }
-/* Легенда — над дорожками, по центру оси: негативный слева, позитивный справа. */
-.likert__legend { grid-column: 2; justify-content: center; margin-bottom: .25rem; }
+/* Легенда — над дорожками, прижата вправо, под кнопкой «Таблица». */
+.likert__legend { grid-column: 2; justify-content: flex-end; margin-bottom: .25rem; }
 .likert__track::before {                 /* ноль */
   content: ""; position: absolute; left: 50%; top: 6px; bottom: 6px;
   width: 1px; margin-left: -.5px; background: #A3ACBB; z-index: 1;
@@ -157,7 +160,7 @@
   .likert { display: block; }
   .likert__row { display: block; border-top: 1px solid var(--border); }
   .likert__legend + .likert__row { border-top: 0; }
-  .likert__legend { margin-bottom: .5rem; justify-content: flex-start; gap: 4px 14px; }
+  .likert__legend { margin-bottom: .5rem; gap: 4px 14px; }
   .likert__label { border-top: 0; padding: 10px 0 2px; }
   .likert__track { border-top: 0; min-height: 36px; }
 }
@@ -211,7 +214,7 @@
 .db {
   display: grid;
   grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr);
-  column-gap: 1.25rem;
+  column-gap: 0;
 }
 .db__axis { grid-column: 2; position: relative; height: 22px; }
 .db__axis span {
@@ -224,7 +227,7 @@
 .db__row { display: contents; }
 .db__label {
   display: flex; align-items: center; justify-content: flex-end; text-align: right;
-  padding: 8px 0;
+  padding: 8px 1.25rem 8px 0;
   font-size: var(--type-body); line-height: 1.35; color: var(--muted);
 }
 .db__row--total .db__label { color: var(--text); font-weight: var(--weight-ui); }
@@ -238,6 +241,9 @@
     var(--zones, none);
 }
 /* Зоны Индекса фоном — как на шкале на главной: ≤19 / 20–45 / >45. */
+/* Тонкие светлые разделители через всю строку: от подписи к её точкам. */
+.db__label, .db__track { border-top: 1px solid #EEF2F8; }
+.db__axis + .db__row > * { border-top: 0; }
 .db--zones .db__track { --zones: linear-gradient(to right, var(--red-l) 59.5%, var(--yel-l) 59.5% 72.5%, var(--grn-l) 72.5%); }
 .db__link {
   position: absolute; top: 50%; height: 2px; margin-top: -1px;
@@ -279,6 +285,7 @@
   .db__axis { margin-bottom: 2px; }
   .db__row { display: block; }
   .db__label { justify-content: flex-start; text-align: left; padding: 10px 0 0; }
+  .db__track { border-top: 0; }
   .db__track { min-height: 40px; }
 }
 
