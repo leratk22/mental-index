@@ -232,8 +232,15 @@
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
     const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th[data-tip]';
+    // На шкале Индекса к значению добавляем зону — чтобы «+8» не читалось как «хорошо».
+    const zone = (v) => (v <= 19 ? 'зона риска' : v <= 45 ? 'средняя зона' : 'высокая зона');
     const show = (node) => {
-      tip.textContent = node.dataset.tip.replace(/: (-)/, ': ' + MINUS);
+      let text = node.dataset.tip.replace(/: (-)/, ': ' + MINUS);
+      if (node.matches('.db--zones .db__dot')) {
+        const v = parseFloat(node.dataset.tip.slice(node.dataset.tip.lastIndexOf(':') + 1));
+        if (!Number.isNaN(v)) text += ` · ${zone(v)}`;
+      }
+      tip.textContent = text;
       const r = node.getBoundingClientRect();
       tip.style.left = (r.left + r.width / 2) + 'px';
       tip.style.top = r.top + 'px';

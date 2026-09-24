@@ -48,6 +48,14 @@
 .chart-tools > .chart-toggle { order: -1; }
 .chart-tools > .legend { margin-bottom: 0 !important; justify-content: flex-end; }
 .chart-tools > .legend[hidden] { display: none; }
+/* С заголовком: заголовок и кнопка — в первой строке, легенда — второй
+   строкой на всю ширину, прижата вправо. На десктопе так она помещается
+   в одну строку, а не ломается о ширину колонки рядом с заголовком. */
+.chart-head { flex-wrap: wrap; row-gap: .5rem; }
+.chart-head > .chart-tools { display: contents; }
+.chart-head > .chart-tools > .chart-toggle { order: 1; margin-left: auto; }
+.chart-head > .chart-tools > .legend { order: 2; flex-basis: 100%; }
+.chart-tools .legend-item { white-space: nowrap; }
 .legend .chart-toggle { margin-left: auto; }
 /* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
 @media (max-width: 600px) {
@@ -280,7 +288,26 @@
 .db--anim.is-drawn .db__dot, .db--anim.is-drawn .db__link { transform: none; }
 .db--anim.is-drawn .db__val { opacity: 1; }
 
+/* Как читать знак и зоны: стрелки под шкалой и ключ фона. */
+.db__hint {
+  grid-column: 2; display: flex; justify-content: space-between; gap: 1rem;
+  padding-top: 6px; font-size: var(--type-body); line-height: 1.35; color: var(--hint);
+}
+.db__note {
+  grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end;
+  gap: 4px 16px; margin-top: .75rem; font-size: var(--type-body); line-height: 1.4; color: var(--muted);
+}
+.db__note-text { flex-basis: 100%; text-align: right; color: var(--hint); }
+.db-zone--risk { background: var(--red-l); box-shadow: inset 0 0 0 1px #F3B9B6; }
+.db-zone--mid  { background: var(--yel-l); box-shadow: inset 0 0 0 1px #F2DB95; }
+.db-zone--high { background: var(--grn-l); box-shadow: inset 0 0 0 1px #C3D6AC; }
+
+.legend-n { color: var(--hint); }
+.chart-caveat { margin-top: .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--muted); }
+
 @media (max-width: 600px) {
+  .db__hint { margin-top: 2px; }
+  .db__note, .db__note-text { justify-content: flex-start; text-align: left; }
   .db { display: block; }
   .db__axis { margin-bottom: 2px; }
   .db__row { display: block; }
