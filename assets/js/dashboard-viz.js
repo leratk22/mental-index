@@ -58,6 +58,15 @@
     tools.style.marginBottom = getComputedStyle(legend).marginBottom;
     legend.replaceWith(tools);
     tools.append(legend, btn);
+    // Заголовок графика над легендой — в одну строку с кнопкой.
+    const title = tools.previousElementSibling;
+    if (title && title.matches('.metric-block__title') && !title.parentElement.matches('.chart-head')) {
+      const head = el('div', 'chart-head');
+      title.replaceWith(head);
+      head.append(title, tools);
+      tools.style.marginBottom = '';
+    }
+    if (tools.parentElement.matches('.chart-head')) tools.style.marginBottom = '';
   }
 
   function placeToggle(anchor, btn) {
