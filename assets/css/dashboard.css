@@ -48,6 +48,14 @@
 .chart-tools > .chart-toggle { order: -1; }
 .chart-tools > .legend { margin-bottom: 0 !important; justify-content: flex-end; }
 .chart-tools > .legend[hidden] { display: none; }
+/* С заголовком: заголовок и кнопка — в первой строке, легенда — второй
+   строкой на всю ширину, прижата вправо. На десктопе так она помещается
+   в одну строку, а не ломается о ширину колонки рядом с заголовком. */
+.chart-head { flex-wrap: wrap; row-gap: .5rem; }
+.chart-head > .chart-tools { display: contents; }
+.chart-head > .chart-tools > .chart-toggle { order: 1; margin-left: auto; }
+.chart-head > .chart-tools > .legend { order: 2; flex-basis: 100%; }
+.chart-tools .legend-item { white-space: nowrap; }
 .legend .chart-toggle { margin-left: auto; }
 /* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
 @media (max-width: 600px) {
