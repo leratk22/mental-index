@@ -294,11 +294,6 @@
 .db-zone--mid  { background: var(--yel-l); box-shadow: inset 0 0 0 1px #F2DB95; }
 .db-zone--high { background: var(--grn-l); box-shadow: inset 0 0 0 1px #C3D6AC; }
 
-/* Заголовок-вывод графика и подпись раздела над ним. */
-.chart-eyebrow {
-  display: block; margin-bottom: .35rem;
-  font-size: 10px; font-weight: 600; letter-spacing: .02em; text-transform: uppercase; color: var(--muted);
-}
 .legend-n { color: var(--hint); }
 .chart-caveat { margin-top: .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--muted); }
 
