@@ -19,7 +19,8 @@
     if (text != null) node.textContent = text;
     return node;
   };
-  const num = (s) => s.trim().replace(/^-/, MINUS);
+  // Десятичная запятая и настоящий минус — как в текстах дашборда.
+  const num = (s) => s.trim().replace(/^-/, MINUS).replace(/(\d)\.(\d)/g, '$1,$2');
 
   /* ── Переключатель ─────────────────────────────────────────── */
   // Подпись кнопки — то, что откроется по нажатию: на графике «Таблица»,
@@ -156,11 +157,11 @@
     });
   }
 
-  /* ── Шкала Индекса на главной ──────────────────────────────── */
+  /* ── Шкала Индекса ментального благополучия на главной ───────── */
   function indexScale() {
     const chart = document.querySelector('.index-scale-chart');
     if (!chart) return;
-    const zone = (v) => (v <= 19 ? 'низкий (≤19)' : v <= 45 ? 'средний (20–45)' : 'высокий (>45)');
+    const zone = (v) => (v <= 19 ? 'низкое (≤19)' : v <= 45 ? 'среднее (20–45)' : 'высокое (>45)');
     const rows = [...chart.querySelectorAll('.scale-marker[aria-label]')].map((m) => {
       const [name, value] = m.getAttribute('aria-label').split(':');
       return [name.trim(), num(value), zone(parseFloat(value))];
@@ -170,7 +171,7 @@
     const key = document.querySelector('.result-heading .legend');
     if (key) withLegend(key, btn); else placeToggle(chart, btn);
     const sw = wrap(chart);
-    sw.appendChild(tableFrom('Индекс: компания и Россия', ['', 'Индекс', 'Зона'], rows));
+    sw.appendChild(tableFrom('Индекс ментального благополучия: компания и Россия', ['', 'Значение', 'Категория'], rows));
     wire(btn, sw);
   }
 
@@ -231,11 +232,11 @@
     const tip = el('div', 'chart-tip');
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
-    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th[data-tip]';
-    // На шкале Индекса к значению добавляем зону — чтобы «+8» не читалось как «хорошо».
-    const zone = (v) => (v <= 19 ? 'зона риска' : v <= 45 ? 'средняя зона' : 'высокая зона');
+    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
+    // На шкале к значению добавляем категорию — чтобы «+8» не читалось как «хорошо».
+    const zone = (v) => (v <= 19 ? 'низкое значение' : v <= 45 ? 'среднее значение' : 'высокое значение');
     const show = (node) => {
-      let text = node.dataset.tip.replace(/: (-)/, ': ' + MINUS);
+      let text = num(node.dataset.tip.replace(/: (-)/, ': ' + MINUS));
       if (node.matches('.db--zones .db__dot')) {
         const v = parseFloat(node.dataset.tip.slice(node.dataset.tip.lastIndexOf(':') + 1));
         if (!Number.isNaN(v)) text += ` · ${zone(v)}`;
