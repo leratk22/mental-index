@@ -55,7 +55,7 @@
 .chart-head > .chart-tools { display: contents; }
 .chart-head > .chart-tools > .chart-toggle { order: 1; margin-left: auto; }
 .chart-head > .chart-tools > .legend { order: 2; flex-basis: 100%; }
-.chart-tools .legend-item { white-space: nowrap; }
+@media (min-width: 601px) { .chart-tools .legend-item { white-space: nowrap; } }
 .legend .chart-toggle { margin-left: auto; }
 /* На телефоне строка легенды с кнопкой уходит под подпись раздела целиком. */
 @media (max-width: 600px) {
@@ -329,3 +329,46 @@
 
 /* Коды субиндексов в заголовках таблиц срезов: расшифровка — подсказкой при наведении. */
 .analytics-card th[data-tip] { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: #A3ACBB; }
+
+/* ── Тексты по «Правилам рассказа об Индексе ментального благополучия» ── */
+/* Рекомендация: основание → что может стоять за этим → действие → проверка. */
+.ins-list .rec { display: block; margin-top: .3rem; }
+.ins-list .rec b { font-weight: 500; color: var(--text); }
+.ins-list li + li { margin-top: .9rem; }
+/* База процентов у долей ответов — слева в строке легенды. */
+.likert__base { grid-column: 1; align-self: end; margin-bottom: .25rem; font-size: var(--type-body); color: var(--hint); }
+@media (max-width: 600px) { .likert__base { margin-bottom: .25rem; } }
+/* Подгруппа, значения которой не показываем (меньше 5 человек). */
+.legend-item--off { display: block; color: var(--hint); }
+.legend-note { color: var(--hint); }
+.analytics-card th [data-tip] { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: #A3ACBB; }
+@media (min-width: 601px) { .chart-tools > .legend { flex-wrap: nowrap; } }
+
+/* Пояснения к таблицам срезов и определения групп в карточках секторов. */
+.analytics-table-note { margin: -.25rem 0 .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--hint); max-width: 720px; }
+.analytics-table-head + .analytics-table-note { margin-top: .25rem; }
+@media (max-width: 480px) { .risk-axis-grid--static .seg-desc { display: block !important; margin: .3rem 0 0 !important; font-size: var(--type-caption) !important; line-height: 1.35 !important; } }
+.likert__base { max-width: 100%; }
+
+/* Названия категорий под подписями шкалы Индекса; на узком экране — только в пояснении ниже. */
+.scale-zone-name { display: block; margin-top: 2px; font-size: var(--type-caption); }
+@media (max-width: 600px) { .scale-zone-name { display: none; } }
+
+/* «Из чего складывается Индекс»: на десктопе карточки компонентов растягиваются
+   на высоту правой колонки (диаграмма и пояснение), лишнее место — перед кнопкой. */
+@media (min-width: 761px) {
+  .dashboard-structure-visual { align-items: stretch !important; }
+  .structure-card-column .structure-component-card { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .structure-card-column .structure-component-card .sc-btn-sm { margin-top: auto; }
+  .structure-card-column .structure-component-card .sc-subs { margin-bottom: .85rem; }
+}
+
+/* Число компонента и разница с Россией: выравнивание по правому краю. */
+.structure-card-head .sc-bench,
+.subpage-hero__figure .sc-bench { align-items: flex-end; text-align: right; }
+
+/* Пояснение перед графиком: одно-два предложения. */
+.chart-lead { margin: 0 0 .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--muted); max-width: 720px; }
+.metric-block .chart-lead { margin-top: .1rem; }
+.likert__base { grid-column: 1 / -1; margin-bottom: .35rem; }
+@media (max-width: 600px) { .likert__base { margin-bottom: .5rem; } }
