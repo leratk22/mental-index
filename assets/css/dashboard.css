@@ -362,3 +362,13 @@
   .structure-card-column .structure-component-card .sc-btn-sm { margin-top: auto; }
   .structure-card-column .structure-component-card .sc-subs { margin-bottom: .85rem; }
 }
+
+/* Число компонента и разница с Россией: выравнивание по правому краю. */
+.structure-card-head .sc-bench,
+.subpage-hero__figure .sc-bench { align-items: flex-end; text-align: right; }
+
+/* Пояснение перед графиком: одно-два предложения. */
+.chart-lead { margin: 0 0 .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--muted); max-width: 720px; }
+.metric-block .chart-lead { margin-top: .1rem; }
+.likert__base { grid-column: 1 / -1; margin-bottom: .35rem; }
+@media (max-width: 600px) { .likert__base { margin-bottom: .5rem; } }
