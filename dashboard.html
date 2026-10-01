@@ -573,7 +573,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20260927g">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20260927h">
 </head>
 <body>
 
@@ -948,9 +948,8 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <p class="db__note"><span class="legend-item"><span class="legend-dot db-zone--risk"></span>низкое ≤19</span><span class="legend-item"><span class="legend-dot db-zone--mid"></span>среднее 20–45</span><span class="legend-item"><span class="legend-dot db-zone--high"></span>высокое &gt;45</span><span class="db__note-text">Плюс ещё не&nbsp;значит «хорошо»: до&nbsp;+19 включительно значение считается низким.</span></p>
     </div></section>
   <section class="dashboard-section">
-  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А1 · Стресс-статус</div><div class="metric-block__val">−19,4</div></div><p class="chart-lead">Сколько сотрудников сообщали о&nbsp;стрессе: как часто и&nbsp;за&nbsp;последний месяц.</p><div class="chart-switch">
+  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А1 · Стресс-статус</div><div class="metric-block__val">−19,4</div></div><div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -965,10 +964,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Как&nbsp;часто у&nbsp;Вас случаются стрессы? (редко / никогда)</th><td>41%</td><td>2%</td><td>57%</td></tr><tr><th scope="row">За&nbsp;последний месяц у&nbsp;Вас бывали стрессы?</th><td>72%</td><td>1%</td><td>27%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">О&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших. Откуда стресс, это число не&nbsp;показывает.</div></div>
-  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А2 · Симптомы</div><div class="metric-block__val">+29,4</div></div><p class="chart-lead">Как часто сотрудники сталкиваются с&nbsp;симптомами неблагополучия: усталостью, тревогой, трудностями со&nbsp;сном и&nbsp;концентрацией.</p><div class="chart-switch">
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях. О&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших. Откуда стресс, это число не&nbsp;показывает.</div></div>
+  <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А2 · Симптомы</div><div class="metric-block__val">+29,4</div></div><div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -993,7 +991,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Ничего не&nbsp;получается, всё валится из&nbsp;рук</th><td>6%</td><td>1%</td><td>93%</td></tr><tr><th scope="row">Внезапные приступы сильной тревоги, страха</th><td>10%</td><td>1%</td><td>89%</td></tr><tr><th scope="row">Ощущение одиночества, покинутости</th><td>21%</td><td>0%</td><td>79%</td></tr><tr><th scope="row">Мало что&nbsp;радует, не&nbsp;хочется ничего делать</th><td>21%</td><td>2%</td><td>77%</td></tr><tr><th scope="row">Бессонница, нарушения сна</th><td>28%</td><td>0%</td><td>72%</td></tr><tr><th scope="row">Трудности с&nbsp;концентрацией внимания, рассеянность</th><td>29%</td><td>0%</td><td>71%</td></tr><tr><th scope="row">Апатия в&nbsp;начале рабочего дня, нежелание приступать к&nbsp;работе</th><td>27%</td><td>2%</td><td>71%</td></tr><tr><th scope="row">Подавленность, плохое настроение</th><td>34%</td><td>1%</td><td>65%</td></tr><tr><th scope="row">Раздражительность, сложно сдерживать эмоции</th><td>35%</td><td>0%</td><td>65%</td></tr><tr><th scope="row">Тревога, нервозность, сильное беспокойство</th><td>43%</td><td>0%</td><td>57%</td></tr><tr><th scope="row">Измотанность, упадок сил</th><td>42%</td><td>2%</td><td>56%</td></tr><tr><th scope="row">Сложности с&nbsp;расслаблением, не&nbsp;удаётся отключаться от&nbsp;забот</th><td>47%</td><td>2%</td><td>51%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">Чаще всего отмечают сложности с&nbsp;расслаблением (47%) и&nbsp;тревогу (43%), реже всего&nbsp;— ощущение, что ничего не&nbsp;получается (6%), и&nbsp;приступы сильной тревоги (10%).</div></div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Чаще всего отмечают сложности с&nbsp;расслаблением (47%) и&nbsp;тревогу (43%), реже всего&nbsp;— ощущение, что ничего не&nbsp;получается (6%), и&nbsp;приступы сильной тревоги (10%).</div></div>
   <div class="insight-card" style="margin-bottom:0;"><h3>Что&nbsp;делать</h3>
       <ol class="ins-list">
         <li><strong>Нагрузка и&nbsp;периоды перегрузки.</strong><span class="rec"><b>Данные.</b> 72% ответивших сообщили о&nbsp;стрессе за&nbsp;последний месяц; стресс-статус −19,4 (в&nbsp;России +3).</span><span class="rec"><b>Почему так может быть.</b> Данные не&nbsp;показывают, откуда стресс. Одна из&nbsp;версий&nbsp;— нагрузка и&nbsp;то, как распределяются задачи.</span><span class="rec"><b>Что сделать.</b> Руководителям&nbsp;— обсудить с&nbsp;командами, когда бывает перегрузка; организации&nbsp;— посмотреть, как распределяются задачи и&nbsp;доступна ли&nbsp;поддержка.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы о&nbsp;стрессе и&nbsp;нагрузке в&nbsp;следующем опросе и&nbsp;спросить команды, что изменилось.</span></li><li><strong>Доступность помощи.</strong><span class="rec"><b>Данные.</b> За&nbsp;год к&nbsp;психологу или психотерапевту обращались 24%, успокоительные без рецепта принимали 26%.</span><span class="rec"><b>Почему так может быть.</b> Неясно, что мешает обратиться к&nbsp;специалисту: доступность помощи, отношение к&nbsp;ней или что-то&nbsp;ещё.</span><span class="rec"><b>Что сделать.</b> Организации&nbsp;— проверить, знают ли&nbsp;сотрудники о&nbsp;поддержке и&nbsp;о&nbsp;том, что она анонимна; руководителям&nbsp;— рассказывать о&nbsp;ней команде.</span><span class="rec"><b>Как проверить.</b> В&nbsp;следующем опросе посмотреть, сколько людей знают о&nbsp;поддержке и&nbsp;обращались за&nbsp;ней.</span></li><li><strong>Разговор о&nbsp;состоянии.</strong><span class="rec"><b>Данные.</b> Те&nbsp;же&nbsp;72%, сообщившие о&nbsp;стрессе.</span><span class="rec"><b>Что сделать.</b> Руководителю&nbsp;— на&nbsp;встречах один на&nbsp;один спрашивать не&nbsp;только о&nbsp;задачах, но&nbsp;и&nbsp;о&nbsp;нагрузке и&nbsp;самочувствии.</span><span class="rec"><b>Как проверить.</b> Спросить команду, полезны ли&nbsp;такие разговоры; сравнить ответы о&nbsp;стрессе в&nbsp;следующем опросе.</span></li>
@@ -1034,10 +1032,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="metric-block">
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">Б1 · Психологический профиль</div><div class="metric-block__val">+13,4</div>
-      </div><p class="chart-lead">Как сотрудники оценивают свою уверенность, энергию и&nbsp;отношение к&nbsp;переменам и&nbsp;рискам.</p>
+      </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1054,15 +1051,14 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Обычно у&nbsp;меня достаточно сил и&nbsp;энергии</th><td>21%</td><td>8%</td><td>71%</td></tr><tr><th scope="row">Меня не&nbsp;пугают перемены</th><td>35%</td><td>2%</td><td>63%</td></tr><tr><th scope="row">Я уверенный в&nbsp;себе человек</th><td>34%</td><td>8%</td><td>58%</td></tr><tr><th scope="row">Отношение к&nbsp;рискам: не&nbsp;избегаю, воспринимаю как&nbsp;норму</th><td>47%</td><td>12%</td><td>40%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">Больше всего негативных ответов&nbsp;— об&nbsp;отношении к&nbsp;рискам: 47% скорее избегают рисков.</div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях. Больше всего негативных ответов&nbsp;— об&nbsp;отношении к&nbsp;рискам: 47% скорее избегают рисков.</div>
     </div>
   <div class="metric-block">
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">Б2 · Психологическая устойчивость</div><div class="metric-block__val">+24,7</div>
-      </div><p class="chart-lead">Как сотрудники оценивают свою стрессоустойчивость, настроение и&nbsp;изменение психологического состояния за&nbsp;год.</p>
+      </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1078,7 +1074,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Вы стрессоустойчивый человек?</th><td>24%</td><td>22%</td><td>54%</td></tr><tr><th scope="row">Как&nbsp;часто бывает плохое настроение? (редко, 1–3&nbsp;балла из&nbsp;9)</th><td>13%</td><td>44%</td><td>42%</td></tr><tr><th scope="row">Психологическое состояние за&nbsp;год: улучшилось / ухудшилось</th><td>26%</td><td>53%</td><td>21%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">53% не&nbsp;смогли сказать, изменилось ли&nbsp;их&nbsp;психологическое состояние за&nbsp;год.</div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. 53% не&nbsp;смогли сказать, изменилось ли&nbsp;их&nbsp;психологическое состояние за&nbsp;год.</div>
     </div>
   <div class="insight-card" style="margin-bottom:0;"><h3>Что&nbsp;делать</h3>
       <ol class="ins-list">
@@ -1114,10 +1110,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="metric-block">
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В1 · Профессиональные факторы</div><div class="metric-block__val">+37,4</div>
-      </div><p class="chart-lead">Как сотрудники оценивают разные стороны своей работы.</p>
+      </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1139,15 +1134,14 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Рабочее место, физические условия труда</th><td>4%</td><td>4%</td><td>92%</td></tr><tr><th scope="row">Отношения с&nbsp;коллегами</th><td>4%</td><td>5%</td><td>91%</td></tr><tr><th scope="row">Отношения с&nbsp;руководством</th><td>6%</td><td>5%</td><td>89%</td></tr><tr><th scope="row">Содержание, суть работы</th><td>21%</td><td>2%</td><td>77%</td></tr><tr><th scope="row">Рабочая нагрузка, объём обязанностей</th><td>22%</td><td>3%</td><td>75%</td></tr><tr><th scope="row">Должность, позиция в&nbsp;компании</th><td>26%</td><td>5%</td><td>69%</td></tr><tr><th scope="row">Эффективность организации рабочих процессов</th><td>38%</td><td>2%</td><td>60%</td></tr><tr><th scope="row">Возможности профессионального роста</th><td>40%</td><td>12%</td><td>47%</td></tr><tr><th scope="row">Уровень заработной платы</th><td>58%</td><td>1%</td><td>41%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">Выше всего оценены условия труда и&nbsp;отношения с&nbsp;коллегами и&nbsp;руководством (89–92% положительных), ниже всего&nbsp;— оплата труда (58% отрицательных) и&nbsp;возможности роста (40%).</div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях. Выше всего оценены условия труда и&nbsp;отношения с&nbsp;коллегами и&nbsp;руководством (89–92% положительных), ниже всего&nbsp;— оплата труда (58% отрицательных) и&nbsp;возможности роста (40%).</div>
     </div>
   <div class="metric-block">
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В2 · Личностные факторы</div><div class="metric-block__val">+31,3</div>
-      </div><p class="chart-lead">Как сотрудники оценивают здоровье, отношения и&nbsp;условия жизни вне работы.</p>
+      </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1168,15 +1162,14 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Отношения с&nbsp;близкими родственниками</th><td>10%</td><td>0%</td><td>90%</td></tr><tr><th scope="row">Отношения с&nbsp;друзьями</th><td>8%</td><td>3%</td><td>89%</td></tr><tr><th scope="row">Жилищные условия</th><td>24%</td><td>2%</td><td>74%</td></tr><tr><th scope="row">Экологическая ситуация в&nbsp;Вашем районе</th><td>24%</td><td>4%</td><td>72%</td></tr><tr><th scope="row">Моя жизнь находится под&nbsp;моим контролем</th><td>19%</td><td>11%</td><td>70%</td></tr><tr><th scope="row">Состояние здоровья</th><td>35%</td><td>2%</td><td>63%</td></tr><tr><th scope="row">У&nbsp;меня есть долгосрочные планы, и&nbsp;мне удаётся им следовать</th><td>35%</td><td>8%</td><td>57%</td></tr><tr><th scope="row">Ваше финансовое положение</th><td>53%</td><td>2%</td><td>45%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">Выше всего оценены отношения с&nbsp;близкими и&nbsp;друзьями (89–90% положительных), ниже всего&nbsp;— финансовое положение (53% отрицательных).</div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Выше всего оценены отношения с&nbsp;близкими и&nbsp;друзьями (89–90% положительных), ниже всего&nbsp;— финансовое положение (53% отрицательных).</div>
     </div>
   <div class="metric-block">
       <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;">
         <div class="metric-block__title">В3 · Социальные факторы</div><div class="metric-block__val">+13,4</div>
-      </div><p class="chart-lead">Насколько сотрудников беспокоит положение дел в&nbsp;районе, области, экономике и&nbsp;стране.</p>
+      </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, %. Всего ответили {Respondent count}&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1194,7 +1187,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <tbody><tr><th scope="row">Я не&nbsp;переживаю по&nbsp;поводу положения дел в&nbsp;моём районе</th><td>18%</td><td>6%</td><td>76%</td></tr><tr><th scope="row">Я не&nbsp;переживаю по&nbsp;поводу положения дел в&nbsp;моей области</th><td>23%</td><td>6%</td><td>71%</td></tr><tr><th scope="row">Я не&nbsp;переживаю по&nbsp;поводу состояния экономики страны</th><td>44%</td><td>7%</td><td>48%</td></tr><tr><th scope="row">Я не&nbsp;переживаю по&nbsp;поводу сегодняшней ситуации в&nbsp;России</th><td>53%</td><td>6%</td><td>41%</td></tr><tr><th scope="row">Я не&nbsp;переживаю по&nbsp;поводу СВО и&nbsp;конфликта России с&nbsp;Западом</th><td>55%</td><td>5%</td><td>40%</td></tr></tbody>
         </table>
       </div>
-      <div class="metric-note">Больше всего беспокоят СВО и&nbsp;конфликт с&nbsp;Западом (55%) и&nbsp;ситуация в&nbsp;России (53%), меньше всего&nbsp;— положение дел в&nbsp;своём районе и&nbsp;области (18% и&nbsp;23%).</div>
+      <div class="metric-note">Доли ответивших, %; всего ответили {Respondent count} человек. Больше всего беспокоят СВО и&nbsp;конфликт с&nbsp;Западом (55%) и&nbsp;ситуация в&nbsp;России (53%), меньше всего&nbsp;— положение дел в&nbsp;своём районе и&nbsp;области (18% и&nbsp;23%).</div>
     </div>
   <div class="insight-card" style="margin-bottom:0;"><h3>Что&nbsp;делать</h3>
       <ol class="ins-list">
@@ -2019,6 +2012,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script src="assets/js/dashboard-viz.js?v=20260927g" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20260927h" defer></script>
 </body>
 </html>
