@@ -349,3 +349,7 @@
 .analytics-table-head + .analytics-table-note { margin-top: .25rem; }
 @media (max-width: 480px) { .risk-axis-grid--static .seg-desc { display: block !important; margin: .3rem 0 0 !important; font-size: var(--type-caption) !important; line-height: 1.35 !important; } }
 .likert__base { max-width: 100%; }
+
+/* Названия категорий под подписями шкалы Индекса; на узком экране — только в пояснении ниже. */
+.scale-zone-name { display: block; margin-top: 2px; font-size: var(--type-caption); }
+@media (max-width: 600px) { .scale-zone-name { display: none; } }
