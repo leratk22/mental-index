@@ -573,7 +573,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20260927a">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20260927b">
 </head>
 <body>
 
@@ -599,7 +599,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="page-topbar"><a class="back-btn" href="index.html">← На&nbsp;сайт</a></div>
   <div class="home-kicker">{Company Name} · {year}</div>
   <div class="home-title">Индекс ментального благополучия</div>
-  <div class="home-meta">{Employee count} сотрудников · {Coverage}% охват · опрос: {Survey period}</div>
+  <div class="home-meta">{Employee count} сотрудников · в&nbsp;опросе участвовало {Coverage}% · период опроса: {Survey period}</div>
 
 <section class="dashboard-section" aria-labelledby="section-result-title">
 <div class="result-heading" style="margin-bottom:1rem;">
@@ -658,9 +658,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
   </div>
 
-  <div class="section-description index-scale-description" style="margin-bottom:1.25rem;"><p>Сравниваем результат сотрудников компании с&nbsp;результатом работающих россиян (исследование ФОМ и&nbsp;«Просебя», август 2025). Тёмная точка&nbsp;— компания, синее кольцо&nbsp;— Россия.</p><p style="margin-top:.6rem">Шкала&nbsp;— от&nbsp;−100 до&nbsp;+100. До&nbsp;19 включительно&nbsp;— низкое значение («В&nbsp;напряжении»), от&nbsp;20 до&nbsp;45&nbsp;— среднее («В&nbsp;хрупком равновесии»), выше 45&nbsp;— высокое («В&nbsp;ресурсе»); границы&nbsp;— по&nbsp;методике 2025 года.</p></div>
+  <div class="section-description index-scale-description" style="margin-bottom:1.25rem;"><p>Индекс ментального благополучия&nbsp;— сводный результат опроса о&nbsp;состоянии людей и&nbsp;связанных с&nbsp;ним факторах: стрессе, симптомах неблагополучия, личных ресурсах, условиях жизни и&nbsp;работы. Сравниваем результат сотрудников компании с&nbsp;результатом работающих россиян (исследование ФОМ и&nbsp;«Просебя», август 2025). Тёмная точка&nbsp;— компания, синее кольцо&nbsp;— Россия.</p><p style="margin-top:.6rem">Шкала&nbsp;— от&nbsp;−100 до&nbsp;+100, чем выше значение, тем лучше. До&nbsp;19 включительно&nbsp;— низкое значение («В&nbsp;напряжении»), от&nbsp;20 до&nbsp;45&nbsp;— среднее («В&nbsp;хрупком равновесии»), выше 45&nbsp;— высокое («В&nbsp;ресурсе»); границы&nbsp;— по&nbsp;методике 2025 года.</p></div>
 
-<div class="insight-card" style="margin-bottom:0;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Индекс ментального благополучия&nbsp;— 17,1: это низкое значение.</strong> У&nbsp;работающих россиян&nbsp;— 30, разница 12,9 пункта. Чем объясняется разница, показывают составляющие в&nbsp;разделе «Из&nbsp;чего складывается Индекс ментального благополучия»; по&nbsp;одному общему числу выбирать действия рано.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Все три составляющие ниже российского результата.</strong> Сильнее всего отстают ментальное состояние (5,0 против 26) и&nbsp;внутренние факторы (19,0 против 36). Внешние факторы почти на&nbsp;уровне России (27,4 против 28).</div></li><li style="--marker-color:#FFD452;"><div class="ins-text"><strong>Стресс-статус&nbsp;— единственный субиндекс ниже нуля (−19,4).</strong> Значит, сотрудники чаще сообщают о&nbsp;стрессе, чем о&nbsp;его отсутствии. Причины стресса по&nbsp;этому числу не&nbsp;видны&nbsp;— их стоит выяснить отдельно.</div></li></ol></div>
+<div class="insight-card" style="margin-bottom:0;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Индекс ментального благополучия&nbsp;— 17,1: это низкое значение.</strong> У&nbsp;работающих россиян&nbsp;— 30, разница 12,9 пункта. Чем объясняется разница, показывают составляющие в&nbsp;разделе «Из&nbsp;чего складывается Индекс ментального благополучия»; по&nbsp;одному общему числу выбирать действия рано.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Все три составляющие ниже российского результата.</strong> Сильнее всего отстают ментальное состояние (5,0 против 26) и&nbsp;внутренние факторы (19,0 против 36). Внешние факторы почти на&nbsp;уровне России (27,4 против 28).</div></li><li style="--marker-color:#FFD452;"><div class="ins-text"><strong>Стресс-статус&nbsp;— единственный частный показатель (субиндекс) ниже нуля: −19,4.</strong> Он&nbsp;описывает, как часто люди испытывают стресс: сообщающих о&nbsp;нём больше, чем не&nbsp;сообщающих. Причины стресса по&nbsp;этому числу не&nbsp;видны&nbsp;— их&nbsp;стоит выяснить отдельно.</div></li></ol></div>
 </section>
 
 <section class="dashboard-section" aria-labelledby="section-structure-title">
@@ -673,7 +673,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="dashboard-structure-visual">
     <div class="structure-card-column">
       <div class="spoke-card structure-component-card" data-component="a" data-goto="subA" onclick="go('subA')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">А · Ментальное состояние</div><div class="structure-value-row"><div class="sc-val">5,0</div><div class="sc-bench"><span class="delta-pill delta-risk">−21,0</span><span>Россия: 26</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">А · Ментальное состояние</div><div class="structure-value-row"><div class="sc-val">5,0</div><div class="sc-bench"><span class="delta-pill delta-risk" title="Разница с результатом работающих россиян">−21,0</span><span>Россия: 26</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>А1 · Стресс-статус</span><span>−19,4</span></div>
           <div class="sc-sub-row"><span>А2 · Симптомы</span><span>29,4</span></div>
@@ -682,7 +682,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
 
       <div class="spoke-card structure-component-card" data-component="b" data-goto="subB" onclick="go('subB')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">Б · Внутренние факторы</div><div class="structure-value-row"><div class="sc-val">19,0</div><div class="sc-bench"><span class="delta-pill delta-risk">−17,0</span><span>Россия: 36</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">Б · Внутренние факторы</div><div class="structure-value-row"><div class="sc-val">19,0</div><div class="sc-bench"><span class="delta-pill delta-risk" title="Разница с результатом работающих россиян">−17,0</span><span>Россия: 36</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>Б1 · Психол. профиль</span><span>13,4</span></div>
           <div class="sc-sub-row"><span>Б2 · Психол. устойчивость</span><span>24,7</span></div>
@@ -691,7 +691,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
 
       <div class="spoke-card structure-component-card" data-component="v" data-goto="subV" onclick="go('subV')" tabindex="0">
-        <div class="structure-card-head"><div class="sc-label">В · Внешние факторы</div><div class="structure-value-row"><div class="sc-val">27,4</div><div class="sc-bench"><span class="delta-pill delta-watch">−0,6</span><span>Россия: 28</span></div></div></div>
+        <div class="structure-card-head"><div class="sc-label">В · Внешние факторы</div><div class="structure-value-row"><div class="sc-val">27,4</div><div class="sc-bench"><span class="delta-pill delta-watch" title="Разница с результатом работающих россиян">−0,6</span><span>Россия: 28</span></div></div></div>
         <div class="sc-subs">
           <div class="sc-sub-row"><span>В1 · Профессиональные</span><span>37,4</span></div>
           <div class="sc-sub-row"><span>В2 · Личностные</span><span>31,3</span></div>
@@ -716,10 +716,10 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         <text x="210" y="218" class="circle-lbl venn-index-value">17,1</text>
       </svg>
       <button class="center-btn" data-goto="home-detail" onclick="go('home-detail')">Смотреть</button>
-      <div class="section-description structure-description">Индекс ментального благополучия состоит из&nbsp;трёх компонентов равного веса: <strong>А&nbsp;— ментальное состояние</strong> (уровень стресса и&nbsp;симптомы), <strong>Б&nbsp;— внутренние факторы</strong> (психологический профиль и&nbsp;психологическая устойчивость), <strong>В&nbsp;— внешние факторы</strong> (профессиональная среда, личная жизнь, социальный контекст). Нажмите на&nbsp;компонент, чтобы открыть подробности.</div>
+      <div class="section-description structure-description">Индекс ментального благополучия состоит из&nbsp;трёх компонентов равного веса: <strong>А&nbsp;— ментальное состояние</strong> (пережитый стресс и&nbsp;симптомы неблагополучия), <strong>Б&nbsp;— внутренние факторы</strong> (психологический профиль: уверенность, энергия, отношение к&nbsp;переменам; психологическая устойчивость: настроение и&nbsp;то, как человек справляется со&nbsp;стрессом), <strong>В&nbsp;— внешние факторы</strong> (работа, жизнь вне работы, восприятие более широких обстоятельств). Каждый компонент делится на&nbsp;субиндексы&nbsp;— частные показатели, например А1&nbsp;— стресс-статус. Цветная метка рядом с&nbsp;числом&nbsp;— разница с&nbsp;результатом работающих россиян. Нажмите на&nbsp;компонент, чтобы открыть подробности.</div>
     </div>
   </div><!-- /hub grid -->
-  <div class="insight-card" style="margin-bottom:0;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Ментальное состояние: о&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших.</strong> Откуда стресс, эти данные не&nbsp;показывают.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Внутренние факторы ниже российского результата.</strong> Психологический профиль&nbsp;— 13,4, психологическая устойчивость&nbsp;— 24,7 (в&nbsp;России&nbsp;— 34 и&nbsp;39). Из&nbsp;навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43). Это связь: она не&nbsp;доказывает, что развитие навыка повысит результат.</div></li><li style="--marker-color:#759F45;"><div class="ins-text"><strong>Внешние факторы&nbsp;— почти на&nbsp;уровне России (27,4 против 28).</strong> Профессиональные факторы&nbsp;— 37,4 (в&nbsp;России&nbsp;— 47). Отношения с&nbsp;коллегами и&nbsp;условия труда оценивают положительно 91% и&nbsp;92%&nbsp;— это стоит сохранить.</div></li></ol></div>
+  <div class="insight-card" style="margin-bottom:0;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Ментальное состояние: о&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших.</strong> Откуда стресс, эти данные не&nbsp;показывают.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Внутренние факторы ниже российского результата.</strong> Психологический профиль&nbsp;— 13,4, психологическая устойчивость&nbsp;— 24,7 (в&nbsp;России&nbsp;— 34 и&nbsp;39). Из&nbsp;психологических навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43; r&nbsp;— коэффициент корреляции: чем ближе к&nbsp;1, тем теснее связь). Это связь, и&nbsp;она не&nbsp;доказывает, что развитие навыка повысит результат.</div></li><li style="--marker-color:#759F45;"><div class="ins-text"><strong>Внешние факторы&nbsp;— почти на&nbsp;уровне России (27,4 против 28).</strong> Профессиональные факторы&nbsp;— 37,4 (в&nbsp;России&nbsp;— 47). Отношения с&nbsp;коллегами и&nbsp;условия труда оценивают положительно 91% и&nbsp;92%&nbsp;— это стоит сохранить.</div></li></ol></div>
 </section>
 
 <section class="dashboard-section" aria-labelledby="section-risks-title">
@@ -789,7 +789,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 
       <div class="risk-axis-x-footer"><span><b class="risk-axis-label-full">100% намерения покинуть</b><b class="risk-axis-label-short">100%</b></span><span><b class="risk-axis-label-full">0% намерения покинуть</b><b class="risk-axis-label-short">0%</b></span></div>
     </div>
-  <div class="section-description" style="margin-bottom:1.25rem;">По&nbsp;вертикали&nbsp;— значение Индекса ментального благополучия (низкое или среднее и&nbsp;высокое), по&nbsp;горизонтали&nbsp;— ответ о&nbsp;намерении уйти. Названия секторов условные: они описывают сочетание ответов, а&nbsp;производительность и&nbsp;причины ухода эти данные не&nbsp;измеряют. Нажмите на&nbsp;сектор, чтобы открыть подробности.</div>
+  <div class="section-description" style="margin-bottom:1.25rem;">Каждая карточка&nbsp;— сектор: группа сотрудников с&nbsp;одним и&nbsp;тем же&nbsp;сочетанием ответов. По&nbsp;вертикали&nbsp;— значение Индекса ментального благополучия (низкое или среднее и&nbsp;высокое), по&nbsp;горизонтали&nbsp;— ответ о&nbsp;намерении уйти. Названия секторов условные: они описывают сочетание ответов, а&nbsp;производительность и&nbsp;причины ухода эти данные не&nbsp;измеряют. Нажмите на&nbsp;сектор, чтобы открыть подробности.</div>
   </div>
 
 
@@ -883,6 +883,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div class="page-topbar"><div class="back-btn" data-back="home">← Общие метрики</div></div>
   <div class="sp-eyebrow">Индекс ментального благополучия · обзор</div>
   <div class="sp-title">Составляющие Индекса ментального благополучия</div>
+  <div class="sp-desc">Индекс состоит из&nbsp;трёх компонентов&nbsp;— А, Б&nbsp;и&nbsp;В&nbsp;(1-й&nbsp;уровень). У&nbsp;каждого компонента есть субиндексы&nbsp;— частные показатели (2-й&nbsp;уровень), например А1&nbsp;— стресс-статус или В1&nbsp;— профессиональные факторы. Для каждого показателя компания сравнивается с&nbsp;результатом работающих россиян.</div>
   <section class="dashboard-section">
   <div class="chart-head">
     <div class="metric-block__title">Индекс ментального благополучия и&nbsp;компоненты 1-го уровня</div>
@@ -935,7 +936,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="sp-title">Ментальное состояние</div>
       <div class="sp-desc" style="margin-bottom:0">Часть результата, связанная с&nbsp;пережитым стрессом и&nbsp;симптомами неблагополучия. Стресс-статус описывает наличие и&nbsp;частоту стрессов; показатель симптомов&nbsp;— частоту таких состояний, как усталость, тревога, трудности со&nbsp;сном и&nbsp;концентрацией.</div>
     </div>
-    <div class="subpage-hero__figure"><div class="sc-val">+5,0</div><div class="sc-bench"><span class="delta-pill delta-risk">−21,0</span><span>Россия: 26</span></div></div>
+    <div class="subpage-hero__figure"><div class="sc-val">+5,0</div><div class="sc-bench"><span class="delta-pill delta-risk" title="Разница с результатом работающих россиян">−21,0</span><span>Россия: 26</span></div></div>
   </div>
   <section class="dashboard-section"><div class="legend" style="margin-bottom:.4rem"><span>Компания:</span><span class="legend-item"><span class="legend-dot" style="background:#759F45"></span>высокое</span><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>среднее</span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>низкое</span><span class="legend-item"><span class="legend-dot legend-dot--outline"></span>Россия, 2025</span></div><div class="db db--zones">
     <div class="db__axis" aria-hidden="true"><span style="left:0%">−100</span><span style="left:25%">−50</span><span style="left:50%">0</span><span style="left:75%">+50</span><span style="left:100%">+100</span></div>
@@ -948,7 +949,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <section class="dashboard-section">
   <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А1 · Стресс-статус</div><div class="metric-block__val">−19,4</div></div><div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -966,7 +967,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="metric-note">О&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших. Откуда стресс, это число не&nbsp;показывает.</div></div>
   <div class="metric-block"><div style="display:flex;align-items:baseline;gap:8px;margin-bottom:.5rem;"><div class="metric-block__title">А2 · Симптомы</div><div class="metric-block__val">+29,4</div></div><div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1018,7 +1019,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="sp-title">Внутренние факторы</div>
       <div class="sp-desc" style="margin-bottom:0">Часть результата о&nbsp;личных ресурсах. Психологический профиль охватывает уверенность, энергию и&nbsp;отношение к&nbsp;переменам; психологическая устойчивость описана через ответы о&nbsp;настроении, преодолении стресса и&nbsp;оценке своего состояния.</div>
     </div>
-    <div class="subpage-hero__figure"><div class="sc-val">+19,0</div><div class="sc-bench"><span class="delta-pill delta-risk">−17,0</span><span>Россия: 36</span></div></div>
+    <div class="subpage-hero__figure"><div class="sc-val">+19,0</div><div class="sc-bench"><span class="delta-pill delta-risk" title="Разница с результатом работающих россиян">−17,0</span><span>Россия: 36</span></div></div>
   </div>
   <section class="dashboard-section"><div class="legend" style="margin-bottom:.4rem"><span>Компания:</span><span class="legend-item"><span class="legend-dot" style="background:#759F45"></span>высокое</span><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>среднее</span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>низкое</span><span class="legend-item"><span class="legend-dot legend-dot--outline"></span>Россия, 2025</span></div><div class="db db--zones">
     <div class="db__axis" aria-hidden="true"><span style="left:0%">−100</span><span style="left:25%">−50</span><span style="left:50%">0</span><span style="left:75%">+50</span><span style="left:100%">+100</span></div>
@@ -1035,7 +1036,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1060,7 +1061,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1080,7 +1081,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     </div>
   <div class="insight-card" style="margin-bottom:0;"><h3>Что&nbsp;делать</h3>
       <ol class="ins-list">
-        <li><strong>Навык управления эмоциями.</strong><span class="rec"><b>Данные.</b> Из&nbsp;навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43).</span><span class="rec"><b>Почему так может быть.</b> Это связь, а&nbsp;не&nbsp;доказательство: неясно, помогает ли&nbsp;навык состоянию или хорошее состояние помогает навыку.</span><span class="rec"><b>Что сделать.</b> Сотрудникам&nbsp;— предложить развивать навык управления эмоциями; руководителям&nbsp;— разбирать с&nbsp;командой сложные ситуации, а&nbsp;не&nbsp;только результат.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы о&nbsp;психологическом профиле и&nbsp;устойчивости в&nbsp;следующем опросе, собрать отзывы участников.</span></li><li><strong>Уверенность в&nbsp;себе.</strong><span class="rec"><b>Данные.</b> 34% не&nbsp;считают себя уверенными людьми. Уверенность тоже связана с&nbsp;Индексом ментального благополучия (r&nbsp;= 0,39).</span><span class="rec"><b>Почему так может быть.</b> Возможно, дело и&nbsp;в&nbsp;том, как в&nbsp;команде дают обратную связь.</span><span class="rec"><b>Что сделать.</b> Руководителю&nbsp;— регулярно давать конкретную обратную связь и&nbsp;отмечать результаты; организации&nbsp;— сделать понятными критерии оценки работы.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы об&nbsp;уверенности в&nbsp;следующем опросе.</span></li><li><strong>Отношение к&nbsp;риску и&nbsp;ошибкам.</strong><span class="rec"><b>Данные.</b> 47% скорее избегают рисков.</span><span class="rec"><b>Почему так может быть.</b> Возможно, дело в&nbsp;том, как в&nbsp;командах реагируют на&nbsp;ошибки.</span><span class="rec"><b>Что сделать.</b> Руководителю с&nbsp;командой&nbsp;— обсудить, как в&nbsp;команде относятся к&nbsp;ошибкам и&nbsp;пробным решениям.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы об&nbsp;отношении к&nbsp;рискам в&nbsp;следующем опросе.</span></li>
+        <li><strong>Навык управления эмоциями.</strong><span class="rec"><b>Данные.</b> Из&nbsp;психологических навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43; r&nbsp;— коэффициент корреляции: чем ближе к&nbsp;1, тем теснее связь).</span><span class="rec"><b>Почему так может быть.</b> Это связь, а&nbsp;не&nbsp;доказательство: неясно, помогает ли&nbsp;навык состоянию или хорошее состояние помогает навыку.</span><span class="rec"><b>Что сделать.</b> Сотрудникам&nbsp;— предложить развивать навык управления эмоциями; руководителям&nbsp;— разбирать с&nbsp;командой сложные ситуации, а&nbsp;не&nbsp;только результат.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы о&nbsp;психологическом профиле и&nbsp;устойчивости в&nbsp;следующем опросе, собрать отзывы участников.</span></li><li><strong>Уверенность в&nbsp;себе.</strong><span class="rec"><b>Данные.</b> 34% не&nbsp;считают себя уверенными людьми. Уверенность тоже связана с&nbsp;Индексом ментального благополучия (r&nbsp;= 0,39).</span><span class="rec"><b>Почему так может быть.</b> Возможно, дело и&nbsp;в&nbsp;том, как в&nbsp;команде дают обратную связь.</span><span class="rec"><b>Что сделать.</b> Руководителю&nbsp;— регулярно давать конкретную обратную связь и&nbsp;отмечать результаты; организации&nbsp;— сделать понятными критерии оценки работы.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы об&nbsp;уверенности в&nbsp;следующем опросе.</span></li><li><strong>Отношение к&nbsp;риску и&nbsp;ошибкам.</strong><span class="rec"><b>Данные.</b> 47% скорее избегают рисков.</span><span class="rec"><b>Почему так может быть.</b> Возможно, дело в&nbsp;том, как в&nbsp;командах реагируют на&nbsp;ошибки.</span><span class="rec"><b>Что сделать.</b> Руководителю с&nbsp;командой&nbsp;— обсудить, как в&nbsp;команде относятся к&nbsp;ошибкам и&nbsp;пробным решениям.</span><span class="rec"><b>Как проверить.</b> Сравнить ответы об&nbsp;отношении к&nbsp;рискам в&nbsp;следующем опросе.</span></li>
       </ol></div>
 </section>
 </div>
@@ -1097,7 +1098,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="sp-title">Внешние факторы</div>
       <div class="sp-desc" style="margin-bottom:0">Часть результата о&nbsp;контексте жизни: работа (профессиональные факторы), здоровье, отношения и&nbsp;условия жизни вне работы (личностные) и&nbsp;восприятие более широких обстоятельств (социальные). Ближе всего к&nbsp;российскому результату.</div>
     </div>
-    <div class="subpage-hero__figure"><div class="sc-val">+27,4</div><div class="sc-bench"><span class="delta-pill delta-watch">−0,6</span><span>Россия: 28</span></div></div>
+    <div class="subpage-hero__figure"><div class="sc-val">+27,4</div><div class="sc-bench"><span class="delta-pill delta-watch" title="Разница с результатом работающих россиян">−0,6</span><span>Россия: 28</span></div></div>
   </div>
   <section class="dashboard-section"><div class="legend" style="margin-bottom:.4rem"><span>Компания:</span><span class="legend-item"><span class="legend-dot" style="background:#759F45"></span>высокое</span><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>среднее</span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>низкое</span><span class="legend-item"><span class="legend-dot legend-dot--outline"></span>Россия, 2025</span></div><div class="db db--zones">
     <div class="db__axis" aria-hidden="true"><span style="left:0%">−100</span><span style="left:25%">−50</span><span style="left:50%">0</span><span style="left:75%">+50</span><span style="left:100%">+100</span></div>
@@ -1115,7 +1116,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек. Позитивный ответ говорит о&nbsp;благополучии, негативный&nbsp;— о&nbsp;трудностях</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1145,7 +1146,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1174,7 +1175,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       </div>
       <div class="chart-switch">
         <div class="likert">
-        <div class="likert__base">Доли ответивших, % · n&nbsp;=&nbsp;99</div>
+        <div class="likert__base">Доли ответивших, %. Всего ответили 99&nbsp;человек</div>
         <div class="legend likert__legend">
         <span class="legend-item"><span class="legend-dot" style="background:var(--red)"></span>негативный</span>
         <span class="legend-item"><span class="legend-dot" style="background:#98A0AE"></span>затруднились</span>
@@ -1212,13 +1213,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="insight-card" style="margin-bottom:0;">
         <h3>Что требует внимания</h3>
       <ol class="ins-list">
-        <li><strong>Стресс-статус −19,4&nbsp;— единственный субиндекс ниже нуля.</strong> О&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших; откуда стресс, эти данные не&nbsp;показывают.</li><li><strong>36%&nbsp;— в&nbsp;секторе «Презентеизм».</strong> Значение низкое, о&nbsp;намерении уйти не&nbsp;сообщают: «Уязвимый лоялист»&nbsp;— 24%, «Тихий выгорающий»&nbsp;— 12%. Снижения производительности эти данные не&nbsp;показывают.</li><li><strong>Оплата труда: 58% оценивают отрицательно.</strong> Причины стоит выяснить отдельно.</li>
+        <li><strong>Стресс-статус&nbsp;— единственный частный показатель (субиндекс) ниже нуля: −19,4.</strong> Он описывает, как часто люди испытывают стресс: о&nbsp;стрессе за&nbsp;последний месяц сообщили 72% ответивших. Откуда стресс, эти данные не&nbsp;показывают.</li><li><strong>36%&nbsp;— в&nbsp;секторе «Презентеизм».</strong> Значение низкое, о&nbsp;намерении уйти не&nbsp;сообщают: «Уязвимый лоялист»&nbsp;— 24%, «Тихий выгорающий»&nbsp;— 12%. Снижения производительности эти данные не&nbsp;показывают.</li><li><strong>Оплата труда: 58% оценивают отрицательно.</strong> Причины стоит выяснить отдельно.</li>
       </ol>
       </div>
       <div class="insight-card" style="margin-bottom:0;">
         <h3>Точки опоры</h3>
       <ol class="ins-list">
-        <li><strong>Отношения с&nbsp;коллегами и&nbsp;условия труда оценивают положительно 91% и&nbsp;92%.</strong> Это стоит сохранить, хотя в&nbsp;целом профессиональные факторы ниже, чем в&nbsp;России (37,4 против 47).</li><li><strong>12%&nbsp;— «Амбассадоры».</strong> Значение высокое, довольны работой, о&nbsp;намерении уйти не&nbsp;сообщают. Стоит выяснить, что им&nbsp;помогает; возможно, они готовы поддерживать коллег.</li><li><strong>Из&nbsp;навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43).</strong> Поможет ли&nbsp;развитие навыка, покажет проверка: связь не&nbsp;гарантирует рост.</li>
+        <li><strong>Отношения с&nbsp;коллегами и&nbsp;условия труда оценивают положительно 91% и&nbsp;92%.</strong> Это стоит сохранить, хотя в&nbsp;целом профессиональные факторы ниже, чем в&nbsp;России (37,4 против 47).</li><li><strong>12%&nbsp;— «Амбассадоры».</strong> Значение высокое, довольны работой, о&nbsp;намерении уйти не&nbsp;сообщают. Стоит выяснить, что им&nbsp;помогает; возможно, они готовы поддерживать коллег.</li><li><strong>Из&nbsp;психологических навыков сильнее всего с&nbsp;Индексом ментального благополучия связано управление эмоциями (r&nbsp;= 0,43; r&nbsp;— коэффициент корреляции: чем ближе к&nbsp;1, тем теснее связь).</strong> Поможет ли&nbsp;развитие навыка, покажет проверка: связь не&nbsp;гарантирует рост.</li>
       </ol>
       </div>
     </div>
@@ -1361,6 +1362,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-n">12&nbsp;чел.</div>
         </div>
         <div class="seg-name">Амбассадор</div>
+        <div class="seg-desc">Высокое значение, доволен работой.</div>
       </div>
       <div class="seg-card seg-card--static seg-card--empty">
         <div class="seg-empty-mark">—</div>
@@ -1374,6 +1376,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-n">28&nbsp;чел.</div>
         </div>
         <div class="seg-name">Стабильный</div>
+        <div class="seg-desc">Среднее значение, доволен работой.</div>
       </div>
       <div class="seg-card seg-neutral seg-card--static">
         <div class="seg-card__head">
@@ -1381,6 +1384,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-n">4&nbsp;чел.</div>
         </div>
         <div class="seg-name">Неопределённый</div>
+        <div class="seg-desc">Среднее значение, недоволен работой.</div>
       </div>
 
       <div class="risk-axis-x-footer" aria-hidden="true"></div>
@@ -1454,16 +1458,16 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   </section>
   <section class="dashboard-section">
     <div class="metric-block__title" style="margin-bottom:1rem">Субиндексы 2-го уровня · сравнение подгрупп</div>
-    <div class="legend" style="margin-bottom:.75rem"><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>Уязв. лоялист (доволен) <span class="legend-n">· 24&nbsp;чел.</span></span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>Тихий выгорающий (недоволен) <span class="legend-n">· 12&nbsp;чел.</span></span></div>
+    <div class="legend" style="margin-bottom:.75rem"><span class="legend-item"><span class="legend-dot" style="background:#FFD452"></span>Уязвимый лоялист (доволен) <span class="legend-n">· 24&nbsp;чел.</span></span><span class="legend-item"><span class="legend-dot" style="background:#F15D56"></span>Тихий выгорающий (недоволен) <span class="legend-n">· 12&nbsp;чел.</span></span></div>
     <div class="db db--zones">
     <div class="db__axis" aria-hidden="true"><span style="left:0%">−100</span><span style="left:25%">−50</span><span style="left:50%">0</span><span style="left:75%">+50</span><span style="left:100%">+100</span></div>
-    <div class="db__row"><div class="db__label">А1 · Стресс-статус</div><div class="db__track" role="img" aria-label="А1 · Стресс-статус: Уязв. лоялист (доволен) −65, Тихий выгорающий (недоволен) −46"><span class="db__link" style="left:17.5%;width:9.5%"></span><span class="db__dot" style="left:17.5%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · А1 · Стресс-статус: -65"></span><span class="db__dot" style="left:27%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · А1 · Стресс-статус: -46"></span><span class="db__val db__val--left db__val--strong" style="left:17.5%">−65</span><span class="db__val db__val--right db__val--strong" style="left:27%">−46</span></div></div>
-    <div class="db__row"><div class="db__label">А2 · Симптомы</div><div class="db__track" role="img" aria-label="А2 · Симптомы: Уязв. лоялист (доволен) +18, Тихий выгорающий (недоволен) +14"><span class="db__link" style="left:57%;width:2%"></span><span class="db__dot" style="left:59%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · А2 · Симптомы: +18"></span><span class="db__dot" style="left:57%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · А2 · Симптомы: +14"></span><span class="db__val db__val--left db__val--strong" style="left:57%">+14</span><span class="db__val db__val--right db__val--strong" style="left:59%">+18</span></div></div>
-    <div class="db__row"><div class="db__label">Б1 · Психол. профиль</div><div class="db__track" role="img" aria-label="Б1 · Психол. профиль: Уязв. лоялист (доволен) −4, Тихий выгорающий (недоволен) −12"><span class="db__link" style="left:44%;width:4%"></span><span class="db__dot" style="left:48%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · Б1 · Психол. профиль: -4"></span><span class="db__dot" style="left:44%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · Б1 · Психол. профиль: -12"></span><span class="db__val db__val--left db__val--strong" style="left:44%">−12</span><span class="db__val db__val--right db__val--strong" style="left:48%">−4</span></div></div>
-    <div class="db__row"><div class="db__label">Б2 · Психол. устойчивость</div><div class="db__track" role="img" aria-label="Б2 · Психол. устойчивость: Уязв. лоялист (доволен) +18, Тихий выгорающий (недоволен) −8"><span class="db__link" style="left:46%;width:13%"></span><span class="db__dot" style="left:59%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · Б2 · Психол. устойчивость: +18"></span><span class="db__dot" style="left:46%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · Б2 · Психол. устойчивость: -8"></span><span class="db__val db__val--left db__val--strong" style="left:46%">−8</span><span class="db__val db__val--right db__val--strong" style="left:59%">+18</span></div></div>
-    <div class="db__row"><div class="db__label">В1 · Профессиональные</div><div class="db__track" role="img" aria-label="В1 · Профессиональные: Уязв. лоялист (доволен) +42, Тихий выгорающий (недоволен) +6"><span class="db__link" style="left:53%;width:18%"></span><span class="db__dot" style="left:71%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · В1 · Профессиональные: +42"></span><span class="db__dot" style="left:53%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В1 · Профессиональные: +6"></span><span class="db__val db__val--left db__val--strong" style="left:53%">+6</span><span class="db__val db__val--right db__val--strong" style="left:71%">+42</span></div></div>
-    <div class="db__row"><div class="db__label">В2 · Личностные</div><div class="db__track" role="img" aria-label="В2 · Личностные: Уязв. лоялист (доволен) +28, Тихий выгорающий (недоволен) +22"><span class="db__link" style="left:61%;width:3%"></span><span class="db__dot" style="left:64%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · В2 · Личностные: +28"></span><span class="db__dot" style="left:61%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В2 · Личностные: +22"></span><span class="db__val db__val--left db__val--strong" style="left:61%">+22</span><span class="db__val db__val--right db__val--strong" style="left:64%">+28</span></div></div>
-    <div class="db__row"><div class="db__label">В3 · Социальные</div><div class="db__track" role="img" aria-label="В3 · Социальные: Уязв. лоялист (доволен) +10, Тихий выгорающий (недоволен) +8"><span class="db__link" style="left:54%;width:1%"></span><span class="db__dot" style="left:55%;--c:#FFD452" data-tip="Уязв. лоялист (доволен) · В3 · Социальные: +10"></span><span class="db__dot" style="left:54%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В3 · Социальные: +8"></span><span class="db__val db__val--left db__val--strong" style="left:54%">+8</span><span class="db__val db__val--right db__val--strong" style="left:55%">+10</span></div></div>
+    <div class="db__row"><div class="db__label">А1 · Стресс-статус</div><div class="db__track" role="img" aria-label="А1 · Стресс-статус: Уязвимый лоялист (доволен) −65, Тихий выгорающий (недоволен) −46"><span class="db__link" style="left:17.5%;width:9.5%"></span><span class="db__dot" style="left:17.5%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · А1 · Стресс-статус: -65"></span><span class="db__dot" style="left:27%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · А1 · Стресс-статус: -46"></span><span class="db__val db__val--left db__val--strong" style="left:17.5%">−65</span><span class="db__val db__val--right db__val--strong" style="left:27%">−46</span></div></div>
+    <div class="db__row"><div class="db__label">А2 · Симптомы</div><div class="db__track" role="img" aria-label="А2 · Симптомы: Уязвимый лоялист (доволен) +18, Тихий выгорающий (недоволен) +14"><span class="db__link" style="left:57%;width:2%"></span><span class="db__dot" style="left:59%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · А2 · Симптомы: +18"></span><span class="db__dot" style="left:57%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · А2 · Симптомы: +14"></span><span class="db__val db__val--left db__val--strong" style="left:57%">+14</span><span class="db__val db__val--right db__val--strong" style="left:59%">+18</span></div></div>
+    <div class="db__row"><div class="db__label">Б1 · Психол. профиль</div><div class="db__track" role="img" aria-label="Б1 · Психол. профиль: Уязвимый лоялист (доволен) −4, Тихий выгорающий (недоволен) −12"><span class="db__link" style="left:44%;width:4%"></span><span class="db__dot" style="left:48%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · Б1 · Психол. профиль: -4"></span><span class="db__dot" style="left:44%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · Б1 · Психол. профиль: -12"></span><span class="db__val db__val--left db__val--strong" style="left:44%">−12</span><span class="db__val db__val--right db__val--strong" style="left:48%">−4</span></div></div>
+    <div class="db__row"><div class="db__label">Б2 · Психол. устойчивость</div><div class="db__track" role="img" aria-label="Б2 · Психол. устойчивость: Уязвимый лоялист (доволен) +18, Тихий выгорающий (недоволен) −8"><span class="db__link" style="left:46%;width:13%"></span><span class="db__dot" style="left:59%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · Б2 · Психол. устойчивость: +18"></span><span class="db__dot" style="left:46%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · Б2 · Психол. устойчивость: -8"></span><span class="db__val db__val--left db__val--strong" style="left:46%">−8</span><span class="db__val db__val--right db__val--strong" style="left:59%">+18</span></div></div>
+    <div class="db__row"><div class="db__label">В1 · Профессиональные</div><div class="db__track" role="img" aria-label="В1 · Профессиональные: Уязвимый лоялист (доволен) +42, Тихий выгорающий (недоволен) +6"><span class="db__link" style="left:53%;width:18%"></span><span class="db__dot" style="left:71%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · В1 · Профессиональные: +42"></span><span class="db__dot" style="left:53%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В1 · Профессиональные: +6"></span><span class="db__val db__val--left db__val--strong" style="left:53%">+6</span><span class="db__val db__val--right db__val--strong" style="left:71%">+42</span></div></div>
+    <div class="db__row"><div class="db__label">В2 · Личностные</div><div class="db__track" role="img" aria-label="В2 · Личностные: Уязвимый лоялист (доволен) +28, Тихий выгорающий (недоволен) +22"><span class="db__link" style="left:61%;width:3%"></span><span class="db__dot" style="left:64%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · В2 · Личностные: +28"></span><span class="db__dot" style="left:61%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В2 · Личностные: +22"></span><span class="db__val db__val--left db__val--strong" style="left:61%">+22</span><span class="db__val db__val--right db__val--strong" style="left:64%">+28</span></div></div>
+    <div class="db__row"><div class="db__label">В3 · Социальные</div><div class="db__track" role="img" aria-label="В3 · Социальные: Уязвимый лоялист (доволен) +10, Тихий выгорающий (недоволен) +8"><span class="db__link" style="left:54%;width:1%"></span><span class="db__dot" style="left:55%;--c:#FFD452" data-tip="Уязвимый лоялист (доволен) · В3 · Социальные: +10"></span><span class="db__dot" style="left:54%;--c:#F15D56" data-tip="Тихий выгорающий (недоволен) · В3 · Социальные: +8"></span><span class="db__val db__val--left db__val--strong" style="left:54%">+8</span><span class="db__val db__val--right db__val--strong" style="left:55%">+10</span></div></div>
     <div class="db__hint" aria-hidden="true"><span>← больше негативных ответов</span><span>больше позитивных ответов →</span></div>
     <p class="db__note"><span class="legend-item"><span class="legend-dot db-zone--risk"></span>низкое ≤19</span><span class="legend-item"><span class="legend-dot db-zone--mid"></span>среднее 20–45</span><span class="legend-item"><span class="legend-dot db-zone--high"></span>высокое &gt;45</span><span class="db__note-text">Плюс ещё не&nbsp;значит «хорошо»: до&nbsp;+19 включительно значение считается низким.</span></p>
     </div>
@@ -1504,7 +1508,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div></div>
       <div class="risk-axis-y-title" aria-hidden="true"></div>
       <div class="risk-axis-column-label">Доволен работой</div>
-      <div class="risk-axis-column-label">Недоволен / затрудн.</div>
+      <div class="risk-axis-column-label">Недоволен или не&nbsp;смог оценить</div>
 
       <div class="risk-axis-y-label risk-axis-y-label-top"><span>высокое &gt;45</span></div>
       <div class="seg-card seg-green seg-card--static">
@@ -1512,7 +1516,8 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-pct">3%</div>
           <div class="seg-n">3&nbsp;человека</div>
         </div>
-        <div class="seg-name">Амбассадор · затрудн. с&nbsp;ответом</div>
+        <div class="seg-name">Амбассадор · затрудняется с&nbsp;ответом</div>
+        <div class="seg-desc">Высокое значение, доволен работой, затрудняется ответить о&nbsp;намерении уйти.</div>
       </div>
       <div class="seg-card seg-card--static seg-card--empty">
         <div class="seg-empty-mark">—</div>
@@ -1525,7 +1530,8 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-pct">2%</div>
           <div class="seg-n">2&nbsp;человека</div>
         </div>
-        <div class="seg-name">Стабильный · затрудн. с&nbsp;ответом</div>
+        <div class="seg-name">Стабильный · затрудняется с&nbsp;ответом</div>
+        <div class="seg-desc">Среднее значение, доволен работой, затрудняется ответить о&nbsp;намерении уйти.</div>
       </div>
       <div class="seg-card seg-neutral seg-card--static">
         <div class="seg-card__head">
@@ -1533,6 +1539,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
           <div class="seg-n">1&nbsp;человек</div>
         </div>
         <div class="seg-name">Неопределённый</div>
+        <div class="seg-desc">Среднее значение, недоволен работой или не&nbsp;смог её оценить.</div>
       </div>
 
       <div class="risk-axis-x-footer" aria-hidden="true"></div>
@@ -1638,6 +1645,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   <div style="margin-bottom:1.75rem;">
     <div class="section-eyebrow" style="margin-bottom:.4rem">Анализ по&nbsp;группам</div>
     <div class="sp-title">Срезы данных</div>
+    <div class="sp-desc" style="margin:.5rem 0 0">Срез&nbsp;— результаты одной части опрошенных, например одного подразделения или сотрудников с&nbsp;определённым стажем. Цвет ячейки подсказывает, на&nbsp;что обратить внимание в&nbsp;первую очередь.</div>
   </div>
 
   <div style="display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;">
@@ -1678,6 +1686,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-dept" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1690,6 +1699,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1701,6 +1711,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1717,6 +1728,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-grade" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1729,6 +1741,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1740,6 +1753,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1756,6 +1770,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-tenure" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1768,6 +1783,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1779,6 +1795,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1795,6 +1812,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-workmode" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1807,6 +1825,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1818,6 +1837,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1834,6 +1854,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-subs" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1846,6 +1867,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1857,6 +1879,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1874,6 +1897,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div id="slice-all" class="slice-panel" style="display:none;">
       <div class="analytics-card">
       <div class="analytics-table-head"><div class="analytics-table-title">Индекс ментального благополучия и&nbsp;субиндексы</div><div class="legend analytics-scale" aria-label="Цвет ячейки по значению Индекса ментального благополучия"><span class="legend-item"><span class="legend-dot" style="background:#F47A74"></span>ниже&nbsp;0</span><span class="legend-item"><span class="legend-dot" style="background:#F7A6A2"></span>0–9</span><span class="legend-item"><span class="legend-dot" style="background:#FAC6C4"></span>10–19</span><span class="legend-item"><span class="legend-dot" style="background:#FFE597"></span>20–32</span><span class="legend-item"><span class="legend-dot" style="background:#FFF4D4"></span>33–45</span><span class="legend-item"><span class="legend-dot" style="background:#BACFA2"></span>выше&nbsp;45</span></div></div>
+      <p class="analytics-table-note">Значение Индекса и&nbsp;субиндексов для каждой группы. Цвет ячейки&nbsp;— по&nbsp;значению Индекса (шкала справа от&nbsp;заголовка); коды А1–В3 расшифровываются при наведении.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1886,6 +1910,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
@@ -1897,6 +1922,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные или антидепрессанты; считают усилия работодателя достаточными или недостаточными.</p>
       <div style="overflow-x:auto;">
         <table style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
@@ -1992,6 +2018,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script src="assets/js/dashboard-viz.js?v=20260927a" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20260927b" defer></script>
 </body>
 </html>

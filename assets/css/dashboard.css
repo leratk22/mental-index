@@ -343,3 +343,9 @@
 .legend-note { color: var(--hint); }
 .analytics-card th [data-tip] { cursor: help; text-decoration: underline dotted; text-underline-offset: 3px; text-decoration-color: #A3ACBB; }
 @media (min-width: 601px) { .chart-tools > .legend { flex-wrap: nowrap; } }
+
+/* Пояснения к таблицам срезов и определения групп в карточках секторов. */
+.analytics-table-note { margin: -.25rem 0 .75rem; font-size: var(--type-body); line-height: 1.5; color: var(--hint); max-width: 720px; }
+.analytics-table-head + .analytics-table-note { margin-top: .25rem; }
+@media (max-width: 480px) { .risk-axis-grid--static .seg-desc { display: block !important; margin: .3rem 0 0 !important; font-size: var(--type-caption) !important; line-height: 1.35 !important; } }
+.likert__base { max-width: 100%; }
