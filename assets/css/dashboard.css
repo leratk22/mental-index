@@ -353,3 +353,12 @@
 /* Названия категорий под подписями шкалы Индекса; на узком экране — только в пояснении ниже. */
 .scale-zone-name { display: block; margin-top: 2px; font-size: var(--type-caption); }
 @media (max-width: 600px) { .scale-zone-name { display: none; } }
+
+/* «Из чего складывается Индекс»: на десктопе карточки компонентов растягиваются
+   на высоту правой колонки (диаграмма и пояснение), лишнее место — перед кнопкой. */
+@media (min-width: 761px) {
+  .dashboard-structure-visual { align-items: stretch !important; }
+  .structure-card-column .structure-component-card { flex: 1 1 auto; display: flex; flex-direction: column; }
+  .structure-card-column .structure-component-card .sc-btn-sm { margin-top: auto; }
+  .structure-card-column .structure-component-card .sc-subs { margin-bottom: .85rem; }
+}
