@@ -392,7 +392,7 @@
   font-size: var(--type-body); font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums;
 }
 .sk__mean b { font-weight: 600; }
-.sk__bench { font-size: var(--type-body); font-weight: 400; line-height: 1.3; color: var(--hint); white-space: nowrap; }
+.sk__bench { white-space: nowrap; }
 .sk--stack .likert__seg { transform-origin: left center; }
 .sk--stack .likert__seg--neg { border-radius: 4px 0 0 4px; }
 .sk--stack .likert__seg--pos { border-radius: 0 4px 4px 0; }
@@ -442,10 +442,14 @@
 .likert--anim .likert__ref { opacity: 0; transition: opacity .2s ease .3s; }
 .likert--anim.is-drawn .likert__ref { opacity: 1; }
 .legend-tick { display: inline-block; flex-shrink: 0; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid #6B9BCC; }
-.seg-ref { margin: -.1rem 0 .5rem; font-size: var(--type-body); line-height: 1.3; color: var(--hint); }
-.support-ref { display: block; margin-top: .15rem; font-size: var(--type-body); font-weight: 400; line-height: 1.3; color: var(--hint); }
+.seg-ref { margin: -.1rem 0 .5rem; }
+.support-ref { display: block; margin-top: .15rem; }
 @media (max-width: 480px) { .risk-axis-grid .seg-ref { display: none !important; } }
 @media (max-width: 600px) {
   .sk__row { grid-template-columns: minmax(0, 1fr) auto; }
   .sk__mean { grid-area: 1 / 2; padding: 6px 0 0 .75rem; }
 }
+
+/* Подпись «Россия: …» — одна на весь дашборд, как у карточек компонентов (.sc-bench): 11 px, цвет --muted. */
+.sc-bench, .seg-ref, .support-ref, .sk__bench { font-size: var(--type-caption); font-weight: var(--weight-caption); line-height: 1.4; color: var(--muted); }
+.seg-ref, .support-ref, .sk__bench { letter-spacing: 0; }
