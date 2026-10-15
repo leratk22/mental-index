@@ -573,7 +573,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261016d">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261016e">
 </head>
 <body>
 
@@ -2114,6 +2114,18 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script src="assets/js/dashboard-viz.js?v=20261016d" defer></script>
+<script>
+/* Переменные шаблона: значения для демо-компании. Для другой компании меняются только они.
+   Переменная, которой здесь нет, остаётся в тексте в фигурных скобках (так видно, что её не заполнили). */
+window.DASHBOARD_VARS = {
+  'Company Name': 'Компания', 'year': '2026',
+  'Employee count': '99', 'Coverage': '20', 'Respondent count': '99',
+  'Benchmark year': '2026', 'Benchmark period': '2026', 'Benchmark n': '811',
+  'Methodology year': '2026',
+  'Skill threshold yellow': '10', 'Skill threshold red': '20'
+  /* 'Survey period': '...'  — период опроса компании, в демо не задан */
+};
+</script>
+<script src="assets/js/dashboard-viz.js?v=20261016e" defer></script>
 </body>
 </html>

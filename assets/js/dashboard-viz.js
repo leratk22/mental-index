@@ -321,7 +321,25 @@
     });
   }
 
+  /* ── Подстановка переменных шаблона {Name} из window.DASHBOARD_VARS ── */
+  function fillVars() {
+    const vars = window.DASHBOARD_VARS || {};
+    const re = /\{([A-Za-z][A-Za-z ]*)\}/g;
+    const sub = (str) => str.replace(re, (m, k) => (k in vars ? vars[k] : m));
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement && /^(SCRIPT|STYLE)$/.test(n.parentElement.tagName) ? NodeFilter.FILTER_REJECT : (re.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP)),
+    });
+    re.lastIndex = 0;
+    const nodes = [];
+    while (walker.nextNode()) { nodes.push(walker.currentNode); re.lastIndex = 0; }
+    nodes.forEach((n) => { n.nodeValue = sub(n.nodeValue); });
+    document.querySelectorAll('[aria-label],[data-tip],[title]').forEach((el) => {
+      ['aria-label', 'data-tip', 'title'].forEach((a) => { const v = el.getAttribute(a); if (v && v.includes('{')) el.setAttribute(a, sub(v)); });
+    });
+  }
+
   function init() {
+    fillVars();
     indexScale();
     dumbbells();
     likerts();
