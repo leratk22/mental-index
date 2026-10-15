@@ -453,3 +453,17 @@
 /* Подпись «Россия: …» — одна на весь дашборд, как у карточек компонентов (.sc-bench): 11 px, цвет --muted. */
 .sc-bench, .seg-ref, .support-ref, .sk__bench { font-size: var(--type-caption); font-weight: var(--weight-caption); line-height: 1.4; color: var(--muted); }
 .seg-ref, .support-ref, .sk__bench { letter-spacing: 0; }
+
+/* Телефон: подписи групп в таблицах срезов — спокойнее и не уезжают при прокрутке таблицы вбок. */
+@media (max-width: 600px) {
+  .analytics-card td.analytics-subhead { padding: 5px 10px 4px; font-size: var(--type-caption); font-weight: 500 !important; letter-spacing: 0 !important; text-transform: none !important; }
+  .analytics-card td.analytics-subhead > span, .analytics-card td.analytics-subhead { white-space: nowrap; }
+  .analytics-card td.analytics-subhead::before { content: none; }
+}
+.chart-tip { max-width: calc(100vw - 16px); white-space: normal; text-align: center; }
+.analytics-subhead__label { position: sticky; left: 10px; display: inline-block; }
+
+/* Скрытый текст в заголовках таблиц (полное название субиндекса для скринридера) позиционируется
+   абсолютно; без позиционированного родителя он выпадал за край таблицы и растягивал страницу
+   вбок на телефоне. Ячейка становится его опорой. */
+.analytics-card th, .chart-table th { position: relative; }

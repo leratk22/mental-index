@@ -246,21 +246,39 @@
         if (!Number.isNaN(v)) text += ` · ${zone(v)}`;
       }
       tip.textContent = text;
-      const r = node.getBoundingClientRect();
-      tip.style.left = (r.left + r.width / 2) + 'px';
-      tip.style.top = r.top + 'px';
       tip.classList.add('is-visible');
     };
-    const hide = () => tip.classList.remove('is-visible');
+    const hide = () => { tip.classList.remove('is-visible'); current = null; };
+    let current = null;
+    const place = () => {
+      // Подсказка не выходит за край экрана: сдвигаем центр, если она шире свободного места.
+      const w = tip.offsetWidth, vw = document.documentElement.clientWidth;
+      const r = current.getBoundingClientRect();
+      const center = Math.min(Math.max(r.left + r.width / 2, w / 2 + 8), vw - w / 2 - 8);
+      tip.style.left = center + 'px';
+      tip.style.top = r.top + 'px';
+    };
+    const showFor = (n) => { current = n; show(n); place(); };
+    // Мышь: наведение. Касание: нажатие показывает подсказку и она остаётся,
+    // пока не нажмёшь в другом месте или не прокрутишь (на тач-экране pointerout
+    // приходит сразу после касания и раньше гасил подсказку за долю секунды).
     document.addEventListener('pointerover', (e) => {
+      if (e.pointerType === 'touch') return;
       const n = e.target.closest && e.target.closest(SEL);
-      if (n) show(n);
+      if (n) showFor(n);
     });
     document.addEventListener('pointerout', (e) => {
+      if (e.pointerType === 'touch') return;
       const n = e.target.closest && e.target.closest(SEL);
       if (n && !n.contains(e.relatedTarget)) hide();
     });
-    document.addEventListener('scroll', hide, true);
+    document.addEventListener('click', (e) => {
+      if (e.pointerType === 'mouse') return;
+      const n = e.target.closest && e.target.closest(SEL);
+      if (n && n !== current) showFor(n); else hide();
+    });
+    document.addEventListener('scroll', () => { if (current) hide(); }, true);
+    window.addEventListener('resize', hide);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
   }
 
