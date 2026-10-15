@@ -236,7 +236,7 @@
     const tip = el('div', 'chart-tip');
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
-    const SEL = '.db [data-tip], .likert [data-tip], .sk [data-tip], .stack [data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
+    const SEL = '.db [data-tip], .likert [data-tip], .sk [data-tip], .stack [data-tip], .chart-table th[data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
     // На шкале к значению добавляем категорию — чтобы «+8» не читалось как «хорошо».
     const zone = (v) => (v <= 19 ? 'низкое значение' : v <= 45 ? 'среднее значение' : 'высокое значение');
     const show = (node) => {
@@ -306,12 +306,24 @@
     }
   }
 
+  /* ── Окно «Что это за навыки»: нативный <dialog>, Esc и клик по фону закрывают ── */
+  function infoDialogs() {
+    document.querySelectorAll('[data-info-open]').forEach((btn) => {
+      const dlg = document.getElementById(btn.dataset.infoOpen);
+      if (!dlg || typeof dlg.showModal !== 'function') return;
+      btn.addEventListener('click', () => dlg.showModal());
+      dlg.querySelector('.info-dialog__close').addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+    });
+  }
+
   function init() {
     indexScale();
     dumbbells();
     likerts();
     likertTips();
     support();
+    infoDialogs();
     tooltip();
     motion();
   }
