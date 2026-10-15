@@ -130,7 +130,7 @@
      data-tip: «Серия · Показатель: значение»; в показателе
      самом тоже бывает « · », поэтому режем по первому. */
   function dumbbells() {
-    document.querySelectorAll('.db').forEach((chart) => {
+    document.querySelectorAll('.db:not([data-skills-variant])').forEach((chart) => {
       const tips = [...chart.querySelectorAll('[data-tip]')].map((n) => n.getAttribute('data-tip'));
       if (!tips.length) return;
       const series = [];
@@ -200,9 +200,13 @@
 
   /* ── Поддержка: по кнопке — полоса из пяти кусочков ────────── */
   function support() {
-    const btn = document.querySelector('.chart-toggle[data-toggle-for="support"]');
-    const sw = document.querySelector('.chart-switch--support');
-    if (btn && sw) wire(btn, sw);
+    // Кнопки «Таблица / Диаграмма» с data-toggle-for: «support» — блок поддержки,
+    // остальные — .chart-switch[data-switch=…].
+    document.querySelectorAll('.chart-toggle[data-toggle-for]').forEach((btn) => {
+      const id = btn.dataset.toggleFor;
+      const sw = id === 'support' ? document.querySelector('.chart-switch--support') : document.querySelector(`.chart-switch[data-switch="${id}"]`);
+      if (sw) wire(btn, sw);
+    });
     // Подсказка у каждого куска — подпись и доля из ключа под полосой.
     document.querySelectorAll('.support-stack').forEach((box) => {
       const items = box.querySelectorAll('.stack__key li');
@@ -232,7 +236,7 @@
     const tip = el('div', 'chart-tip');
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
-    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
+    const SEL = '.db [data-tip], .likert [data-tip], .sk [data-tip], .stack [data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
     // На шкале к значению добавляем категорию — чтобы «+8» не читалось как «хорошо».
     const zone = (v) => (v <= 19 ? 'низкое значение' : v <= 45 ? 'среднее значение' : 'высокое значение');
     const show = (node) => {
@@ -273,7 +277,7 @@
   }
 
   function motion() {
-    const likertList = [...document.querySelectorAll('.likert')];
+    const likertList = [...document.querySelectorAll('.likert, .sk')];
     const dbs = [...document.querySelectorAll('.db')];
     const stacks = [...document.querySelectorAll('.stack')];
     likertList.forEach((n) => n.classList.add('likert--anim'));
@@ -302,12 +306,25 @@
     }
   }
 
+  /* ── TEMP: переключатель вариантов графика навыков ──────────── */
+  function skillsVariants() {
+    const btns = [...document.querySelectorAll('.skills-switch__btn')];
+    if (!btns.length) return;
+    const views = [...document.querySelectorAll('[data-skills-variant]')];
+    btns.forEach((btn) => btn.addEventListener('click', () => {
+      btns.forEach((b) => { const on = b === btn; b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on)); });
+      views.forEach((v) => { v.hidden = v.dataset.skillsVariant !== btn.dataset.variant; });
+      views.filter((v) => !v.hidden).forEach((v) => { v.classList.remove('is-drawn'); void v.offsetWidth; requestAnimationFrame(() => v.classList.add('is-drawn')); });
+    }));
+  }
+
   function init() {
     indexScale();
     dumbbells();
     likerts();
     likertTips();
     support();
+    skillsVariants();
     tooltip();
     motion();
   }
