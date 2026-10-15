@@ -375,7 +375,7 @@
 
 /* ── Семь психологических навыков: полоса из трёх зон ─────────── */
 
-.sk { display: grid; grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr) 4.5rem; column-gap: 0; }
+.sk { display: grid; grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr) 7rem; column-gap: 0; }
 .sk__row, .sk__head { display: contents; }
 .sk__colname { padding-bottom: 6px; font-size: var(--type-caption); line-height: 1.3; color: var(--hint); }
 .sk__colname--end { text-align: right; }
@@ -387,10 +387,12 @@
 .sk__track { position: relative; min-height: 48px; border-top: 1px solid #EEF2F8; }
 .sk__head + .sk__row > * { border-top: 0; }
 .sk__mean {
-  display: flex; align-items: center; justify-content: flex-end;
+  display: flex; flex-direction: column; align-items: flex-end; justify-content: center;
   border-top: 1px solid #EEF2F8; padding-left: .75rem;
   font-size: var(--type-body); font-weight: 600; color: var(--text); font-variant-numeric: tabular-nums;
 }
+.sk__mean b { font-weight: 600; }
+.sk__bench { font-size: var(--type-body); font-weight: 400; line-height: 1.3; color: var(--hint); white-space: nowrap; }
 .sk--stack .likert__seg { transform-origin: left center; }
 .sk--stack .likert__seg--neg { border-radius: 4px 0 0 4px; }
 .sk--stack .likert__seg--pos { border-radius: 0 4px 4px 0; }
@@ -433,3 +435,17 @@
 .skills-about__list dt:first-child { margin-top: 0; }
 .skills-about__alias { font-weight: 400; color: var(--hint); }
 .skills-about__list dd { margin: .15rem 0 0; font-size: var(--type-body); line-height: 1.5; color: var(--muted); }
+
+
+/* ── Россия: ориентиры в долях ответов, карте секторов и блоке поддержки ── */
+.likert__ref { position: absolute; top: calc(50% + 13px); z-index: 2; width: 0; height: 0; margin-left: -5px; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 7px solid #6B9BCC; }
+.likert--anim .likert__ref { opacity: 0; transition: opacity .2s ease .3s; }
+.likert--anim.is-drawn .likert__ref { opacity: 1; }
+.legend-tick { display: inline-block; flex-shrink: 0; width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-bottom: 8px solid #6B9BCC; }
+.seg-ref { margin: -.1rem 0 .5rem; font-size: var(--type-body); line-height: 1.3; color: var(--hint); }
+.support-ref { display: block; margin-top: .15rem; font-size: var(--type-body); font-weight: 400; line-height: 1.3; color: var(--hint); }
+@media (max-width: 480px) { .risk-axis-grid .seg-ref { display: none !important; } }
+@media (max-width: 600px) {
+  .sk__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .sk__mean { grid-area: 1 / 2; padding: 6px 0 0 .75rem; }
+}
