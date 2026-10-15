@@ -258,7 +258,7 @@
       tip.style.left = center + 'px';
       tip.style.top = r.top + 'px';
     };
-    const showFor = (n) => { current = n; show(n); place(); };
+    let showFor = (n) => { current = n; show(n); place(); };
     // Мышь: наведение. Касание: нажатие показывает подсказку и она остаётся,
     // пока не нажмёшь в другом месте или не прокрутишь (на тач-экране pointerout
     // приходит сразу после касания и раньше гасил подсказку за долю секунды).
@@ -272,12 +272,31 @@
       const n = e.target.closest && e.target.closest(SEL);
       if (n && !n.contains(e.relatedTarget)) hide();
     });
-    document.addEventListener('click', (e) => {
+    // Касание обрабатываем через pointerdown/pointerup, а не click: iOS Safari не отправляет click
+    // на неинтерактивные элементы при делегировании на document, и подсказка не появлялась.
+    // Тап — это отпускание почти там же, где коснулись, и быстро; прокрутка отменяет pointer-события.
+    let down = null;
+    document.addEventListener('pointerdown', (e) => {
       if (e.pointerType === 'mouse') return;
+      down = { x: e.clientX, y: e.clientY, t: Date.now() };
+    });
+    document.addEventListener('pointerup', (e) => {
+      if (e.pointerType === 'mouse' || !down) return;
+      const tap = Math.hypot(e.clientX - down.x, e.clientY - down.y) < 12 && Date.now() - down.t < 600;
+      down = null;
+      if (!tap) return;
       const n = e.target.closest && e.target.closest(SEL);
       if (n && n !== current) showFor(n); else hide();
     });
-    document.addEventListener('scroll', () => { if (current) hide(); }, true);
+    document.addEventListener('pointercancel', () => { down = null; });
+    // Прокрутка страницы убирает подсказку, но не сразу после показа и не от мелких сдвигов
+    // (на телефоне при касании может «дрогнуть» адресная строка).
+    let shownAt = 0, shownY = 0;
+    const baseShow = showFor;
+    showFor = (n) => { shownAt = Date.now(); shownY = window.scrollY; baseShow(n); };
+    document.addEventListener('scroll', () => {
+      if (current && Date.now() - shownAt > 250 && Math.abs(window.scrollY - shownY) > 10) hide();
+    }, true);
     window.addEventListener('resize', hide);
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
   }
