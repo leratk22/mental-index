@@ -306,14 +306,18 @@
     }
   }
 
-  /* ── Окно «Что это за навыки»: нативный <dialog>, Esc и клик по фону закрывают ── */
-  function infoDialogs() {
-    document.querySelectorAll('[data-info-open]').forEach((btn) => {
-      const dlg = document.getElementById(btn.dataset.infoOpen);
-      if (!dlg || typeof dlg.showModal !== 'function') return;
-      btn.addEventListener('click', () => dlg.showModal());
-      dlg.querySelector('.info-dialog__close').addEventListener('click', () => dlg.close());
-      dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  /* ── Раскрывающееся описание по кнопке: подпись называет следующее действие ── */
+  function expanders() {
+    document.querySelectorAll('.chart-toggle[data-expand]').forEach((btn) => {
+      const target = document.getElementById(btn.dataset.expand);
+      if (!target) return;
+      const label = btn.textContent, back = btn.dataset.labelBack || label;
+      btn.addEventListener('click', () => {
+        const open = target.hidden;
+        target.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.textContent = open ? back : label;
+      });
     });
   }
 
@@ -323,7 +327,7 @@
     likerts();
     likertTips();
     support();
-    infoDialogs();
+    expanders();
     tooltip();
     motion();
   }

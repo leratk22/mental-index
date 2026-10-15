@@ -573,7 +573,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261015f">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261015g">
 </head>
 <body>
 
@@ -873,12 +873,16 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 </section>
 
 <section class="dashboard-section" aria-labelledby="section-skills-title">
-  <div class="section-intro">
-    <div id="section-skills-title" class="section-eyebrow">Психологические навыки</div>
-    <div class="section-title">Семь психологических навыков <button type="button" class="info-btn" aria-haspopup="dialog" aria-controls="skills-dialog" aria-label="Что это за навыки" data-info-open="skills-dialog">?</button></div>
+  <div class="section-intro section-intro--action">
+    <div>
+      <div id="section-skills-title" class="section-eyebrow">Психологические навыки</div>
+      <div class="section-title">Семь психологических навыков</div>
+    </div>
+    <button type="button" class="chart-toggle" data-expand="skills-about" data-label-back="Свернуть" aria-expanded="false" aria-controls="skills-about">Что это за навыки</button>
   </div>
   <div class="section-description chart-lead" style="margin-bottom:1rem;">Показано, как сотрудники оценили семь психологических навыков по&nbsp;шкале от&nbsp;1 до&nbsp;10: до&nbsp;4 включительно&nbsp;— низкая зона, 5–6&nbsp;— средняя, 7–10&nbsp;— высокая. Это авторская модель Н. Бехтеревой, разработанная «Просебя».</div>
-  <details class="skills-about"><summary>Что это за навыки</summary><div class="skills-about__body"><p>Модель из&nbsp;семи навыков&nbsp;— авторская модель Н. Бехтеревой, разработанная «Просебя». Описания взяты с&nbsp;сайта «Просебя» (prosebya.ru): они говорят о&nbsp;том, что даёт развитие навыка, а&nbsp;не&nbsp;о&nbsp;результатах этого опроса. В&nbsp;скобках&nbsp;— другое название навыка на&nbsp;сайте.</p><dl class="skills-about__list"><dt>Понимание себя <span class="skills-about__alias">(Саморефлексия)</span></dt><dd>Стимулирует стремление к&nbsp;развитию, помогает конструктивно воспринимать обратную связь и&nbsp;брать ответственность.</dd><dt>Умение выстраивать отношения <span class="skills-about__alias">(Взаимоотношения с&nbsp;другими)</span></dt><dd>Облегчает коммуникацию и&nbsp;распределение задач, предотвращает конфликты, помогает осваиваться новым сотрудникам.</dd><dt>Критическое мышление</dt><dd>Помогает принимать взвешенные решения, уменьшает количество ошибок, повышает качество работы.</dd><dt>Понимание потребностей тела <span class="skills-about__alias">(Забота о&nbsp;теле)</span></dt><dd>Уменьшает число больничных и&nbsp;пропусков, снижает утомляемость и&nbsp;предупреждает выгорание, повышает работоспособность.</dd><dt>Приспособление к&nbsp;изменениям <span class="skills-about__alias">(Адаптивность)</span></dt><dd>Снижает стресс от&nbsp;перемен, ускоряет освоение нового, помогает сохранять эффективность в&nbsp;условиях неопределённости.</dd><dt>Управление эмоциями</dt><dd>Способствует открытому и&nbsp;конструктивному диалогу, создаёт комфортную атмосферу, повышает качество сервиса.</dd><dt>Отношение к&nbsp;себе <span class="skills-about__alias">(Вера в&nbsp;себя)</span></dt><dd>Развивает лидерские качества, уменьшает прокрастинацию и&nbsp;страх перед сложными задачами, помогает расти внутри компании.</dd></dl></div></details>
+  <div id="skills-about" class="skills-about__body" hidden><p>Модель из&nbsp;семи навыков&nbsp;— авторская модель Н. Бехтеревой, разработанная «Просебя». Описания взяты с&nbsp;сайта «Просебя» (prosebya.ru): они говорят о&nbsp;том, что даёт развитие навыка, а&nbsp;не&nbsp;о&nbsp;результатах этого опроса. В&nbsp;скобках&nbsp;— другое название навыка на&nbsp;сайте.</p><dl class="skills-about__list"><dt>Понимание себя <span class="skills-about__alias">(Саморефлексия)</span></dt><dd>Стимулирует стремление к&nbsp;развитию, помогает конструктивно воспринимать обратную связь и&nbsp;брать ответственность.</dd><dt>Умение выстраивать отношения <span class="skills-about__alias">(Взаимоотношения с&nbsp;другими)</span></dt><dd>Облегчает коммуникацию и&nbsp;распределение задач, предотвращает конфликты, помогает осваиваться новым сотрудникам.</dd><dt>Критическое мышление</dt><dd>Помогает принимать взвешенные решения, уменьшает количество ошибок, повышает качество работы.</dd><dt>Понимание потребностей тела <span class="skills-about__alias">(Забота о&nbsp;теле)</span></dt><dd>Уменьшает число больничных и&nbsp;пропусков, снижает утомляемость и&nbsp;предупреждает выгорание, повышает работоспособность.</dd><dt>Приспособление к&nbsp;изменениям <span class="skills-about__alias">(Адаптивность)</span></dt><dd>Снижает стресс от&nbsp;перемен, ускоряет освоение нового, помогает сохранять эффективность в&nbsp;условиях неопределённости.</dd><dt>Управление эмоциями</dt><dd>Способствует открытому и&nbsp;конструктивному диалогу, создаёт комфортную атмосферу, повышает качество сервиса.</dd><dt>Отношение к&nbsp;себе <span class="skills-about__alias">(Вера в&nbsp;себя)</span></dt><dd>Развивает лидерские качества, уменьшает прокрастинацию и&nbsp;страх перед сложными задачами, помогает расти внутри компании.</dd></dl></div>
+  
 
   <div class="chart-head chart-head--inline">
     <div class="metric-block__title">Навыки по среднему баллу</div>
@@ -908,7 +912,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 
   <div class="insight-card" style="margin-bottom:0;margin-top:1.25rem;"><h3>Выводы</h3><ol class="ins-list"><li style="--marker-color:#759F45;"><div class="ins-text"><strong>Выше всего оценены понимание себя и&nbsp;умение выстраивать отношения.</strong> Средний балл&nbsp;— 8,1 и&nbsp;7,0; в&nbsp;высокой зоне 84% и&nbsp;66% сотрудников.</div></li><li style="--marker-color:#F15D56;"><div class="ins-text"><strong>Ниже всего оценено отношение к&nbsp;себе.</strong> Средний балл&nbsp;— 5,7: в&nbsp;низкой зоне 25% сотрудников, в&nbsp;высокой&nbsp;— 35%.</div></li><li style="--marker-color:#FFD452;"><div class="ins-text"><strong>Критическое мышление, понимание потребностей тела и&nbsp;приспособление к&nbsp;изменениям&nbsp;— посередине.</strong> В&nbsp;низкой зоне 12–17% сотрудников, в&nbsp;высокой&nbsp;— 55–60%.</div></li></ol></div>
 </section>
-<dialog id="skills-dialog" class="info-dialog" aria-labelledby="skills-dialog-title"><div class="info-dialog__head"><h3 id="skills-dialog-title">Семь психологических навыков</h3><button type="button" class="info-dialog__close" aria-label="Закрыть">×</button></div><p>Модель из&nbsp;семи навыков&nbsp;— авторская модель Н. Бехтеревой, разработанная «Просебя». Описания взяты с&nbsp;сайта «Просебя» (prosebya.ru): они говорят о&nbsp;том, что даёт развитие навыка, а&nbsp;не&nbsp;о&nbsp;результатах этого опроса. В&nbsp;скобках&nbsp;— другое название навыка на&nbsp;сайте.</p><dl class="skills-about__list"><dt>Понимание себя <span class="skills-about__alias">(Саморефлексия)</span></dt><dd>Стимулирует стремление к&nbsp;развитию, помогает конструктивно воспринимать обратную связь и&nbsp;брать ответственность.</dd><dt>Умение выстраивать отношения <span class="skills-about__alias">(Взаимоотношения с&nbsp;другими)</span></dt><dd>Облегчает коммуникацию и&nbsp;распределение задач, предотвращает конфликты, помогает осваиваться новым сотрудникам.</dd><dt>Критическое мышление</dt><dd>Помогает принимать взвешенные решения, уменьшает количество ошибок, повышает качество работы.</dd><dt>Понимание потребностей тела <span class="skills-about__alias">(Забота о&nbsp;теле)</span></dt><dd>Уменьшает число больничных и&nbsp;пропусков, снижает утомляемость и&nbsp;предупреждает выгорание, повышает работоспособность.</dd><dt>Приспособление к&nbsp;изменениям <span class="skills-about__alias">(Адаптивность)</span></dt><dd>Снижает стресс от&nbsp;перемен, ускоряет освоение нового, помогает сохранять эффективность в&nbsp;условиях неопределённости.</dd><dt>Управление эмоциями</dt><dd>Способствует открытому и&nbsp;конструктивному диалогу, создаёт комфортную атмосферу, повышает качество сервиса.</dd><dt>Отношение к&nbsp;себе <span class="skills-about__alias">(Вера в&nbsp;себя)</span></dt><dd>Развивает лидерские качества, уменьшает прокрастинацию и&nbsp;страх перед сложными задачами, помогает расти внутри компании.</dd></dl></dialog>
 
 
 </div>
@@ -2099,6 +2102,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 })();
 </script>
 
-<script src="assets/js/dashboard-viz.js?v=20261015f" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261015g" defer></script>
 </body>
 </html>
