@@ -130,7 +130,7 @@
      data-tip: «Серия · Показатель: значение»; в показателе
      самом тоже бывает « · », поэтому режем по первому. */
   function dumbbells() {
-    document.querySelectorAll('.db:not([data-skills-variant])').forEach((chart) => {
+    document.querySelectorAll('.db').forEach((chart) => {
       const tips = [...chart.querySelectorAll('[data-tip]')].map((n) => n.getAttribute('data-tip'));
       if (!tips.length) return;
       const series = [];
@@ -306,25 +306,12 @@
     }
   }
 
-  /* ── TEMP: переключатель вариантов графика навыков ──────────── */
-  function skillsVariants() {
-    const btns = [...document.querySelectorAll('.skills-switch__btn')];
-    if (!btns.length) return;
-    const views = [...document.querySelectorAll('[data-skills-variant]')];
-    btns.forEach((btn) => btn.addEventListener('click', () => {
-      btns.forEach((b) => { const on = b === btn; b.classList.toggle('is-active', on); b.setAttribute('aria-pressed', String(on)); });
-      views.forEach((v) => { v.hidden = v.dataset.skillsVariant !== btn.dataset.variant; });
-      views.filter((v) => !v.hidden).forEach((v) => { v.classList.remove('is-drawn'); void v.offsetWidth; requestAnimationFrame(() => v.classList.add('is-drawn')); });
-    }));
-  }
-
   function init() {
     indexScale();
     dumbbells();
     likerts();
     likertTips();
     support();
-    skillsVariants();
     tooltip();
     motion();
   }
