@@ -200,9 +200,13 @@
 
   /* ── Поддержка: по кнопке — полоса из пяти кусочков ────────── */
   function support() {
-    const btn = document.querySelector('.chart-toggle[data-toggle-for="support"]');
-    const sw = document.querySelector('.chart-switch--support');
-    if (btn && sw) wire(btn, sw);
+    // Кнопки «Таблица / Диаграмма» с data-toggle-for: «support» — блок поддержки,
+    // остальные — .chart-switch[data-switch=…].
+    document.querySelectorAll('.chart-toggle[data-toggle-for]').forEach((btn) => {
+      const id = btn.dataset.toggleFor;
+      const sw = id === 'support' ? document.querySelector('.chart-switch--support') : document.querySelector(`.chart-switch[data-switch="${id}"]`);
+      if (sw) wire(btn, sw);
+    });
     // Подсказка у каждого куска — подпись и доля из ключа под полосой.
     document.querySelectorAll('.support-stack').forEach((box) => {
       const items = box.querySelectorAll('.stack__key li');
@@ -232,7 +236,7 @@
     const tip = el('div', 'chart-tip');
     tip.setAttribute('role', 'tooltip');
     document.body.appendChild(tip);
-    const SEL = '.db [data-tip], .likert [data-tip], .stack [data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
+    const SEL = '.db [data-tip], .likert [data-tip], .sk [data-tip], .stack [data-tip], .chart-table th[data-tip], .analytics-card th [data-tip], .analytics-card th[data-tip]';
     // На шкале к значению добавляем категорию — чтобы «+8» не читалось как «хорошо».
     const zone = (v) => (v <= 19 ? 'низкое значение' : v <= 45 ? 'среднее значение' : 'высокое значение');
     const show = (node) => {
@@ -273,7 +277,7 @@
   }
 
   function motion() {
-    const likertList = [...document.querySelectorAll('.likert')];
+    const likertList = [...document.querySelectorAll('.likert, .sk')];
     const dbs = [...document.querySelectorAll('.db')];
     const stacks = [...document.querySelectorAll('.stack')];
     likertList.forEach((n) => n.classList.add('likert--anim'));
@@ -302,12 +306,46 @@
     }
   }
 
+  /* ── Раскрывающееся описание по кнопке: подпись называет следующее действие ── */
+  function expanders() {
+    document.querySelectorAll('.chart-toggle[data-expand]').forEach((btn) => {
+      const target = document.getElementById(btn.dataset.expand);
+      if (!target) return;
+      const label = btn.textContent, back = btn.dataset.labelBack || label;
+      btn.addEventListener('click', () => {
+        const open = target.hidden;
+        target.hidden = !open;
+        btn.setAttribute('aria-expanded', String(open));
+        btn.textContent = open ? back : label;
+      });
+    });
+  }
+
+  /* ── Подстановка переменных шаблона {Name} из window.DASHBOARD_VARS ── */
+  function fillVars() {
+    const vars = window.DASHBOARD_VARS || {};
+    const re = /\{([A-Za-z][A-Za-z ]*)\}/g;
+    const sub = (str) => str.replace(re, (m, k) => (k in vars ? vars[k] : m));
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: (n) => (n.parentElement && /^(SCRIPT|STYLE)$/.test(n.parentElement.tagName) ? NodeFilter.FILTER_REJECT : (re.test(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP)),
+    });
+    re.lastIndex = 0;
+    const nodes = [];
+    while (walker.nextNode()) { nodes.push(walker.currentNode); re.lastIndex = 0; }
+    nodes.forEach((n) => { n.nodeValue = sub(n.nodeValue); });
+    document.querySelectorAll('[aria-label],[data-tip],[title]').forEach((el) => {
+      ['aria-label', 'data-tip', 'title'].forEach((a) => { const v = el.getAttribute(a); if (v && v.includes('{')) el.setAttribute(a, sub(v)); });
+    });
+  }
+
   function init() {
+    fillVars();
     indexScale();
     dumbbells();
     likerts();
     likertTips();
     support();
+    expanders();
     tooltip();
     motion();
   }
