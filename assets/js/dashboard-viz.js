@@ -380,6 +380,12 @@
      Строка «Все опрошенные» остаётся сверху; во вкладке «Все срезы» группы
      сортируются внутри своего среза; прочерки уходят вниз при любом порядке. */
   function sortTables() {
+    const touch = window.matchMedia('(hover: none)').matches;
+    if (touch) {
+      document.querySelectorAll('.legend-note').forEach((n) => {
+        if (n.textContent.indexOf('заголовок столбца') !== -1) n.textContent += '; пояснение к названию — по значку «i»';
+      });
+    }
     document.querySelectorAll('.analytics-card table[data-sortable]').forEach((table) => {
       const tbody = table.tBodies[0];
       const heads = Array.from(table.tHead.rows[0].cells);
@@ -416,10 +422,22 @@
       };
       heads.forEach((th, hi) => {
         if (hi === 0) return;
+        // На сенсорном экране у заголовка две разные зоны нажатия: название сортирует столбец,
+        // значок «i» рядом показывает пояснение. С мышью пояснение остаётся по наведению.
+        const holder = touch ? (th.hasAttribute('data-tip') ? th : th.querySelector('[data-tip]')) : null;
+        const tipText = holder ? holder.dataset.tip : '';
+        if (holder) holder.removeAttribute('data-tip');
         const btn = el('button', 'th-sort');
         btn.type = 'button';
         while (th.firstChild) btn.appendChild(th.firstChild);
         th.appendChild(btn);
+        if (tipText) {
+          const info = el('button', 'th-info', 'i');
+          info.type = 'button';
+          info.dataset.tip = tipText;
+          info.setAttribute('aria-label', 'Пояснение: ' + tipText);
+          th.appendChild(info);
+        }
         th.setAttribute('aria-sort', 'none');
         btn.addEventListener('click', () => apply(hi));
       });
