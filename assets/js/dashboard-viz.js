@@ -383,7 +383,7 @@
     const touch = window.matchMedia('(hover: none)').matches;
     if (touch) {
       document.querySelectorAll('.legend-note').forEach((n) => {
-        if (n.textContent.indexOf('заголовок столбца') !== -1) n.textContent += '; пояснение к названию — по значку «i»';
+        if (n.textContent.indexOf('заголовок столбца') !== -1) n.textContent = 'Нажмите на стрелки у названия столбца, чтобы отсортировать группы: первое нажатие — по убыванию, второе — по возрастанию, третье — исходный порядок. Пояснение к названию — по нажатию на подчёркнутое слово.';
       });
     }
     document.querySelectorAll('.analytics-card table[data-sortable]').forEach((table) => {
@@ -422,21 +422,26 @@
       };
       heads.forEach((th, hi) => {
         if (hi === 0) return;
-        // На сенсорном экране у заголовка две разные зоны нажатия: название сортирует столбец,
-        // значок «i» рядом показывает пояснение. С мышью пояснение остаётся по наведению.
-        const holder = touch ? (th.hasAttribute('data-tip') ? th : th.querySelector('[data-tip]')) : null;
-        const tipText = holder ? holder.dataset.tip : '';
-        if (holder) holder.removeAttribute('data-tip');
+        // На сенсорном экране у заголовка две разные зоны нажатия: подчёркнутое название показывает
+        // пояснение, стрелки рядом сортируют столбец. С мышью пояснение остаётся по наведению,
+        // а клик по заголовку сортирует.
         const btn = el('button', 'th-sort');
         btn.type = 'button';
-        while (th.firstChild) btn.appendChild(th.firstChild);
-        th.appendChild(btn);
-        if (tipText) {
-          const info = el('button', 'th-info', 'i');
-          info.type = 'button';
-          info.dataset.tip = tipText;
-          info.setAttribute('aria-label', 'Пояснение: ' + tipText);
-          th.appendChild(info);
+        if (touch) {
+          const holder = th.hasAttribute('data-tip') ? th : th.querySelector('[data-tip]');
+          const tipText = holder ? holder.dataset.tip : '';
+          if (holder) holder.removeAttribute('data-tip');
+          const name = th.textContent.replace(/\s+/g, ' ').trim();
+          const label = el('span', 'th-label');
+          while (th.firstChild) label.appendChild(th.firstChild);
+          if (tipText) label.dataset.tip = tipText;
+          btn.setAttribute('aria-label', 'Сортировать столбец: ' + name);
+          th.classList.add('is-touch');
+          th.appendChild(label);
+          th.appendChild(btn);
+        } else {
+          while (th.firstChild) btn.appendChild(th.firstChild);
+          th.appendChild(btn);
         }
         th.setAttribute('aria-sort', 'none');
         btn.addEventListener('click', () => apply(hi));
