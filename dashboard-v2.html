@@ -65,6 +65,7 @@ body.has-pagehead #screen-home .home,body.has-pagehead #screen-analytics .subpag
 .view-tabs .nav-tab.active{background:var(--card);color:var(--text);font-weight:500;box-shadow:0 1px 3px rgba(34,38,59,.12)}
 .view-tabs .nav-tab:focus-visible{outline:2px solid var(--text);outline-offset:2px}
 @media (max-width:480px){
+  .page-head__in .home-kicker,.page-head__in .home-title{text-align:center}
   .meta-row{flex-direction:column;align-items:center;gap:.75rem;margin-top:1.25rem}
   .meta-row .home-meta{margin:0;text-align:center}
   .view-tabs{display:flex;width:fit-content;max-width:100%;margin:0 auto}
@@ -603,7 +604,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022o">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022p">
 </head>
 <body>
 
@@ -2159,6 +2160,6 @@ window.DASHBOARD_VARS = {
   /* 'Survey period': '...'  — период опроса компании, в демо не задан */
 };
 </script>
-<script src="assets/js/dashboard-viz.js?v=20261022o" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261022p" defer></script>
 </body>
 </html>
