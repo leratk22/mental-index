@@ -48,6 +48,10 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .support-tile .q-text{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 .support-tile__title{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
 @media (max-width:480px){.support-tile{padding:.9rem .7rem!important}.support-tile__title{font-size:16px!important}.support-tile .big-num{font-size:36px}}
+.skills-lead{display:flex;align-items:flex-start;justify-content:space-between;gap:1.25rem;margin-bottom:1rem}
+.skills-lead .chart-lead{margin:0!important;flex:1;min-width:0}
+.skills-lead .chart-toggle{flex:none}
+@media (max-width:760px){.skills-lead{flex-direction:column;gap:.75rem}}
 .page-head__in{max-width:1100px;margin:0 auto;padding:2.5rem 2.5rem 0}
 .page-head[hidden]{display:none}
 body.has-pagehead #screen-home .home,body.has-pagehead #screen-analytics .subpage{padding-top:0}
@@ -599,7 +603,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022k">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022l">
 </head>
 <body>
 
@@ -831,14 +835,16 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 </section>
 
 <section class="dashboard-section" aria-labelledby="section-skills-title">
-  <div class="section-intro section-intro--action">
+  <div class="section-intro">
     <div>
       <div id="section-skills-title" class="section-eyebrow">Психологические навыки</div>
       <div class="section-title">Семь психологических навыков</div>
     </div>
+  </div>
+  <div class="skills-lead">
+    <div class="section-description chart-lead">Показано, как опрошенные оценили семь психологических навыков по&nbsp;шкале от&nbsp;0 до&nbsp;10: до&nbsp;4 включительно&nbsp;— низкая зона, 5–6&nbsp;— средняя, 7–10&nbsp;— высокая. Это авторская модель Н. Бехтеревой, разработанная «Просебя».</div>
     <button type="button" class="chart-toggle" data-expand="skills-about" data-label-back="Свернуть" aria-expanded="false" aria-controls="skills-about">Что это за навыки</button>
   </div>
-  <div class="section-description chart-lead" style="margin-bottom:1rem;">Показано, как опрошенные оценили семь психологических навыков по&nbsp;шкале от&nbsp;0 до&nbsp;10: до&nbsp;4 включительно&nbsp;— низкая зона, 5–6&nbsp;— средняя, 7–10&nbsp;— высокая. Это авторская модель Н. Бехтеревой, разработанная «Просебя».</div>
   <div id="skills-about" class="skills-about__body" hidden><dl class="skills-about__list"><dt>Понимание себя</dt><dd>Стимулирует стремление к&nbsp;развитию, помогает конструктивно воспринимать обратную связь и&nbsp;брать ответственность.</dd><dt>Умение выстраивать отношения</dt><dd>Облегчает коммуникацию и&nbsp;распределение задач, предотвращает конфликты, помогает осваиваться новым сотрудникам.</dd><dt>Критическое мышление</dt><dd>Помогает принимать взвешенные решения, уменьшает количество ошибок, повышает качество работы.</dd><dt>Понимание потребностей тела</dt><dd>Уменьшает число больничных и&nbsp;пропусков, снижает утомляемость и&nbsp;предупреждает выгорание, повышает работоспособность.</dd><dt>Приспособление к&nbsp;изменениям</dt><dd>Снижает стресс от&nbsp;перемен, ускоряет освоение нового, помогает сохранять эффективность в&nbsp;условиях неопределённости.</dd><dt>Управление эмоциями</dt><dd>Способствует открытому и&nbsp;конструктивному диалогу, создаёт комфортную атмосферу, повышает качество сервиса.</dd><dt>Отношение к&nbsp;себе</dt><dd>Развивает лидерские качества, уменьшает прокрастинацию и&nbsp;страх перед сложными задачами, помогает расти внутри компании.</dd></dl></div>
 
   <div class="chart-head chart-head--inline">
@@ -2153,6 +2159,6 @@ window.DASHBOARD_VARS = {
   /* 'Survey period': '...'  — период опроса компании, в демо не задан */
 };
 </script>
-<script src="assets/js/dashboard-viz.js?v=20261022k" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261022l" defer></script>
 </body>
 </html>
