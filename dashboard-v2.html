@@ -43,6 +43,15 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 .back-btn[href]{text-decoration:none}
 .nav-tab{font-size:13px;color:var(--muted);padding:16px 14px;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .15s,border-color .15s}
 .nav-tab:hover{color:var(--text)}
+.support-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:1.25rem}
+.support-tile{min-width:0}
+.support-tile .q-text{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+.support-tile__title{overflow-wrap:break-word;hyphens:auto;-webkit-hyphens:auto}
+@media (max-width:480px){.support-tile{padding:.9rem .7rem!important}.support-tile__title{font-size:16px!important}.support-tile .big-num{font-size:36px}}
+.page-head__in{max-width:1100px;margin:0 auto;padding:2.5rem 2.5rem 0}
+.page-head[hidden]{display:none}
+body.has-pagehead #screen-home .home,body.has-pagehead #screen-analytics .subpage{padding-top:0}
+@media (max-width:760px){.page-head__in{padding:1.5rem 1rem 0}}
 .meta-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem 1.25rem;margin:1.75rem 0 2.5rem}
 .meta-row .home-meta{margin:0 0 0 auto;text-align:right}
 .meta-row--sub{margin:1.5rem 0 1.25rem}
@@ -590,7 +599,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022h">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022k">
 </head>
 <body>
 
@@ -607,13 +616,17 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   </a>
 </nav>
 
+<header class="page-head" id="page-head">
+  <div class="page-head__in">
+    <div class="home-kicker">{Company Name}</div>
+    <div class="home-title">Индекс ментального благополучия</div>
+    <div class="meta-row"><div class="view-tabs" role="group" aria-label="Раздел дашборда"><button type="button" class="nav-tab active" data-nav="home" aria-current="page">Общие метрики</button><button type="button" class="nav-tab" data-nav="analytics">Анализ по&nbsp;группам</button></div><div class="home-meta">{Respondent count} опрошенных · период опроса: {Survey period}</div></div>
+  </div>
+</header>
+
 <!-- ════════════════ HOME ════════════════ -->
 <div id="screen-home" class="screen active">
 <div class="home">
-
-  <div class="home-kicker">{Company Name}</div>
-  <div class="home-title">Индекс ментального благополучия</div>
-  <div class="meta-row"><div class="view-tabs" role="group" aria-label="Раздел дашборда"><button type="button" class="nav-tab active" data-nav="home" aria-current="page">Общие метрики</button><button type="button" class="nav-tab" data-nav="analytics">Анализ по&nbsp;группам</button></div><div class="home-meta">{Respondent count} опрошенных · период опроса: {Survey period}</div></div>
 
 <section class="dashboard-section" aria-labelledby="section-result-title">
 <div class="result-heading" style="margin-bottom:1rem;">
@@ -786,7 +799,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="subsection-title" style="margin-bottom:.35rem">Как&nbsp;опрошенные заботятся о&nbsp;своём состоянии</div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.25rem;">
+    <div class="support-tiles">
       <div class="support-tile">
         <div class="support-tile__title">Обращались за&nbsp;профессиональной помощью</div>
         <div class="big-num">9%</div>
@@ -1190,6 +1203,10 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       var panel = document.getElementById('slice-'+slice);
       if(panel) panel.style.display='block';
     }
+    var head = document.getElementById('page-head');
+    var showHead = (id === 'home' || id === 'analytics');
+    if (head) head.hidden = !showHead;
+    document.body.classList.toggle('has-pagehead', showHead);
     var root = id.split('-')[0];
     var navIds = {home:'home',analytics:'analytics',insights:'home','home-detail':'home',
       subA:'home',subB:'home',subV:'home',
@@ -1456,9 +1473,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 <div class="subpage">
 
   <div style="margin-bottom:1.75rem;">
-    <div class="section-eyebrow" style="margin-bottom:.4rem">Анализ по&nbsp;группам</div>
-    <div class="sp-title">Срезы данных</div>
-    <div class="meta-row meta-row--sub"><div class="view-tabs" role="group" aria-label="Раздел дашборда"><button type="button" class="nav-tab" data-nav="home">Общие метрики</button><button type="button" class="nav-tab active" data-nav="analytics" aria-current="page">Анализ по&nbsp;группам</button></div><div class="home-meta">{Respondent count} опрошенных · период опроса: {Survey period}</div></div>
+    <div class="subsection-title" style="margin-bottom:.5rem">Срезы данных</div>
     <div class="sp-desc" style="margin:.5rem 0 0">Срез&nbsp;— результаты одной части опрошенных, например мужчин и&nbsp;женщин или людей одного возраста. Цвет ячейки подсказывает, на&nbsp;что обратить внимание в&nbsp;первую очередь. Все результаты взвешены.</div>
   </div>
 
@@ -2138,6 +2153,6 @@ window.DASHBOARD_VARS = {
   /* 'Survey period': '...'  — период опроса компании, в демо не задан */
 };
 </script>
-<script src="assets/js/dashboard-viz.js?v=20261022h" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261022k" defer></script>
 </body>
 </html>
