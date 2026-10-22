@@ -375,6 +375,57 @@
     });
   }
 
+  /* ── Сортировка столбцов в «Анализе по группам» ─────────────────
+     Нажатие на заголовок: по убыванию → по возрастанию → исходный порядок.
+     Строка «Все опрошенные» остаётся сверху; во вкладке «Все срезы» группы
+     сортируются внутри своего среза; прочерки уходят вниз при любом порядке. */
+  function sortTables() {
+    document.querySelectorAll('.analytics-card table[data-sortable]').forEach((table) => {
+      const tbody = table.tBodies[0];
+      const heads = Array.from(table.tHead.rows[0].cells);
+      const starts = [];
+      let col = 0;
+      heads.forEach((th) => { starts.push(col); col += th.colSpan || 1; });
+      Array.from(tbody.rows).forEach((r, i) => { r.dataset.order = i; });
+      const state = { col: -1, dir: 0 };
+      const value = (row, c) => {
+        const cell = row.cells[c];
+        const n = parseFloat(((cell && cell.textContent) || '').replace(/\u2212/g, '-').replace(',', '.').replace(/[^\d.\-]/g, ''));
+        return Number.isNaN(n) ? null : n;
+      };
+      const sortSection = (rows, c, dir) => rows.sort((a, b) => {
+        if (dir === 0) return a.dataset.order - b.dataset.order;
+        const x = value(a, c), y = value(b, c);
+        if (x === null || y === null) return x === y ? a.dataset.order - b.dataset.order : (x === null ? 1 : -1);
+        return (dir === 1 ? y - x : x - y) || a.dataset.order - b.dataset.order;
+      });
+      const apply = (hi) => {
+        state.dir = state.col === hi ? (state.dir + 1) % 3 : 1;
+        state.col = hi;
+        heads.forEach((th, i) => th.setAttribute('aria-sort', i === hi && state.dir ? (state.dir === 1 ? 'descending' : 'ascending') : 'none'));
+        const rows = Array.from(tbody.rows);
+        const total = rows.shift();
+        const out = [total];
+        let current = [];
+        const flush = () => { out.push(...sortSection(current, starts[hi], state.dir)); current = []; };
+        rows.forEach((r) => {
+          if (r.querySelector('td.analytics-subhead')) { flush(); out.push(r); } else current.push(r);
+        });
+        flush();
+        out.forEach((r) => tbody.appendChild(r));
+      };
+      heads.forEach((th, hi) => {
+        if (hi === 0) return;
+        const btn = el('button', 'th-sort');
+        btn.type = 'button';
+        while (th.firstChild) btn.appendChild(th.firstChild);
+        th.appendChild(btn);
+        th.setAttribute('aria-sort', 'none');
+        btn.addEventListener('click', () => apply(hi));
+      });
+    });
+  }
+
   function init() {
     fillVars();
     indexScale();
@@ -383,6 +434,7 @@
     likertTips();
     support();
     expanders();
+    sortTables();
     tooltip();
     motion();
   }
