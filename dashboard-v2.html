@@ -483,6 +483,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
   /* On a small phone the matrix stays a compact overview; long explanations open in the sheet below. */
   .risk-axis-grid{grid-template-columns:32px minmax(0,1fr) minmax(0,1fr)!important;grid-template-rows:30px 136px 136px 28px!important;column-gap:8px!important;row-gap:6px!important;min-height:0!important;margin-right:0!important}
   .risk-axis-grid{--ax-left:32px;--ax-top:30px;--ax-bottom:34px}
+  .risk-axis-grid .seg-name{hyphens:auto;-webkit-hyphens:auto;overflow-wrap:break-word}
   .risk-axis-grid > :nth-child(1){display:block!important;grid-column:1;grid-row:1}
   .risk-axis-grid > .risk-axis-y-title{display:none!important}
   .risk-axis-grid > .risk-axis-column-label:nth-of-type(3){grid-column:2;grid-row:1}
@@ -714,16 +715,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="risk-axis-column-label">Допускают уход или&nbsp;не&nbsp;определились</div>
 
       <div class="risk-axis-y-label risk-axis-y-label-top">
-        <span>среднее / высокое значение</span>
-      </div>
-      <div class="seg-card seg-neutral" data-goto="seg-leave-ok" onclick="go('seg-leave-ok')" style="margin:0;">
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
-          <div class="seg-pct">7%</div>
-          <div class="seg-n">64&nbsp;человек</div>
-        </div>
-        <div class="seg-name">Риск потери ресурса</div>
-        <div class="seg-desc">Значение среднее или высокое, но&nbsp;люди допускают уход или не&nbsp;определились. Уйдут ли&nbsp;они и&nbsp;почему, пока неизвестно.</div>
-        <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
+        <span>Индекс: среднее или высокое</span>
       </div>
       <div class="seg-card seg-green" data-goto="seg-stay-ok" onclick="go('seg-stay-ok')" style="margin:0;">
         <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
@@ -734,18 +726,18 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         <div class="seg-desc">Значение среднее или высокое, о&nbsp;намерении уйти не&nbsp;сообщают. Их&nbsp;состояние может быть ресурсом для работы, но&nbsp;саму производительность карта не&nbsp;измеряет.</div>
         <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
       </div>
+      <div class="seg-card seg-neutral" data-goto="seg-leave-ok" onclick="go('seg-leave-ok')" style="margin:0;">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
+          <div class="seg-pct">7%</div>
+          <div class="seg-n">64&nbsp;человек</div>
+        </div>
+        <div class="seg-name">Риск потери ресурса</div>
+        <div class="seg-desc">Значение среднее или высокое, но&nbsp;люди допускают уход или не&nbsp;определились. Уйдут ли&nbsp;они и&nbsp;почему, пока неизвестно.</div>
+        <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
+      </div>
 
       <div class="risk-axis-y-label risk-axis-y-label-bottom">
-        <span>низкое значение</span>
-      </div>
-      <div class="seg-card seg-red" data-goto="seg-leave-risk" onclick="go('seg-leave-risk')" style="margin:0;">
-        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
-          <div class="seg-pct">9%</div>
-          <div class="seg-n">66&nbsp;человек</div>
-        </div>
-        <div class="seg-name">Явные потери по&nbsp;ментальным причинам</div>
-        <div class="seg-desc">Значение низкое, люди допускают уход или не&nbsp;определились. Состояние может быть одной из&nbsp;причин, но&nbsp;это стоит выяснить.</div>
-        <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
+        <span>Индекс: низкое</span>
       </div>
       <div class="seg-card seg-yellow" data-goto="seg-stay-risk" onclick="go('seg-stay-risk')" style="margin:0;">
         <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
@@ -754,6 +746,15 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </div>
         <div class="seg-name">Презентеизм</div>
         <div class="seg-desc">Значение низкое, о&nbsp;намерении уйти не&nbsp;сообщают. Часть людей может работать, испытывая трудности; снижения производительности эти данные не&nbsp;показывают.</div>
+        <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
+      </div>
+      <div class="seg-card seg-red" data-goto="seg-leave-risk" onclick="go('seg-leave-risk')" style="margin:0;">
+        <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:.5rem;">
+          <div class="seg-pct">9%</div>
+          <div class="seg-n">66&nbsp;человек</div>
+        </div>
+        <div class="seg-name">Явные потери по&nbsp;ментальным причинам</div>
+        <div class="seg-desc">Значение низкое, люди допускают уход или не&nbsp;определились. Состояние может быть одной из&nbsp;причин, но&nbsp;это стоит выяснить.</div>
         <button type="button" class="seg-detail-button">Нажмите для&nbsp;детализации →</button>
       </div>
 
