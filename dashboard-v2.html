@@ -370,7 +370,8 @@ body{font-family:var(--font);background:var(--bg);color:var(--text);font-size:14
 
 .support-employer-panel{margin-top:1.25rem!important;margin-bottom:1.25rem!important;padding:1.25rem 1.5rem!important}
 .support-block-title{margin:0 0 1rem!important;font-size:var(--type-section)!important;font-weight:var(--weight-section)!important;line-height:1.3!important;letter-spacing:-.2px!important;color:var(--text)!important;text-transform:none!important}
-.support-employer-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;margin-bottom:1.25rem!important}
+#skills-about.skills-about__body{max-width:none}
+.support-employer-summary{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;margin-bottom:1.25rem!important}
 .support-employer-metric{display:flex;align-items:center;gap:16px;min-width:0;padding:0 1rem}
 .support-employer-metric:first-child{padding-left:0}
 .support-employer-metric:last-child{padding-right:0}
@@ -589,7 +590,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip{position:fixed;z-index:500;padding:6px 10px;border-radius:8px;background:var(--text);color:#fff;font-size:var(--type-body);font-weight:500;line-height:1.3;white-space:nowrap;opacity:0;pointer-events:none;transform:translate(-50%,calc(-100% - 10px));transition:opacity .12s ease;box-shadow:0 6px 18px rgba(27,34,58,.18)}
 .chart-tip.is-visible{opacity:1}
 </style>
-<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022g">
+<link rel="stylesheet" href="assets/css/dashboard.css?v=20261022h">
 </head>
 <body>
 
@@ -800,7 +801,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 
     <div class="support-employer-panel" style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;">
       <div class="support-block-head"><h3 class="support-block-title">Работодатель предпринимает достаточно усилий для&nbsp;поддержания психологического благополучия сотрудников?</h3></div>
-      <div class="support-employer-summary" style="grid-template-columns:repeat(2,minmax(0,1fr));">
+      <div class="support-employer-summary">
         <div class="support-employer-metric">
           <div class="big-num">53%</div>
           <div class="support-metric-label">считают усилия работодателя достаточными</div>
@@ -2137,6 +2138,6 @@ window.DASHBOARD_VARS = {
   /* 'Survey period': '...'  — период опроса компании, в демо не задан */
 };
 </script>
-<script src="assets/js/dashboard-viz.js?v=20261022g" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261022h" defer></script>
 </body>
 </html>
