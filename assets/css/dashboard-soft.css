@@ -164,9 +164,7 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
   .page-head { margin-bottom: 2rem; }
 }
 
-/* ── Легенда цвета ячеек по столбцам (светофор, как у остальных таблиц) ── */
-.heat-legend { margin: -.1rem 0 .75rem; gap: 6px 18px; }
-.heat-legend .legend-note:last-child { flex-basis: 100%; }
+.analytics-legend--heat { margin-top: 1rem; }
 
 /* ── Табы и чипсы — в оформлении кнопок «Таблица» / «Легенда» (светлая кнопка с тонким контуром, выбранная — тёмная) ── */
 .view-tabs { background: transparent; padding: 0; gap: 8px; border-radius: 0; }
