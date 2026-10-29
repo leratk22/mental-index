@@ -40,7 +40,7 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .dashboard-section, .analytics-card { border: 0; border-radius: var(--radius-card); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
 .dashboard-section { padding: 2rem 2rem 2.25rem; }
 .analytics-card { padding: 1.75rem 1.75rem 2rem; }
-.side-card, .sub-card, .spoke-card, .seg-card, .support-tile, .sd-hero, .sd-metric, .sd-group, .td-hero, .td-mini, .type-card,
+.side-card, .sub-card, .spoke-card, .support-tile, .sd-hero, .sd-metric, .sd-group, .td-hero, .td-mini, .type-card,
 .dashboard-section [style*="border:1px solid var(--border)"] { border: 0 !important; background: var(--bg) !important; border-radius: var(--r) !important; box-shadow: none; }
 .seg-card--empty { background: transparent !important; }
 [style*="border-radius:12px"] { border-radius: var(--r) !important; }
@@ -123,3 +123,29 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .slices-legend { margin-top: 1rem; padding: 1.25rem 1.5rem; background: #fff; border-radius: var(--r); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
 .slices-legend[hidden] { display: none; }
 .slices-legend .sp-desc { margin: 0 !important; max-width: 640px; }
+
+/* ── Карточки секторов: белые, без серой подложки; от фона секции отделяет мягкая тень ── */
+.seg-card { border: 0 !important; background: #fff !important; border-radius: var(--r) !important; box-shadow: 0 2px 16px rgba(42, 47, 69, .08); }
+.seg-card--empty { background: transparent !important; box-shadow: none; }
+.seg-detail-button { background: var(--bg); }
+
+/* ── Переключение «Таблица / График» у шкалы Индекса не нужно ── */
+.result-heading .chart-toggle { display: none !important; }
+
+/* ── Десктоп: число человек — в правом верхнем углу карточки сектора ── */
+@media (min-width: 761px) {
+  .risk-axis-grid .seg-card > div:first-child .seg-n,
+  .seg-card--static .seg-card__head .seg-n { position: absolute; top: 1.15rem; right: 1.35rem; margin: 0; font-size: 12px !important; }
+}
+
+/* ── Компактная шапка на десктопе: тексты слева (в первой строке — компания и число опрошенных, ниже заголовок), переключатель справа ── */
+@media (min-width: 761px) {
+  .page-head__in { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 0; align-items: center; }
+  .page-head .meta-row { display: contents; }
+  .page-head .home-kicker { grid-column: 1; grid-row: 1; margin: 0 !important; }
+  .page-head .meta-row .home-meta { grid-column: 2; grid-row: 1; margin: 0; text-align: left; }
+  .page-head .meta-row .home-meta::before { content: "·"; margin: 0 .6rem; }
+  .page-head .home-title { grid-column: 1 / 3; grid-row: 2; font-size: 30px !important; margin-top: .35rem; }
+  .page-head .view-tabs { grid-column: 3; grid-row: 1 / 3; align-self: center; margin-left: 2rem; }
+  .page-head { margin-bottom: 2rem; }
+}
