@@ -12,12 +12,12 @@
   --text: #2A2F45;
   --muted: #646A83;             /* ≈5,3:1 на белом, ≈4,9:1 на фоне страницы */
   --hint: #646A83;
-  --r: 14px;                    /* было 12px */
+  --r: 20px;                    /* было 12px */
   --weight-display: 300;
   --weight-section: 400;
   --weight-ui: 400;
   --weight-factoid: 300;
-  --radius-card: 20px;
+  --radius-card: 28px;
 }
 
 body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -36,15 +36,19 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .view-tabs .nav-tab { padding: 9px 22px; font-size: 15px !important; font-weight: 400 !important; color: var(--muted); }
 .view-tabs .nav-tab.active { background: #fff; color: var(--text); font-weight: 500 !important; box-shadow: 0 1px 2px rgba(42, 47, 69, .08); }
 
-/* ── Карточки: мягче углы, воздуха больше, контур едва заметный ── */
-.dashboard-section, .analytics-card { border-radius: var(--radius-card); border-color: var(--border); box-shadow: 0 1px 2px rgba(42, 47, 69, .03); }
+/* ── Карточки: без обводок, углы круглее, блоки внутри — светлой заливкой ── */
+.dashboard-section, .analytics-card { border: 0; border-radius: var(--radius-card); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
 .dashboard-section { padding: 2rem 2rem 2.25rem; }
 .analytics-card { padding: 1.75rem 1.75rem 2rem; }
-[style*="border-radius:12px"] { border-radius: 14px !important; }
-.chart-toggle, .center-btn, .seg-detail-button, .sc-btn-sm, .mobile-seg-detail-button { border-radius: 10px; }
+.side-card, .sub-card, .spoke-card, .seg-card, .support-tile, .sd-hero, .sd-metric, .sd-group, .td-hero, .td-mini, .type-card,
+.dashboard-section [style*="border:1px solid var(--border)"] { border: 0 !important; background: var(--bg) !important; border-radius: var(--r) !important; box-shadow: none; }
+.seg-card--empty { background: transparent !important; }
+[style*="border-radius:12px"] { border-radius: var(--r) !important; }
+.seg-detail-button, .spoke-card .sc-btn-sm, .center-btn { background: #fff; border-color: transparent; border-radius: 12px; }
+.chart-toggle, .mobile-seg-detail-button { border-radius: 12px; }
 .chart-toggle { border-color: #DCE3F1; }
 .chart-toggle:hover { border-color: #B9C2D6; }
-.insight-card { padding: 1.4rem 1.75rem; }
+.insight-card { padding: 1.4rem 1.75rem; border-radius: var(--r); }
 
 /* ── Типографика: легче заголовки и числа, спокойнее подписи ── */
 .section-eyebrow, .sp-eyebrow, .sd-eyebrow { font-weight: 500 !important; letter-spacing: .08em !important; }
@@ -84,6 +88,16 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .analytics-card tr[style*="#EAEFF8"] { background: #F2F5FB !important; }
 
 @media (max-width: 760px) {
-  .dashboard-section { padding: 1.25rem 1rem 1.5rem; border-radius: 16px; }
-  .analytics-card { padding: 1.25rem 1rem 1.5rem; border-radius: 16px; }
+  .dashboard-section { padding: 1.25rem 1rem 1.5rem; border-radius: 22px; }
+  .analytics-card { padding: 1.25rem 1rem 1.5rem; border-radius: 22px; }
 }
+
+/* ── Цвет текста: основной текст — тем же тёмным, что и заголовки.
+      Светлее остаются только поясняющие подписи (графики, легенды, сноски) и всё внутри таблиц. ── */
+.section-description, .sp-desc, .sd-desc, .seg-desc, .ins-text, .ins-list li, .ins-list .rec, .ins-list li::marker,
+.home-meta, .page-head .home-kicker, .section-eyebrow, .sp-eyebrow, .sd-eyebrow,
+.view-tabs .nav-tab, .back-btn,
+.likert__label, .db__label, .sk__label, .sc-sub-row, .support-metric-label, .analytics-table-note,
+.skills-about__body p, .skills-about__list dd, .insight-card h3 { color: var(--text) !important; }
+.slice-btn:not(.active-slice) { color: var(--text) !important; }
+.slice-btn.active-slice { color: #fff !important; }
