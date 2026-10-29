@@ -115,3 +115,11 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .support-employer-metric .waffle { grid-column: 1 / -1; margin: .75rem 0 0; }
 .support-tile .waffle { margin-top: .85rem; margin-bottom: .75rem; }
 .index-scale-chart { margin-top: 2.25rem !important; }
+
+/* ── «Анализ по группам»: после заголовка сразу чипсы, пояснения и легенда — в раскрывающемся блоке ── */
+.analytics-head { margin-bottom: 1rem; }
+.analytics-head__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.analytics-head .subsection-title { margin-bottom: 0 !important; }
+.slices-legend { margin-top: 1rem; padding: 1.25rem 1.5rem; background: #fff; border-radius: var(--r); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
+.slices-legend[hidden] { display: none; }
+.slices-legend .sp-desc { margin: 0 !important; max-width: 640px; }

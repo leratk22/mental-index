@@ -605,7 +605,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip.is-visible{opacity:1}
 </style>
 <link rel="stylesheet" href="assets/css/dashboard.css?v=20261022p">
-<link rel="stylesheet" href="assets/css/dashboard-soft.css?v=20261029f">
+<link rel="stylesheet" href="assets/css/dashboard-soft.css?v=20261029g">
 </head>
 <body>
 
@@ -1488,7 +1488,11 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 <div class="subpage">
 
   <div class="analytics-head">
-    <div class="subsection-title" style="margin-bottom:.5rem">Срезы данных</div>
+    <div class="analytics-head__row">
+      <div class="subsection-title">Срезы данных</div>
+      <button type="button" class="chart-toggle" data-expand="slices-legend" data-label-back="Свернуть" aria-expanded="false" aria-controls="slices-legend">Легенда</button>
+    </div>
+    <div id="slices-legend" class="slices-legend" hidden>
     <div class="sp-desc" style="margin:.5rem 0 0">Срез&nbsp;— результаты одной части опрошенных, например мужчин и&nbsp;женщин или людей одного возраста. Цвет ячейки подсказывает, на&nbsp;что обратить внимание в&nbsp;первую очередь. Все результаты взвешены.</div>
     <div class="legend analytics-legend">
       <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#BACFA2;--edge:#759F45"></span>благоприятно</span>
@@ -1497,6 +1501,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <span class="legend-item legend-note">* меньше 10&nbsp;человек&nbsp;— значения ориентировочные; для групп меньше 5&nbsp;человек значения не&nbsp;показаны</span>
       <span class="legend-item legend-note">Нажмите на&nbsp;заголовок столбца, чтобы отсортировать группы: первое нажатие&nbsp;— по&nbsp;убыванию, второе&nbsp;— по&nbsp;возрастанию, третье&nbsp;— исходный порядок</span>
       </div>
+    </div>
   </div>
 
   <div class="slice-chips" style="display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;">
