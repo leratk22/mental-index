@@ -1,0 +1,225 @@
+/* ============================================================
+   Смягчённая визуальная подача дашборда (только dashboard-v2.html).
+   Локальная доработка: светлее серый, мягче контраст «белый / серый»,
+   спокойнее типографика, чуть мягче углы. Данные, тексты и поведение
+   не затрагиваются; в дизайн-систему сайта это не входит.
+   Подключается после dashboard.css и встроенных стилей страницы.
+   ============================================================ */
+
+:root {
+  --bg: #F5F7FC;                /* тот же сине-серый оттенок, но светлее (был #EAEFF8) */
+  --border: #E7ECF6;            /* было #DBE4F3 */
+  --text: #2A2F45;
+  --muted: #646A83;             /* ≈5,3:1 на белом, ≈4,9:1 на фоне страницы */
+  --hint: #646A83;
+  --r: 20px;                    /* было 12px */
+  --weight-display: 400;
+  --weight-section: 500;
+  --weight-ui: 500;
+  --weight-factoid: 400;
+  --radius-card: 28px;
+}
+
+body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* ── Шапка: без белой плашки и линии, логотипы на фоне страницы ── */
+.nav { background: var(--bg); border-bottom: 0; }
+.nav-logo { padding: 20px 0 14px; opacity: .92; }
+.page-head__in { padding-top: 1.25rem; }
+.page-head .home-kicker { font-size: 15px !important; font-weight: 600 !important; letter-spacing: .06em !important; margin-bottom: .5rem; }
+.page-head .home-title { letter-spacing: -.4px !important; margin-bottom: 0; }
+.meta-row { margin: 1.25rem 0 2rem; }
+.meta-row .home-meta { color: var(--hint); }
+
+/* Переключатель разделов: светлая подложка, белая «таблетка» без тяжёлой тени */
+.view-tabs { background: #E9EEF7; padding: 3px; }
+.view-tabs .nav-tab { padding: 9px 22px; font-size: 15px !important; font-weight: 500 !important; color: var(--muted); }
+.view-tabs .nav-tab.active { background: #fff; color: var(--text); font-weight: 600 !important; box-shadow: 0 1px 2px rgba(42, 47, 69, .08); }
+
+/* ── Карточки: без обводок, углы круглее, блоки внутри — светлой заливкой ── */
+.dashboard-section, .analytics-card { border: 0; border-radius: var(--radius-card); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
+.dashboard-section { padding: 2rem 2rem 2.25rem; }
+.analytics-card { padding: 1.75rem 1.75rem 2rem; }
+.side-card, .sub-card, .spoke-card, .support-tile, .sd-hero, .sd-metric, .sd-group, .td-hero, .td-mini, .type-card,
+.dashboard-section [style*="border:1px solid var(--border)"] { border: 0 !important; background: var(--bg) !important; border-radius: var(--r) !important; box-shadow: none; }
+.seg-card--empty { background: transparent !important; }
+[style*="border-radius:12px"] { border-radius: var(--r) !important; }
+.seg-detail-button, .spoke-card .sc-btn-sm, .center-btn { background: #fff; border-color: transparent; border-radius: 12px; }
+.chart-toggle, .mobile-seg-detail-button { border-radius: 12px; }
+.chart-toggle { border-color: #DCE3F1; }
+.chart-toggle:hover { border-color: #B9C2D6; }
+.insight-card { padding: 1.4rem 1.75rem; border-radius: var(--r); }
+
+/* ── Типографика: легче заголовки и числа, спокойнее подписи ── */
+.section-eyebrow, .sp-eyebrow, .sd-eyebrow { font-weight: 600 !important; letter-spacing: .08em !important; }
+.subsection-title, .section-title, .dashboard-section .section-title, .dashboard-section .subsection-title { letter-spacing: -.2px !important; }
+.analytics-card th { font-weight: 600; letter-spacing: .04em; color: var(--hint); }
+.insight-card h3 { font-weight: 500 !important; }
+.slice-btn { font-weight: 500 !important; }
+.slice-btn.active-slice { font-weight: 600 !important; }
+
+/* ── Заголовок и легенда — один спокойный блок ── */
+@media (min-width: 761px) {
+  .result-heading { display: block; position: relative; margin-bottom: 1rem; }
+  .result-heading > div:first-child { padding-right: 130px; }
+  .result-heading > .chart-tools { display: block; margin: .1rem 0 0 !important; }
+  .result-heading > .chart-tools > .chart-toggle { position: absolute; top: 0; right: 0; margin: 0; }
+}
+.chart-tools > .legend, .likert__legend { justify-content: flex-start; }
+.likert__legend { margin-bottom: .6rem; }
+/* график без названия: легенда слева, кнопка справа — в одной строке */
+.dashboard-section > .chart-tools { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: .5rem 1rem; flex-wrap: wrap; margin-bottom: .75rem !important; }
+.dashboard-section > .chart-tools > .legend { order: 0; flex-wrap: wrap; }
+.dashboard-section > .chart-tools > .chart-toggle { order: 1; margin-left: auto; }
+.analytics-table-head { display: block; margin-bottom: .5rem; }
+.analytics-table-head .analytics-table-title { margin-bottom: .4rem; }
+.analytics-table-head .legend { gap: 6px 14px; margin-top: .3rem; }
+.analytics-table-divider { border-top-color: var(--border); }
+
+/* ── «Анализ по группам»: заголовок + описание + легенда вместе, чипсы — прямо над таблицей ── */
+.analytics-head { margin-bottom: 1.5rem; }
+.analytics-head .sp-desc { max-width: 640px; margin-bottom: 0; }
+.analytics-legend { margin-top: 1rem; gap: 6px 18px; }
+.analytics-legend .legend-note { flex-basis: 100%; color: var(--hint); }
+.slice-chips { margin-bottom: .75rem !important; gap: 8px !important; }
+.slice-btn { padding: 6px 14px !important; border-color: var(--border) !important; }
+
+/* ── Таблицы срезов: тоньше линии, спокойнее итоговая строка ── */
+.analytics-card [style*="border-bottom:1px solid #DBE4F3"] { border-bottom-color: #EDF1F8 !important; }
+.analytics-card th[style*="border-bottom:2px solid"], .analytics-card td[style*="border-bottom:2px solid"] { border-bottom: 1px solid var(--border) !important; }
+.analytics-card tr[style*="#EAEFF8"] { background: #F2F5FB !important; }
+
+@media (max-width: 760px) {
+  .dashboard-section { padding: 1.25rem 1rem 1.5rem; border-radius: 22px; }
+  .analytics-card { padding: 1.25rem 1rem 1.5rem; border-radius: 22px; }
+}
+
+/* ── Цвет текста: основной текст — тем же тёмным, что и заголовки.
+      Светлее остаются только поясняющие подписи (графики, легенды, сноски) и всё внутри таблиц. ── */
+.section-description, .sp-desc, .sd-desc, .seg-desc, .ins-text, .ins-list li, .ins-list .rec, .ins-list li::marker,
+.home-meta, .page-head .home-kicker, .section-eyebrow, .sp-eyebrow, .sd-eyebrow,
+.view-tabs .nav-tab, .back-btn,
+.likert__label, .db__label, .sk__label, .sc-sub-row, .support-metric-label, .analytics-table-note,
+.skills-about__body p, .skills-about__list dd, .insight-card h3 { color: var(--text) !important; }
+.slice-btn:not(.active-slice) { color: var(--text) !important; }
+.slice-btn.active-slice { color: #fff !important; }
+
+/* ── Подпись точки на шкале всегда видна (а не только при наведении) ── */
+/* (только когда на шкале одна точка: при сравнении с Россией подписи двух точек налезали бы друг на друга) */
+.index-scale-chart:not(:has(.scale-marker-russia)) .scale-value-label { opacity: 1 !important; visibility: visible !important; }
+
+/* ── Блок «Поддержка»: инфографика «100 опрошенных» — по точке на процент.
+      Слева направо: сначала точки, затем процент и подпись, что он обозначает. ── */
+.waffle { display: grid; grid-template-columns: repeat(10, 7px); gap: 3px; width: max-content; }
+.waffle i { width: 7px; height: 7px; border-radius: 50%; background: #E3E8F3; }
+.waffle i.on { background: var(--c); }
+
+.support-tile { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto auto auto; column-gap: 1.5rem; align-items: center; align-content: center; text-align: left; padding: 1.4rem 1.6rem !important; }
+.support-tile .waffle { grid-column: 1; grid-row: 1 / 5; margin: 0; }
+.support-tile .support-ref { grid-column: 2; grid-row: 4; margin-top: .25rem; }
+.support-tile .big-num { grid-column: 2; grid-row: 1; margin: 0 0 .2rem; }
+.support-tile__title { grid-column: 2; grid-row: 2; margin: 0 0 .25rem; font-size: 16px; line-height: 1.3; }
+.support-tile .q-text { grid-column: 2; grid-row: 3; }
+.support-tiles { gap: 14px; }
+
+.support-employer-metric { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; align-content: center; gap: .25rem 1.5rem; }
+.support-employer-metric .waffle { grid-column: 1; grid-row: 1 / 3; margin: 0; }
+.support-employer-metric .big-num { grid-column: 2; grid-row: 1; align-self: end; }
+.support-employer-metric .support-metric-label { grid-column: 2; grid-row: 2; align-self: start; }
+
+@media (max-width: 760px) {
+  .support-tiles { grid-template-columns: 1fr; }
+  .support-tile { padding: 1.1rem 1.2rem !important; column-gap: 1.1rem; }
+}
+.index-scale-chart:not(:has(.scale-marker-russia)) { margin-top: 2.25rem !important; }
+
+/* ── «Анализ по группам»: после заголовка сразу чипсы, пояснения и легенда — в раскрывающемся блоке ── */
+.analytics-head { margin-bottom: 1rem; }
+.analytics-head__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.analytics-head .subsection-title { margin-bottom: 0 !important; }
+.slices-legend { margin-top: 1rem; padding: 1.25rem 1.5rem; background: #fff; border-radius: var(--r); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
+.slices-legend[hidden] { display: none; }
+.slices-legend .sp-desc { margin: 0 !important; max-width: 640px; }
+
+/* ── Карточки секторов: белые, без серой подложки; от фона секции отделяет мягкая тень ── */
+.seg-card { border: 0 !important; background: #fff !important; border-radius: var(--r) !important; box-shadow: 0 2px 16px rgba(42, 47, 69, .08); }
+.seg-card--empty { background: transparent !important; box-shadow: none; }
+.seg-detail-button { background: var(--bg); }
+
+/* ── Переключение «Таблица / График» у шкалы Индекса не нужно ── */
+.result-heading .chart-toggle { display: none !important; }
+
+/* ── Десктоп: число человек — в правом верхнем углу карточки сектора ── */
+@media (min-width: 761px) {
+  .risk-axis-grid .seg-card > div:first-child .seg-n,
+  .seg-card--static .seg-card__head .seg-n { position: absolute; top: 1.15rem; right: 1.35rem; margin: 0; font-size: 12px !important; }
+}
+
+/* ── Компактная шапка на десктопе: тексты слева (компания, заголовок, под ним число опрошенных), переключатель разделов справа ── */
+@media (min-width: 761px) {
+  .page-head__in { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 2rem; align-items: center; }
+  .page-head .meta-row { display: contents; }
+  .page-head .home-kicker { grid-column: 1; grid-row: 1; margin: 0 !important; }
+  .page-head .home-title { grid-column: 1; grid-row: 2; font-size: 30px !important; margin-top: .35rem; }
+  .page-head .meta-row .home-meta { grid-column: 1; grid-row: 3; margin: .5rem 0 0; text-align: left; }
+  .page-head .view-tabs { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+  .page-head { margin-bottom: 2rem; }
+}
+
+.analytics-legend--heat { margin-top: 1rem; }
+
+/* ── Табы и чипсы — в оформлении кнопок «Таблица» / «Легенда» (светлая кнопка с тонким контуром, выбранная — тёмная) ── */
+.view-tabs { background: transparent; padding: 0; gap: 8px; border-radius: 0; }
+.view-tabs .nav-tab, .slice-btn { min-height: 32px; padding: 5px 14px !important; border: 1px solid #DCE3F1 !important; border-radius: 12px !important; background: #fff; color: var(--text) !important; font-size: 14px !important; font-weight: 500 !important; line-height: 1.3; box-shadow: none; }
+.view-tabs .nav-tab:hover, .slice-btn:hover { border-color: #B9C2D6 !important; }
+.view-tabs .nav-tab.active, .slice-btn.active-slice { background: var(--text) !important; border-color: var(--text) !important; color: #fff !important; font-weight: 500 !important; box-shadow: none; }
+@media (max-width: 480px) {
+  .view-tabs { width: 100%; }
+  .view-tabs .nav-tab { flex: 1 1 0; padding: 8px 10px !important; font-size: 14px !important; white-space: normal; }
+}
+
+/* ── Страницы секторов: первые два блока (шапка сектора и следующий) — на одной подложке ── */
+.seg-hero { margin-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; padding-bottom: 1.25rem; }
+.seg-hero + .dashboard-section { border-top-left-radius: 0; border-top-right-radius: 0; padding-top: .5rem; margin-top: 0; box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
+
+/* ── Шкала Индекса: без серой подложки ── */
+.dashboard-section .index-scale-chart[style] { background: transparent !important; border-radius: 0 !important; }
+
+/* ── Табы и чипсы: невыбранные без заливки, выбранный — тёмная заливка ── */
+.view-tabs .nav-tab, .slice-btn { background: transparent !important; }
+.view-tabs .nav-tab.active, .slice-btn.active-slice { background: var(--text) !important; color: #fff !important; border-color: var(--text) !important; box-shadow: none; font-weight: 500 !important; }
+/* кнопки «Таблица», «Легенда», «Свернуть» — без заливки */
+.chart-toggle { background: transparent !important; }
+
+/* ── Страницы секторов: все блоки — на одной подложке, без теней, карточки плоские ── */
+.sd-wrap > .dashboard-section { box-shadow: none; }
+.sd-wrap > .dashboard-section:not(:last-of-type) { margin-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
+.sd-wrap > .dashboard-section + .dashboard-section { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; padding-top: .5rem; }
+.seg-card--static { background: transparent !important; box-shadow: none !important; cursor: default; }
+/* тень под плашкой — только там, где есть ось координат */
+.risk-axis-grid .seg-card--static:not(.seg-card--empty) { background: #fff !important; box-shadow: 0 2px 16px rgba(42, 47, 69, .10) !important; }
+.seg-card--static:hover { box-shadow: none !important; }
+/* подгруппы сектора — в два столбца, а не друг под другом */
+.sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.5rem 2rem !important; }
+@media (max-width: 760px) { .sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] { grid-template-columns: 1fr !important; } }
+
+/* ── Кольцевая диаграмма рядом с процентом ── */
+.seg-card__head { align-items: center !important; gap: 14px !important; }
+.seg-donut { --c: #98A0AE; flex: none; width: 48px; height: 48px; border-radius: 50%;
+  background: conic-gradient(var(--c) calc(var(--p) * 1%), #E9EDF6 0);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 7px), #000 calc(100% - 6px)); }
+.seg-green .seg-donut { --c: #759F45; }
+.seg-yellow .seg-donut { --c: #F5C93C; }
+.seg-red .seg-donut { --c: #F15D56; }
+
+/* три плитки в ряд (если их три) — только при достаточной ширине, иначе друг под другом */
+@media (max-width: 1100px) { .support-tiles--3 { grid-template-columns: 1fr; } }
+
+/* три плитки в ряд: точки сверху, затем процент и подпись (по центру) */
+.support-tiles--3 .support-tile { grid-template-columns: 1fr; grid-template-rows: auto auto auto auto auto; justify-items: center; text-align: center; row-gap: .15rem; }
+.support-tiles--3 .support-tile .waffle { grid-column: 1; grid-row: 1; margin: 0 0 .75rem; }
+.support-tiles--3 .support-tile .big-num { grid-column: 1; grid-row: 2; }
+.support-tiles--3 .support-tile .support-tile__title { grid-column: 1; grid-row: 3; }
+.support-tiles--3 .support-tile .q-text { grid-column: 1; grid-row: 4; }
+.support-tiles--3 .support-tile .support-ref { grid-column: 1; grid-row: 5; }
