@@ -481,6 +481,7 @@
           const f = dir === 'down' ? 1 - t : t;
           const rgb = f < 0.5 ? mix(RED, YEL, f / 0.5) : mix(YEL, GRN, (f - 0.5) / 0.5);
           r.cells[c].style.background = 'rgb(' + rgb.join(',') + ')';
+          r.cells[c].style.fontWeight = f < 0.25 ? '600' : '400';
         });
       });
     });
