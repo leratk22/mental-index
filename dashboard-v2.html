@@ -605,6 +605,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip.is-visible{opacity:1}
 </style>
 <link rel="stylesheet" href="assets/css/dashboard.css?v=20261022p">
+<link rel="stylesheet" href="assets/css/dashboard-soft.css?v=20261029a">
 </head>
 <body>
 
@@ -1479,12 +1480,19 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 <div id="screen-analytics" class="screen">
 <div class="subpage">
 
-  <div style="margin-bottom:1.75rem;">
+  <div class="analytics-head">
     <div class="subsection-title" style="margin-bottom:.5rem">Срезы данных</div>
     <div class="sp-desc" style="margin:.5rem 0 0">Срез&nbsp;— результаты одной части опрошенных, например мужчин и&nbsp;женщин или людей одного возраста. Цвет ячейки подсказывает, на&nbsp;что обратить внимание в&nbsp;первую очередь. Все результаты взвешены.</div>
+    <div class="legend analytics-legend">
+      <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#BACFA2;--edge:#759F45"></span>благоприятно</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#FFF4D4;--edge:#E0B53A"></span>средне</span>
+      <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#F7A6A2;--edge:#F15D56"></span>требует внимания</span>
+      <span class="legend-item legend-note">* меньше 10&nbsp;человек&nbsp;— значения ориентировочные; для групп меньше 5&nbsp;человек значения не&nbsp;показаны</span>
+      <span class="legend-item legend-note">Нажмите на&nbsp;заголовок столбца, чтобы отсортировать группы: первое нажатие&nbsp;— по&nbsp;убыванию, второе&nbsp;— по&nbsp;возрастанию, третье&nbsp;— исходный порядок</span>
+      </div>
   </div>
 
-  <div style="display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;">
+  <div class="slice-chips" style="display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap;">
     <button class="slice-btn" data-slice="all"
       style="padding:7px 16px;border-radius:20px;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;">
       Все срезы
@@ -1529,14 +1537,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       style="padding:7px 16px;border-radius:20px;font-family:var(--font);cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--muted);transition:all .15s;">
       Федеральный округ
     </button>
-  </div>
-
-  <div class="legend" style="margin-bottom:1rem">
-    <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#BACFA2;--edge:#759F45"></span>благоприятно</span>
-    <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#FFF4D4;--edge:#E0B53A"></span>средне</span>
-    <span class="legend-item"><span class="legend-dot legend-dot--tint" style="background:#F7A6A2;--edge:#F15D56"></span>требует внимания</span>
-    <span class="legend-item legend-note">* меньше 10&nbsp;человек&nbsp;— значения ориентировочные; для групп меньше 5&nbsp;человек значения не&nbsp;показаны</span>
-    <span class="legend-item legend-note">Нажмите на&nbsp;заголовок столбца, чтобы отсортировать группы: первое нажатие&nbsp;— по&nbsp;убыванию, второе&nbsp;— по&nbsp;возрастанию, третье&nbsp;— исходный порядок</span>
   </div>
 
     <div id="slice-gender" class="slice-panel" style="display:none;">

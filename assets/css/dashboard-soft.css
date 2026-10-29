@@ -1,0 +1,89 @@
+/* ============================================================
+   Смягчённая визуальная подача дашборда (только dashboard-v2.html).
+   Локальная доработка: светлее серый, мягче контраст «белый / серый»,
+   спокойнее типографика, чуть мягче углы. Данные, тексты и поведение
+   не затрагиваются; в дизайн-систему сайта это не входит.
+   Подключается после dashboard.css и встроенных стилей страницы.
+   ============================================================ */
+
+:root {
+  --bg: #F5F7FC;                /* тот же сине-серый оттенок, но светлее (был #EAEFF8) */
+  --border: #E7ECF6;            /* было #DBE4F3 */
+  --text: #2A2F45;
+  --muted: #646A83;             /* ≈5,3:1 на белом, ≈4,9:1 на фоне страницы */
+  --hint: #646A83;
+  --r: 14px;                    /* было 12px */
+  --weight-display: 300;
+  --weight-section: 400;
+  --weight-ui: 400;
+  --weight-factoid: 300;
+  --radius-card: 20px;
+}
+
+body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+/* ── Шапка: без белой плашки и линии, логотипы на фоне страницы ── */
+.nav { background: var(--bg); border-bottom: 0; }
+.nav-logo { padding: 20px 0 14px; opacity: .92; }
+.page-head__in { padding-top: 1.25rem; }
+.page-head .home-kicker { font-weight: 500 !important; letter-spacing: .08em !important; color: var(--hint) !important; margin-bottom: .5rem; }
+.page-head .home-title { letter-spacing: -.4px !important; margin-bottom: 0; }
+.meta-row { margin: 1.25rem 0 2rem; }
+.meta-row .home-meta { color: var(--hint); }
+
+/* Переключатель разделов: светлая подложка, белая «таблетка» без тяжёлой тени */
+.view-tabs { background: #E9EEF7; padding: 3px; }
+.view-tabs .nav-tab { padding: 9px 22px; font-size: 15px !important; font-weight: 400 !important; color: var(--muted); }
+.view-tabs .nav-tab.active { background: #fff; color: var(--text); font-weight: 500 !important; box-shadow: 0 1px 2px rgba(42, 47, 69, .08); }
+
+/* ── Карточки: мягче углы, воздуха больше, контур едва заметный ── */
+.dashboard-section, .analytics-card { border-radius: var(--radius-card); border-color: var(--border); box-shadow: 0 1px 2px rgba(42, 47, 69, .03); }
+.dashboard-section { padding: 2rem 2rem 2.25rem; }
+.analytics-card { padding: 1.75rem 1.75rem 2rem; }
+[style*="border-radius:12px"] { border-radius: 14px !important; }
+.chart-toggle, .center-btn, .seg-detail-button, .sc-btn-sm, .mobile-seg-detail-button { border-radius: 10px; }
+.chart-toggle { border-color: #DCE3F1; }
+.chart-toggle:hover { border-color: #B9C2D6; }
+.insight-card { padding: 1.4rem 1.75rem; }
+
+/* ── Типографика: легче заголовки и числа, спокойнее подписи ── */
+.section-eyebrow, .sp-eyebrow, .sd-eyebrow { font-weight: 500 !important; letter-spacing: .08em !important; }
+.subsection-title, .section-title, .dashboard-section .section-title, .dashboard-section .subsection-title { letter-spacing: -.2px !important; }
+.analytics-card th { font-weight: 500; letter-spacing: .04em; color: var(--hint); }
+.insight-card h3 { font-weight: 500 !important; }
+
+/* ── Заголовок и легенда — один спокойный блок ── */
+@media (min-width: 761px) {
+  .result-heading { display: block; position: relative; margin-bottom: 1rem; }
+  .result-heading > div:first-child { padding-right: 130px; }
+  .result-heading > .chart-tools { display: block; margin: .1rem 0 0 !important; }
+  .result-heading > .chart-tools > .chart-toggle { position: absolute; top: 0; right: 0; margin: 0; }
+}
+.chart-tools > .legend, .likert__legend { justify-content: flex-start; }
+.likert__legend { margin-bottom: .6rem; }
+/* график без названия: легенда слева, кнопка справа — в одной строке */
+.dashboard-section > .chart-tools { display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: .5rem 1rem; flex-wrap: wrap; margin-bottom: .75rem !important; }
+.dashboard-section > .chart-tools > .legend { order: 0; flex-wrap: wrap; }
+.dashboard-section > .chart-tools > .chart-toggle { order: 1; margin-left: auto; }
+.analytics-table-head { display: block; margin-bottom: .5rem; }
+.analytics-table-head .analytics-table-title { margin-bottom: .4rem; }
+.analytics-table-head .legend { gap: 6px 14px; margin-top: .3rem; }
+.analytics-table-divider { border-top-color: var(--border); }
+
+/* ── «Анализ по группам»: заголовок + описание + легенда вместе, чипсы — прямо над таблицей ── */
+.analytics-head { margin-bottom: 1.5rem; }
+.analytics-head .sp-desc { max-width: 640px; margin-bottom: 0; }
+.analytics-legend { margin-top: 1rem; gap: 6px 18px; }
+.analytics-legend .legend-note { flex-basis: 100%; color: var(--hint); }
+.slice-chips { margin-bottom: .75rem !important; gap: 8px !important; }
+.slice-btn { padding: 6px 14px !important; border-color: var(--border) !important; }
+
+/* ── Таблицы срезов: тоньше линии, спокойнее итоговая строка ── */
+.analytics-card [style*="border-bottom:1px solid #DBE4F3"] { border-bottom-color: #EDF1F8 !important; }
+.analytics-card th[style*="border-bottom:2px solid"], .analytics-card td[style*="border-bottom:2px solid"] { border-bottom: 1px solid var(--border) !important; }
+.analytics-card tr[style*="#EAEFF8"] { background: #F2F5FB !important; }
+
+@media (max-width: 760px) {
+  .dashboard-section { padding: 1.25rem 1rem 1.5rem; border-radius: 16px; }
+  .analytics-card { padding: 1.25rem 1rem 1.5rem; border-radius: 16px; }
+}
