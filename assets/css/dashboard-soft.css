@@ -107,13 +107,28 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 /* ── Подпись точки на шкале всегда видна (а не только при наведении) ── */
 .index-scale-chart .scale-value-label { opacity: 1 !important; visibility: visible !important; }
 
-/* ── Блок «Поддержка»: инфографика «100 опрошенных» — каждая точка один процент ── */
-.waffle { display: grid; grid-template-columns: repeat(10, 7px); gap: 3px; margin: .9rem auto .75rem; width: max-content; }
+/* ── Блок «Поддержка»: инфографика «100 опрошенных» — по точке на процент.
+      Слева направо: сначала точки, затем процент и подпись, что он обозначает. ── */
+.waffle { display: grid; grid-template-columns: repeat(10, 7px); gap: 3px; width: max-content; }
 .waffle i { width: 7px; height: 7px; border-radius: 50%; background: #E3E8F3; }
 .waffle i.on { background: var(--c); }
-.support-employer-metric { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; align-content: start; gap: .5rem 16px; }
-.support-employer-metric .waffle { grid-column: 1 / -1; margin: .75rem 0 0; }
-.support-tile .waffle { margin-top: .85rem; margin-bottom: .75rem; }
+
+.support-tile { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto auto; column-gap: 1.5rem; align-items: center; align-content: center; text-align: left; padding: 1.4rem 1.6rem !important; }
+.support-tile .waffle { grid-column: 1; grid-row: 1 / 4; margin: 0; }
+.support-tile .big-num { grid-column: 2; grid-row: 1; margin: 0 0 .2rem; }
+.support-tile__title { grid-column: 2; grid-row: 2; margin: 0 0 .25rem; font-size: 16px; line-height: 1.3; }
+.support-tile .q-text { grid-column: 2; grid-row: 3; }
+.support-tiles { gap: 14px; }
+
+.support-employer-metric { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; align-content: center; gap: .25rem 1.5rem; }
+.support-employer-metric .waffle { grid-column: 1; grid-row: 1 / 3; margin: 0; }
+.support-employer-metric .big-num { grid-column: 2; grid-row: 1; align-self: end; }
+.support-employer-metric .support-metric-label { grid-column: 2; grid-row: 2; align-self: start; }
+
+@media (max-width: 760px) {
+  .support-tiles { grid-template-columns: 1fr; }
+  .support-tile { padding: 1.1rem 1.2rem !important; column-gap: 1.1rem; }
+}
 .index-scale-chart { margin-top: 2.25rem !important; }
 
 /* ── «Анализ по группам»: после заголовка сразу чипсы, пояснения и легенда — в раскрывающемся блоке ── */
