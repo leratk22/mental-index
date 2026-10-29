@@ -249,3 +249,18 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 
 /* блоки на осях координат — плоские, без падающих теней (оси сами разделяют блоки) */
 .risk-axis-grid .seg-card, .risk-axis-grid .seg-card:hover { background: transparent !important; box-shadow: none !important; }
+
+/* ── Шапка сектора: без цветной полоски сверху; справа от процента — небольшое кольцо в цвете сектора ── */
+.seg-hero::before { display: none !important; }
+.seg-hero__figure { display: grid; grid-template-columns: auto auto; justify-content: end; align-items: center; column-gap: 14px; }
+.seg-hero__figure .seg-donut { grid-column: 1; grid-row: 1; width: 44px; height: 44px; }
+.seg-hero__figure .seg-pct { grid-column: 2; grid-row: 1; }
+.seg-hero__figure .seg-n { grid-column: 1 / -1; grid-row: 2; text-align: right; }
+.seg-hero--green .seg-donut { --c: #759F45; }
+.seg-hero--yellow .seg-donut { --c: #F5C93C; }
+.seg-hero--red .seg-donut { --c: #F15D56; }
+.seg-hero--neutral .seg-donut { --c: #98A0AE; }
+@media (max-width: 600px) {
+  .seg-hero__figure { justify-content: start; }
+  .seg-hero__figure .seg-n { text-align: left; }
+}
