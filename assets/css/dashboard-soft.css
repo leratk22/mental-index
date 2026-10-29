@@ -153,19 +153,31 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
   .seg-card--static .seg-card__head .seg-n { position: absolute; top: 1.15rem; right: 1.35rem; margin: 0; font-size: 12px !important; }
 }
 
-/* ── Компактная шапка на десктопе: тексты слева (в первой строке — компания и число опрошенных, ниже заголовок), переключатель справа ── */
+/* ── Компактная шапка на десктопе: тексты слева (компания, заголовок, под ним число опрошенных), переключатель разделов справа ── */
 @media (min-width: 761px) {
-  .page-head__in { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: 0; align-items: center; }
+  .page-head__in { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: 2rem; align-items: center; }
   .page-head .meta-row { display: contents; }
   .page-head .home-kicker { grid-column: 1; grid-row: 1; margin: 0 !important; }
-  .page-head .meta-row .home-meta { grid-column: 2; grid-row: 1; margin: 0; text-align: left; }
-  .page-head .meta-row .home-meta::before { content: "·"; margin: 0 .6rem; }
-  .page-head .home-title { grid-column: 1 / 3; grid-row: 2; font-size: 30px !important; margin-top: .35rem; }
-  .page-head .view-tabs { grid-column: 3; grid-row: 1 / 3; align-self: center; margin-left: 2rem; }
+  .page-head .home-title { grid-column: 1; grid-row: 2; font-size: 30px !important; margin-top: .35rem; }
+  .page-head .meta-row .home-meta { grid-column: 1; grid-row: 3; margin: .5rem 0 0; text-align: left; }
+  .page-head .view-tabs { grid-column: 2; grid-row: 1 / 4; align-self: center; }
   .page-head { margin-bottom: 2rem; }
 }
 
-/* ── Легенда тепловой карты по столбцам: пять ступеней одного нейтрального цвета (без красного, зелёного, жёлтого, фиолетового) ── */
-.heat-legend { margin: -.1rem 0 .75rem; gap: 6px 10px; }
-.heat-legend .legend-note { margin-right: .25rem; }
-.legend-dot--heat { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(42, 47, 69, .08); }
+/* ── Легенда цвета ячеек по столбцам (светофор, как у остальных таблиц) ── */
+.heat-legend { margin: -.1rem 0 .75rem; gap: 6px 18px; }
+.heat-legend .legend-note:last-child { flex-basis: 100%; }
+
+/* ── Табы и чипсы — в оформлении кнопок «Таблица» / «Легенда» (светлая кнопка с тонким контуром, выбранная — тёмная) ── */
+.view-tabs { background: transparent; padding: 0; gap: 8px; border-radius: 0; }
+.view-tabs .nav-tab, .slice-btn { min-height: 32px; padding: 5px 14px !important; border: 1px solid #DCE3F1 !important; border-radius: 12px !important; background: #fff; color: var(--text) !important; font-size: 14px !important; font-weight: 500 !important; line-height: 1.3; box-shadow: none; }
+.view-tabs .nav-tab:hover, .slice-btn:hover { border-color: #B9C2D6 !important; }
+.view-tabs .nav-tab.active, .slice-btn.active-slice { background: var(--text) !important; border-color: var(--text) !important; color: #fff !important; font-weight: 500 !important; box-shadow: none; }
+@media (max-width: 480px) {
+  .view-tabs { width: 100%; }
+  .view-tabs .nav-tab { flex: 1 1 0; padding: 8px 10px !important; font-size: 14px !important; white-space: normal; }
+}
+
+/* ── Страницы секторов: первые два блока (шапка сектора и следующий) — на одной подложке ── */
+.seg-hero { margin-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; box-shadow: none; padding-bottom: 1.25rem; }
+.seg-hero + .dashboard-section { border-top-left-radius: 0; border-top-right-radius: 0; padding-top: .5rem; margin-top: 0; box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }

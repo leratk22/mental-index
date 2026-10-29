@@ -449,31 +449,40 @@
     });
   }
 
-  /* ── Тепловая карта по столбцам в таблицах срезов ───────────────
-     Для таблиц с data-heat: чем выше значение в столбце, тем темнее ячейка.
-     Цвет один (без «хорошо / плохо»): шкала показывает только соотношение значений. */
+  /* ── Цвет ячеек по столбцам в таблицах срезов (светофор, как везде) ─
+     Для таблиц с data-heat: ячейка красится по сравнению с другими группами
+     в своём столбце. Направление задаёт data-heat-dir у заголовка столбца:
+     up — выше благоприятнее (зелёный сверху), down — меньше благоприятнее. */
   function heatTables() {
+    const RED = [247, 166, 162], YEL = [255, 244, 212], GRN = [186, 207, 162];
+    const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
     document.querySelectorAll('.analytics-card table[data-heat]').forEach((table) => {
       const rows = Array.from(table.tBodies[0].rows).slice(1).filter((r) => !r.querySelector('td.analytics-subhead'));
       if (rows.length < 2) return;
-      const first = table.tHead.rows[0].cells[0].colSpan || 1;
-      const count = rows[0].cells.length;
+      const heads = Array.from(table.tHead.rows[0].cells);
+      let col = 0;
+      const dirByCol = {};
+      heads.forEach((th) => { dirByCol[col] = th.getAttribute('data-heat-dir'); col += th.colSpan || 1; });
       const val = (cell) => {
         const n = parseFloat((cell.textContent || '').replace(/\u2212/g, '-').replace(',', '.').replace(/[^\d.\-]/g, ''));
         return Number.isNaN(n) ? null : n;
       };
-      for (let c = first; c < count; c += 1) {
+      Object.keys(dirByCol).forEach((c) => {
+        const dir = dirByCol[c];
+        if (!dir) return;
         const nums = rows.map((r) => val(r.cells[c])).filter((n) => n !== null);
-        if (nums.length < 2) continue;
+        if (nums.length < 2) return;
         const min = Math.min(...nums), max = Math.max(...nums);
-        if (max === min) continue;
+        if (max === min) return;
         rows.forEach((r) => {
           const v = val(r.cells[c]);
           if (v === null) return;
           const t = (v - min) / (max - min);
-          r.cells[c].style.background = 'rgba(91,111,147,' + (0.06 + 0.34 * t).toFixed(3) + ')';
+          const f = dir === 'down' ? 1 - t : t;
+          const rgb = f < 0.5 ? mix(RED, YEL, f / 0.5) : mix(YEL, GRN, (f - 0.5) / 0.5);
+          r.cells[c].style.background = 'rgb(' + rgb.join(',') + ')';
         });
-      }
+      });
     });
   }
 
