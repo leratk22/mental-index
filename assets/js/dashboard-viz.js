@@ -449,6 +449,34 @@
     });
   }
 
+  /* ── Тепловая карта по столбцам в таблицах срезов ───────────────
+     Для таблиц с data-heat: чем выше значение в столбце, тем темнее ячейка.
+     Цвет один (без «хорошо / плохо»): шкала показывает только соотношение значений. */
+  function heatTables() {
+    document.querySelectorAll('.analytics-card table[data-heat]').forEach((table) => {
+      const rows = Array.from(table.tBodies[0].rows).slice(1).filter((r) => !r.querySelector('td.analytics-subhead'));
+      if (rows.length < 2) return;
+      const first = table.tHead.rows[0].cells[0].colSpan || 1;
+      const count = rows[0].cells.length;
+      const val = (cell) => {
+        const n = parseFloat((cell.textContent || '').replace(/\u2212/g, '-').replace(',', '.').replace(/[^\d.\-]/g, ''));
+        return Number.isNaN(n) ? null : n;
+      };
+      for (let c = first; c < count; c += 1) {
+        const nums = rows.map((r) => val(r.cells[c])).filter((n) => n !== null);
+        if (nums.length < 2) continue;
+        const min = Math.min(...nums), max = Math.max(...nums);
+        if (max === min) continue;
+        rows.forEach((r) => {
+          const v = val(r.cells[c]);
+          if (v === null) return;
+          const t = (v - min) / (max - min);
+          r.cells[c].style.background = 'rgba(129,120,210,' + (0.06 + 0.34 * t).toFixed(3) + ')';
+        });
+      }
+    });
+  }
+
   function init() {
     fillVars();
     indexScale();
@@ -458,6 +486,7 @@
     support();
     expanders();
     sortTables();
+    heatTables();
     tooltip();
     motion();
   }

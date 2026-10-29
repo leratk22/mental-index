@@ -605,7 +605,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 .chart-tip.is-visible{opacity:1}
 </style>
 <link rel="stylesheet" href="assets/css/dashboard.css?v=20261022p">
-<link rel="stylesheet" href="assets/css/dashboard-soft.css?v=20261029d">
+<link rel="stylesheet" href="assets/css/dashboard-soft.css?v=20261029f">
 </head>
 <body>
 
@@ -625,7 +625,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 <header class="page-head" id="page-head">
   <div class="page-head__in">
     <div class="home-kicker">{Company Name}</div>
-    <div class="home-title">Индекс ментального благополучия</div>
+    <div class="home-title">Индекс ментального благополучия {Audience}</div>
     <div class="meta-row"><div class="view-tabs" role="group" aria-label="Раздел дашборда"><button type="button" class="nav-tab active" data-nav="home" aria-current="page">Общие метрики</button><button type="button" class="nav-tab" data-nav="analytics">Анализ по&nbsp;группам</button></div><div class="home-meta">{Respondent count} опрошенных · период опроса: {Survey period}</div></div>
   </div>
 </header>
@@ -641,7 +641,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     <div class="subsection-title" style="margin-bottom:.35rem">Где находятся опрошенные на&nbsp;шкале Индекса ментального благополучия</div>
   </div>
   <div class="legend result-chart-key" aria-label="Обозначения маркеров">
-    <span class="legend-item"><span class="legend-dot" style="background:var(--muted)" aria-hidden="true"></span>Результат опрошенных</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--muted)" aria-hidden="true"></span>{Company Name}</span>
   </div>
 </div>
 <div class="section-description chart-lead" style="margin-bottom:1rem;">Индекс ментального благополучия&nbsp;— сводный результат опроса о&nbsp;состоянии людей и&nbsp;связанных с&nbsp;ним факторах. Показан результат всех опрошенных по&nbsp;шкале от&nbsp;−100 до&nbsp;+100; результаты взвешены.</div>
@@ -656,7 +656,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         <div style="width:13.0%;background:linear-gradient(90deg,#FFD452,#FFD452);" title="Средний 20–45"></div>
         <div style="width:27.5%;background:linear-gradient(90deg,#759F45,#759F45);" title="Высокий >45"></div>
       </div>
-      <div class="scale-marker scale-marker-company" tabindex="0" aria-label="Результат опрошенных: 33,4" style="position:absolute;top:-6px;left:66.7%;transform:translateX(-50%);">
+      <div class="scale-marker scale-marker-company" tabindex="0" aria-label="{Company Name}: 33,4" style="position:absolute;top:-6px;left:66.7%;transform:translateX(-50%);">
         <div style="width:2px;height:28px;background:#22263B;margin:0 auto;"></div>
         <div class="scale-marker-dot" aria-hidden="true"></div>
       </div>
@@ -809,11 +809,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       <div class="support-tile">
         <div class="support-tile__title">Обращались за&nbsp;профессиональной помощью</div>
         <div class="big-num">9%</div>
+        <div class="waffle" style="--c:#5B6F93" role="img" aria-label="9 из 100 опрошенных"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="q-text">к&nbsp;психологу или&nbsp;психотерапевту за&nbsp;последние 12&nbsp;месяцев</div>
       </div>
       <div class="support-tile">
         <div class="support-tile__title">Принимали успокоительные</div>
         <div class="big-num">23%</div>
+        <div class="waffle" style="--c:#5B6F93" role="img" aria-label="23 из 100 опрошенных"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         <div class="q-text">без&nbsp;рецепта</div>
       </div>
     </div>
@@ -824,10 +826,12 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         <div class="support-employer-metric">
           <div class="big-num">53%</div>
           <div class="support-metric-label">считают усилия работодателя достаточными</div>
+          <div class="waffle" style="--c:#759F45" role="img" aria-label="53 из 100 опрошенных"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </div>
         <div class="support-employer-metric">
           <div class="big-num">46%</div>
           <div class="support-metric-label">считают усилия недостаточными или отсутствующими</div>
+          <div class="waffle" style="--c:#F15D56" role="img" aria-label="46 из 100 опрошенных"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
         </div>
       </div>
     </div>
@@ -1193,7 +1197,14 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 (function(){
   var navStack = ['home'];
 
-  function show(id){
+  var positions = {};   // положение прокрутки экранов: «назад» возвращает туда, откуда ушли
+  function show(id, opts){
+    var prev = document.querySelector('.screen.active');
+    if (prev) positions[prev.id.replace('screen-','')] = window.scrollY;
+    var head = document.getElementById('page-head');
+    var showHead = (id === 'home' || id === 'analytics');
+    if (head) head.hidden = !showHead;
+    document.body.classList.toggle('has-pagehead', showHead);
     document.querySelectorAll('.screen').forEach(function(s){
       s.classList.remove('active');
       s.style.display = 'none';
@@ -1202,7 +1213,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     if(el){
       el.classList.add('active');
       el.style.display = 'block';
-      window.scrollTo(0,0);
+      window.scrollTo(0, (opts && opts.restore && positions[id] != null) ? positions[id] : 0);
     }
     if(id === 'analytics'){
       var active = document.querySelector('.slice-btn.active-slice');
@@ -1211,10 +1222,6 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
       var panel = document.getElementById('slice-'+slice);
       if(panel) panel.style.display='block';
     }
-    var head = document.getElementById('page-head');
-    var showHead = (id === 'home' || id === 'analytics');
-    if (head) head.hidden = !showHead;
-    document.body.classList.toggle('has-pagehead', showHead);
     var root = id.split('-')[0];
     var navIds = {home:'home',analytics:'analytics',insights:'home','home-detail':'home',
       subA:'home',subB:'home',subV:'home',
@@ -1227,9 +1234,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     });
   }
 
-  function go(id){
+  function go(id, opts){
     navStack.push(id);
-    show(id);
+    show(id, opts);
   }
   window.go = go;
   window.show = show;
@@ -1282,7 +1289,7 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
     var fwd = e.target.closest('[data-goto]');
     if(fwd){ go(fwd.getAttribute('data-goto')); return; }
     var back = e.target.closest('[data-back]');
-    if(back){ go(back.getAttribute('data-back')); return; }
+    if(back){ go(back.getAttribute('data-back'), {restore:true}); return; }
   });
 
   show('home');
@@ -1553,9 +1560,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1564,9 +1571,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1601,9 +1608,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1612,9 +1619,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1649,9 +1656,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1660,9 +1667,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1697,9 +1704,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1708,9 +1715,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1745,9 +1752,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1756,9 +1763,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1793,9 +1800,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1804,9 +1811,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1841,9 +1848,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1852,9 +1859,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1889,9 +1896,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1900,9 +1907,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1937,9 +1944,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1948,9 +1955,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -1985,9 +1992,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -1996,9 +2003,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -2033,9 +2040,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Карта состояния и&nbsp;рисков</div>
-      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %.</p>
+      <p class="analytics-table-note">Какая доля группы попала в&nbsp;каждый сектор карты, %. Чем темнее ячейка, тем выше значение в&nbsp;этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:600px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:600px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;" colspan="2">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Ресурс производительности</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Презентизм</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Риск потери ресурса</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Явные потери</th>
@@ -2044,9 +2051,9 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
         </table>
       </div>
       <div class="analytics-table-divider">Поддержка ментального благополучия</div>
-      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными.</p>
+      <p class="analytics-table-note">Доли группы, %: за&nbsp;последние 12 месяцев обращались к&nbsp;психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Чем темнее ячейка, тем выше значение в этом столбце.</p>
       <div style="overflow-x:auto;">
-        <table data-sortable style="width:100%;border-collapse:collapse;min-width:700px;">
+        <table data-sortable data-heat style="width:100%;border-collapse:collapse;min-width:700px;">
           <thead><tr>
             <th style="padding:7px 10px;text-align:left;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;" colspan="2">Группа</th>
             <th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">К&nbsp;психологу</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Успокоительные</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: достаточно</th><th style="padding:7px 10px;text-align:center;text-transform:uppercase;color:var(--muted);border-bottom:2px solid var(--border);white-space:nowrap;">Работодатель: недостаточно</th>
@@ -2153,13 +2160,13 @@ body{font-size:var(--type-body)!important;font-weight:var(--weight-body)!importa
 /* Переменные шаблона: значения для демо-компании. Для другой компании меняются только они.
    Переменная, которой здесь нет, остаётся в тексте в фигурных скобках (так видно, что её не заполнили). */
 window.DASHBOARD_VARS = {
-  'Company Name': 'РФ 2026', 'year': '2026',
+  'Company Name': 'РФ 2026', 'year': '2026', 'Audience': 'работающих россиян',
   'Respondent count': '811',
   'Methodology year': '2026',
   'Skill threshold yellow': '10', 'Skill threshold red': '20'
   /* 'Survey period': '...'  — период опроса компании, в демо не задан */
 };
 </script>
-<script src="assets/js/dashboard-viz.js?v=20261022p" defer></script>
+<script src="assets/js/dashboard-viz.js?v=20261029b" defer></script>
 </body>
 </html>

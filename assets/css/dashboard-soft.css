@@ -13,10 +13,10 @@
   --muted: #646A83;             /* ≈5,3:1 на белом, ≈4,9:1 на фоне страницы */
   --hint: #646A83;
   --r: 20px;                    /* было 12px */
-  --weight-display: 300;
-  --weight-section: 400;
-  --weight-ui: 400;
-  --weight-factoid: 300;
+  --weight-display: 400;
+  --weight-section: 500;
+  --weight-ui: 500;
+  --weight-factoid: 400;
   --radius-card: 28px;
 }
 
@@ -26,15 +26,15 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .nav { background: var(--bg); border-bottom: 0; }
 .nav-logo { padding: 20px 0 14px; opacity: .92; }
 .page-head__in { padding-top: 1.25rem; }
-.page-head .home-kicker { font-weight: 500 !important; letter-spacing: .08em !important; color: var(--hint) !important; margin-bottom: .5rem; }
+.page-head .home-kicker { font-size: 15px !important; font-weight: 600 !important; letter-spacing: .06em !important; margin-bottom: .5rem; }
 .page-head .home-title { letter-spacing: -.4px !important; margin-bottom: 0; }
 .meta-row { margin: 1.25rem 0 2rem; }
 .meta-row .home-meta { color: var(--hint); }
 
 /* Переключатель разделов: светлая подложка, белая «таблетка» без тяжёлой тени */
 .view-tabs { background: #E9EEF7; padding: 3px; }
-.view-tabs .nav-tab { padding: 9px 22px; font-size: 15px !important; font-weight: 400 !important; color: var(--muted); }
-.view-tabs .nav-tab.active { background: #fff; color: var(--text); font-weight: 500 !important; box-shadow: 0 1px 2px rgba(42, 47, 69, .08); }
+.view-tabs .nav-tab { padding: 9px 22px; font-size: 15px !important; font-weight: 500 !important; color: var(--muted); }
+.view-tabs .nav-tab.active { background: #fff; color: var(--text); font-weight: 600 !important; box-shadow: 0 1px 2px rgba(42, 47, 69, .08); }
 
 /* ── Карточки: без обводок, углы круглее, блоки внутри — светлой заливкой ── */
 .dashboard-section, .analytics-card { border: 0; border-radius: var(--radius-card); box-shadow: 0 2px 14px rgba(42, 47, 69, .04); }
@@ -51,10 +51,12 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .insight-card { padding: 1.4rem 1.75rem; border-radius: var(--r); }
 
 /* ── Типографика: легче заголовки и числа, спокойнее подписи ── */
-.section-eyebrow, .sp-eyebrow, .sd-eyebrow { font-weight: 500 !important; letter-spacing: .08em !important; }
+.section-eyebrow, .sp-eyebrow, .sd-eyebrow { font-weight: 600 !important; letter-spacing: .08em !important; }
 .subsection-title, .section-title, .dashboard-section .section-title, .dashboard-section .subsection-title { letter-spacing: -.2px !important; }
-.analytics-card th { font-weight: 500; letter-spacing: .04em; color: var(--hint); }
+.analytics-card th { font-weight: 600; letter-spacing: .04em; color: var(--hint); }
 .insight-card h3 { font-weight: 500 !important; }
+.slice-btn { font-weight: 500 !important; }
+.slice-btn.active-slice { font-weight: 600 !important; }
 
 /* ── Заголовок и легенда — один спокойный блок ── */
 @media (min-width: 761px) {
@@ -101,3 +103,15 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .skills-about__body p, .skills-about__list dd, .insight-card h3 { color: var(--text) !important; }
 .slice-btn:not(.active-slice) { color: var(--text) !important; }
 .slice-btn.active-slice { color: #fff !important; }
+
+/* ── Подпись точки на шкале всегда видна (а не только при наведении) ── */
+.index-scale-chart .scale-value-label { opacity: 1 !important; visibility: visible !important; }
+
+/* ── Блок «Поддержка»: инфографика «100 опрошенных» — каждая точка один процент ── */
+.waffle { display: grid; grid-template-columns: repeat(10, 7px); gap: 3px; margin: .9rem auto .75rem; width: max-content; }
+.waffle i { width: 7px; height: 7px; border-radius: 50%; background: #E3E8F3; }
+.waffle i.on { background: var(--c); }
+.support-employer-metric { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; align-content: start; gap: .5rem 16px; }
+.support-employer-metric .waffle { grid-column: 1 / -1; margin: .75rem 0 0; }
+.support-tile .waffle { margin-top: .85rem; margin-bottom: .75rem; }
+.index-scale-chart { margin-top: 2.25rem !important; }
