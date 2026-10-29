@@ -196,8 +196,7 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .sd-wrap > .dashboard-section:not(:last-of-type) { margin-bottom: 0; border-bottom-left-radius: 0; border-bottom-right-radius: 0; }
 .sd-wrap > .dashboard-section + .dashboard-section { margin-top: 0; border-top-left-radius: 0; border-top-right-radius: 0; padding-top: .5rem; }
 .seg-card--static { background: transparent !important; box-shadow: none !important; cursor: default; }
-/* тень под плашкой — только там, где есть ось координат */
-.risk-axis-grid .seg-card--static:not(.seg-card--empty) { background: #fff !important; box-shadow: 0 2px 16px rgba(42, 47, 69, .10) !important; }
+
 .seg-card--static:hover { box-shadow: none !important; }
 /* подгруппы сектора — в два столбца, а не друг под другом */
 .sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 1.5rem 2rem !important; }
@@ -223,3 +222,30 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
 .support-tiles--3 .support-tile .support-tile__title { grid-column: 1; grid-row: 3; }
 .support-tiles--3 .support-tile .q-text { grid-column: 1; grid-row: 4; }
 .support-tiles--3 .support-tile .support-ref { grid-column: 1; grid-row: 5; }
+
+/* ── Карточки секторов: вместо цветной полоски сверху — кольцо рядом с процентом ── */
+.seg-card::before { display: none !important; }
+.risk-axis-grid .seg-card > div:first-child { align-items: center !important; gap: 14px !important; }
+@media (max-width: 760px) {
+  .risk-axis-grid .seg-donut { width: 34px; height: 34px; -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px)); mask: radial-gradient(farthest-side, transparent calc(100% - 5px), #000 calc(100% - 4px)); }
+}
+
+/* ── Подгруппы сектора: тонкий серый разделитель между блоками ── */
+.sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] { column-gap: 0 !important; }
+.sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] > .seg-card { padding: 1.25rem 2rem; border-radius: 0 !important; }
+.sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] > .seg-card:first-child { padding-left: 0; }
+.sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] > .seg-card + .seg-card { border-left: 1px solid #DCE3F1 !important; padding-right: 0; }
+@media (max-width: 760px) {
+  .sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] > .seg-card { padding: 1.25rem 0; }
+  .sd-wrap .dashboard-section > div[style*="grid-template-columns:1fr;gap:12px"] > .seg-card + .seg-card { border-left: 0 !important; border-top: 1px solid #DCE3F1 !important; }
+}
+
+/* телефон: карточки карты растут по содержимому (кольцо и число занимают больше места, чем прежняя полоска) */
+@media (max-width: 480px) {
+  .risk-axis-grid:not(.risk-axis-grid--static) { grid-template-rows: 46px auto auto 30px !important; }
+  .risk-axis-grid:not(.risk-axis-grid--static) .seg-card { height: auto !important; }
+  .risk-axis-grid .seg-donut { width: 30px; height: 30px; }
+}
+
+/* блоки на осях координат — плоские, без падающих теней (оси сами разделяют блоки) */
+.risk-axis-grid .seg-card, .risk-axis-grid .seg-card:hover { background: transparent !important; box-shadow: none !important; }
