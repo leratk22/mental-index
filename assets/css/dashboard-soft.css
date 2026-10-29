@@ -149,3 +149,8 @@ body { line-height: 1.55; -webkit-font-smoothing: antialiased; text-rendering: o
   .page-head .view-tabs { grid-column: 3; grid-row: 1 / 3; align-self: center; margin-left: 2rem; }
   .page-head { margin-bottom: 2rem; }
 }
+
+/* ── Легенда тепловой карты по столбцам: пять ступеней одного нейтрального цвета (без красного, зелёного, жёлтого, фиолетового) ── */
+.heat-legend { margin: -.1rem 0 .75rem; gap: 6px 10px; }
+.heat-legend .legend-note { margin-right: .25rem; }
+.legend-dot--heat { width: 14px; height: 14px; border-radius: 4px; box-shadow: inset 0 0 0 1px rgba(42, 47, 69, .08); }

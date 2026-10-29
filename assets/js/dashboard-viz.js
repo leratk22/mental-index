@@ -471,7 +471,7 @@
           const v = val(r.cells[c]);
           if (v === null) return;
           const t = (v - min) / (max - min);
-          r.cells[c].style.background = 'rgba(129,120,210,' + (0.06 + 0.34 * t).toFixed(3) + ')';
+          r.cells[c].style.background = 'rgba(91,111,147,' + (0.06 + 0.34 * t).toFixed(3) + ')';
         });
       }
     });
