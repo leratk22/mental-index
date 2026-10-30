@@ -34,6 +34,13 @@
       render();
     });
   });
+  const columnObserver = new ResizeObserver(entries => {
+    entries.forEach(({ target }) => {
+      const width = target.getBoundingClientRect().width;
+      if (width) target.closest('table').style.setProperty('--group-column-width', `${width}px`);
+    });
+  });
+  combined.querySelectorAll('table thead th:first-child[colspan="2"]').forEach(header => columnObserver.observe(header));
   const status = document.createElement('p');
   status.className = 'slice-selection-status';
   status.setAttribute('role', 'status');
@@ -63,11 +70,10 @@
       }
       row.hidden = !(allSelected || selected.has(row.dataset.sliceGroup)) || Boolean(closed && !toggle);
     });
-    status.textContent = allSelected
-      ? 'Вы можете фильтровать по конкретным значениям'
-      : selected.size
-      ? `Выбрано срезов: ${selected.size} из ${choices.length}`
-      : 'Вы можете фильтровать по конкретным значениям';
+    const comparison = 'Выберите признак — возраст, пол, характер занятости или другой — и сравните результаты групп со строкой «Все опрошенные». Так можно увидеть, чем группы отличаются от общей картины.';
+    status.textContent = !allSelected && selected.size
+      ? `Выбрано срезов: ${selected.size} из ${choices.length}. ${comparison}`
+      : comparison;
   }
   chips.addEventListener('click', event => {
     const button = event.target.closest('[data-slice]');
@@ -139,17 +145,6 @@
     new MutationObserver(syncLegend).observe(chart, { attributes: true, attributeFilter: ['class'] });
     syncLegend();
   }
-})();
-
-(() => {
-  document.querySelectorAll('section[aria-labelledby="section-skills-title"] .chart-table tbody th').forEach(label => {
-    label.removeAttribute('data-tip');
-    label.removeAttribute('title');
-    label.querySelectorAll('[data-tip], [title]').forEach(child => {
-      child.removeAttribute('data-tip');
-      child.removeAttribute('title');
-    });
-  });
 })();
 
 /* Place explanations next to the data they describe. */
@@ -486,6 +481,7 @@
     track.querySelectorAll('[data-tip]').forEach(e => e.dataset.tip = tip);
   });
   document.querySelectorAll('.metric-note').forEach(note => {
+    if (note.closest('#screen-subA, #screen-subB, #screen-subV')) return;
     const first = note.textContent.split('. ')[0];
     note.textContent = first + '. Позитивный ответ говорит о благополучии, негативный — о трудностях.';
   });
@@ -499,10 +495,10 @@
     else if (first?.matches('p') && first.firstElementChild?.matches('strong, b')) first.firstElementChild.classList.add('recommendation-title');
   });
   const footers = [
-    'Значение Индекса и субиндексов для каждой группы. Цвет ячейки — по значению Индекса; коды А1–В3 расшифровываются при наведении или касании. Срез — результаты части опрошенных, например одного пола или возраста. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка доступна только по столбцу «Индекс».',
+    'Индекс показывает ментальное благополучие группы в целом. Показатели А, Б и В помогают увидеть, какие стороны состояния и жизни оцениваются выше или ниже. Цвет ячейки соответствует значению Индекса. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка доступна только по столбцу «Индекс».',
     'Какая доля группы попала в каждый сектор карты, %. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Справляются и остаются» благоприятнее большее значение, для остальных секторов — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.',
     'Доли группы, %: за последние 12 месяцев обращались к психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Психолог» и «Работодатель: достаточно» благоприятнее большее значение, для остальных показателей — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.',
-    'Доля группы с низким уровнем навыка (оценка 0–4), %. Показана доля группы с низким уровнем навыка. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.'
+    'Таблица показывает долю участников каждой группы, оценивших навык на 0–4 балла. Чем выше процент, тем чаще навык получал низкую оценку. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.'
   ];
   document.querySelectorAll('.slice-panel').forEach(panel => {
     panel.querySelectorAll('.analytics-table-footer .analytics-table-note').forEach((note,index) => { if (footers[index]) note.textContent = footers[index]; });
@@ -565,12 +561,15 @@
   function play(target) {
     if (reduce.matches) return;
     target.dataset.motionPlayed = 'true';
-    const timing = {duration:360, easing};
+    const timing = {duration:1000, easing, fill:'both'};
     if (target.matches('.v3-ring')) {
       const fill = target.querySelector('.v3-ring-fill');
-      fill.animate([{strokeDashoffset:'100'}, {strokeDashoffset:fill.getAttribute('stroke-dashoffset')}], timing);
+      const animation = fill.animate([{strokeDashoffset:'100'}, {strokeDashoffset:fill.getAttribute('stroke-dashoffset')}], timing);
+      target.classList.remove('motion-pending');
+      animation.onfinish = () => animation.cancel();
     } else if (target.matches('.waffle')) {
-      target.querySelectorAll('i.on').forEach((dot, i) => dot.animate([{opacity:.15},{opacity:1}], {duration:200,delay:Math.floor(i / 10) * 30,easing}));
+      target.querySelectorAll('i.on').forEach((dot, i) => { const animation = dot.animate([{opacity:.12, transform:'scale(.65)'},{opacity:1, transform:'scale(1)'}], {duration:450,delay:i * 18,easing,fill:'both'}); animation.onfinish = () => animation.cancel(); });
+      target.classList.remove('motion-pending');
     } else if (target.matches('.index-band-chart')) {
       target.classList.add('v3-motion-playing');
       target.querySelectorAll('.db__dot, .db__val').forEach(e => e.animate([{opacity:0},{opacity:1}], timing));
@@ -585,7 +584,7 @@
     play(entry.target);
     observer.unobserve(entry.target);
   }), {threshold:.2});
-  targets.forEach(e => observer.observe(e));
+  targets.forEach(e => { if (!reduce.matches && e.matches('.v3-ring, .waffle')) e.classList.add('motion-pending'); observer.observe(e); });
   reduce.addEventListener('change', () => { if (reduce.matches) targets.forEach(e => { e.getAnimations({subtree:true}).forEach(a => a.finish()); e.classList.remove('v3-motion-playing'); }); });
 })();
 

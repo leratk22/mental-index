@@ -71,7 +71,7 @@ section[aria-labelledby="section-skills-title"] .chart-table th:first-child { te
 .risk-intent-title { margin: 0 0 16px; color: var(--text); font-size: 26px; font-weight: 500; line-height: 1.25; letter-spacing: -.3px; }
 .risk-intent-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .risk-intent-card { display: flex; flex-direction: column; min-width: 0; padding: 24px; background: #fff; border: 1px solid #E1E6F0; border-radius: 20px; }
-.risk-intent-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 16px; min-height: 72px; }
+.risk-intent-head { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 16px; min-height: 56px; }
 .risk-intent-name { margin: 4px 0 0; color: var(--text); font-size: 16px; font-weight: 500; line-height: 1.4; }
 .risk-intent-stat { text-align: right; }
 .risk-intent-percent { display: flex; justify-content: flex-end; align-items: center; gap: 8px; font-size: 42px; line-height: 1; letter-spacing: -1.5px; font-variant-numeric: tabular-nums; }
@@ -95,7 +95,7 @@ section[aria-labelledby="section-skills-title"] .chart-table th:first-child { te
   .risk-intent-title { font-size: 22px; }
   .risk-intent-card { padding: 20px; }
   .risk-intent-percent { font-size: 36px; }
-  .risk-intent-head { min-height: 72px; }
+  .risk-intent-head { min-height: 56px; }
 }
 .structure-component-card .sc-val { font-size: var(--type-display) !important; }
 /* Shared metric grid: chart at left, number and copy anchored at top right. */
@@ -335,6 +335,17 @@ section[aria-labelledby="section-skills-title"] .chart-table th:first-child { te
   section[aria-labelledby="section-skills-title"] .sk { grid-template-columns: minmax(9rem, .7fr) minmax(0, 2fr) 5rem; }
   section[aria-labelledby="section-skills-title"] .sk__mean { padding-left: 8px; }
 }
+
+.db__label .component-code { justify-content: flex-start; }
+.dashboard-support-content .support-tile .waffle,
+.dashboard-support-content .support-employer-metric .waffle {
+  width: 128px; height: 128px; min-height: 128px; align-self: start;
+  grid-template-columns: repeat(10, 8px); grid-template-rows: repeat(10, 8px);
+  justify-content: space-between; align-content: space-between;
+}
+.index-group-note h3 span { margin-left: 5px; color: var(--muted); }
+.page-head .view-tabs .nav-tab.active { border-bottom-color: currentColor !important; }
+.structure-component-card .sc-val { font-size: 22px !important; font-weight: 500 !important; letter-spacing: -.5px !important; }
 @media (max-width: 480px) {
   .dashboard-support-content .support-tile,
   .dashboard-support-content .support-employer-panel--split .support-employer-metric { grid-template-rows: 36px minmax(86px, auto); }
@@ -345,7 +356,7 @@ section[aria-labelledby="section-skills-title"] .chart-table th:first-child { te
 .page-head { margin-bottom: 24px !important; }
 #screen-home > .home > section[aria-labelledby="section-result-title"] { padding-bottom: 24px !important; }
 #screen-home .index-scale-description { margin-bottom: 0 !important; }
-.dashboard-structure-visual .structure-component-card .sc-btn-sm:hover { background: #F2AE00 !important; border-color: #F2AE00 !important; }
+.dashboard-structure-visual .structure-component-card .sc-btn-sm:hover { background: #EEF1F8 !important; color: var(--text) !important; }
 .section-eyebrow, .sp-eyebrow, .sd-eyebrow, .sub-card-ey, .sd-m-ey,
 .sd-g-label, .sd-groups-title, .home-kicker, .qs-head,
 .analytics-subhead, .analytics-card th { color: rgba(34, 38, 59, .6) !important; }
@@ -548,8 +559,8 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
 .analytics-workspace .analytics-subhead { background: #E9EDF5 !important; color: #515B74 !important; }
 .slice-group-toggle { all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; font: inherit; color: inherit; }
 .slice-group-toggle:not(:disabled) { cursor: pointer; }
-.slice-group-toggle:not(:disabled)::after { content: ''; width: 6px; height: 6px; flex: none; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-2px) rotate(45deg); }
-.slice-group-toggle[aria-expanded="false"]:not(:disabled)::after { transform: rotate(-45deg); }
+.slice-group-toggle:not(:disabled)::after { content: ''; width: 6px; height: 6px; flex: none; margin-left: auto; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translate(3px, -2px) rotate(45deg); }
+.slice-group-toggle[aria-expanded="false"]:not(:disabled)::after { transform: translateX(3px) rotate(-45deg); }
 .slice-group-toggle:focus-visible { outline: 2px solid #344079; outline-offset: 2px; }
 .analytics-workspace th[aria-sort="none"] .th-sort::after { content: none; }
 @media (max-width: 480px) { .analytics-workspace .slice-chips { padding-top: 16px; } }
@@ -727,3 +738,34 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
 .index-group-note p { margin: 0; color: var(--muted); font-size: var(--type-caption); line-height: 1.55; }
 @media(max-width:760px) { .index-group-notes { grid-template-columns: 1fr; gap: 8px; } .index-group-note { padding: 14px 16px; } }
 .page-topbar .back-btn { align-self: center; padding-left: 4px; line-height: 1.4; }
+
+/* Shared card controls and chart descriptions. */
+.index-group-note { padding: 0; border: 0; border-radius: 0; background: transparent; }
+.index-group-note h3 { font-size: var(--type-section); font-weight: var(--weight-section); letter-spacing: -.2px; }
+.index-group-note p { font-size: var(--type-body); line-height: 1.55; color: rgba(34,38,59,.6); }
+@media(max-width:760px) { .index-group-note { padding: 0; } .index-group-notes { gap: 20px; } }
+.dashboard-structure-visual .structure-component-card .sc-btn-sm { border: 0 !important; }
+.risk-intent-button { background: #EEF1F8; color: #344079; }
+.risk-intent-button:hover { background: #F2AE00; }
+.slice-group-toggle { width: min(100%, calc(var(--group-column-width, 30ch + 10px) - 20px)); }
+.analytics-workspace .analytics-card table thead th:first-child[colspan="2"] {
+  box-sizing: border-box;
+  width: calc(30ch + 10px);
+  min-width: calc(30ch + 10px);
+}
+.analytics-workspace .analytics-card table thead th:not(:first-child) {
+  white-space: normal !important;
+  font-size: 11px !important;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+}
+.dashboard-support-content .support-tile .waffle,
+.dashboard-support-content .support-employer-metric .waffle { width: 128px; height: 128px; min-height: 128px; align-self: start; }
+.v3-ring.motion-pending .v3-ring-fill { stroke-dashoffset: 100; }
+.waffle.motion-pending i.on { opacity: .12; transform: scale(.65); }
+@media (min-width: 761px) {
+  .index-group-notes { gap: 28px; }
+  .page-head .home-title { margin-left: -3px; }
+  .page-head .home-kicker, .page-head .home-meta { margin-left: -2px; }
+}
