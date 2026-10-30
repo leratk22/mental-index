@@ -766,6 +766,6 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
 .waffle.motion-pending i.on { opacity: .12; transform: scale(.65); }
 @media (min-width: 761px) {
   .index-group-notes { gap: 28px; }
-  .page-head .home-title { margin-left: -3px; }
+  .page-head .home-title { margin-left: -1px; }
   .page-head .home-kicker, .page-head .home-meta { margin-left: -2px; }
 }
