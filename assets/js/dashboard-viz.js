@@ -11,6 +11,7 @@
 
   const MINUS = '−';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let motionObserver = null;
   let uid = 0;
 
   const el = (tag, cls, text) => {
@@ -304,6 +305,13 @@
   /* ── Появление и перерисовка ───────────────────────────────── */
   function draw(node) {
     if (reduceMotion) { node.classList.add('is-drawn'); return; }
+    const rect = node.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
+      node.classList.remove('is-drawn');
+      if (motionObserver) motionObserver.observe(node);
+      else node.classList.add('is-drawn');
+      return;
+    }
     node.classList.remove('is-drawn');
     void node.offsetWidth;                       // сбросить переход, чтобы проиграть заново
     requestAnimationFrame(() => node.classList.add('is-drawn'));
@@ -323,14 +331,14 @@
     if (reduceMotion || !('IntersectionObserver' in window)) {
       [...likertList, ...dbs, ...stacks].forEach((n) => n.classList.add('is-drawn'));
     } else {
-      const io = new IntersectionObserver((entries) => {
+      motionObserver = new IntersectionObserver((entries) => {
         entries.forEach((e) => {
           if (!e.isIntersecting) return;
           e.target.classList.add('is-drawn');
-          io.unobserve(e.target);
+          motionObserver.unobserve(e.target);
         });
       }, { threshold: 0.2 });
-      [...likertList, ...dbs].forEach((n) => io.observe(n));
+      [...likertList, ...dbs, ...stacks].forEach((n) => motionObserver.observe(n));
     }
     // Экраны дашборда скрыты через display:none — ширина появляется
     // только при показе, поэтому подгонка подписей — по ResizeObserver.
@@ -383,12 +391,14 @@
     const touch = window.matchMedia('(hover: none)').matches;
     if (touch) {
       document.querySelectorAll('.legend-note').forEach((n) => {
-        if (n.textContent.indexOf('заголовок столбца') !== -1) n.textContent = 'Нажмите на стрелки у названия столбца, чтобы отсортировать группы: первое нажатие — по убыванию, второе — по возрастанию, третье — исходный порядок. Пояснение к названию — по нажатию на подчёркнутое слово.';
+        if (n.textContent.indexOf('заголовок столбца') !== -1) n.textContent = 'Сортировать группы можно только по столбцу «Индекс». Пояснение к названию — по нажатию на подчёркнутое слово.';
       });
     }
     document.querySelectorAll('.analytics-card table[data-sortable]').forEach((table) => {
       const tbody = table.tBodies[0];
       const heads = Array.from(table.tHead.rows[0].cells);
+      const sortIndex = heads.findIndex(th => th.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'индекс');
+      if (sortIndex < 0) return;
       const starts = [];
       let col = 0;
       heads.forEach((th) => { starts.push(col); col += th.colSpan || 1; });
@@ -421,7 +431,7 @@
         out.forEach((r) => tbody.appendChild(r));
       };
       heads.forEach((th, hi) => {
-        if (hi === 0) return;
+        if (hi !== sortIndex) return;
         // На сенсорном экране у заголовка две разные зоны нажатия: подчёркнутое название показывает
         // пояснение, стрелки рядом сортируют столбец. С мышью пояснение остаётся по наведению,
         // а клик по заголовку сортирует.

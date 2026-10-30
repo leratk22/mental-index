@@ -5,7 +5,8 @@
   const chips = root.querySelector('.slice-chips');
   const buttons = [...chips.querySelectorAll('[data-slice]')];
   const choices = buttons.filter(b => b.dataset.slice !== 'all');
-  const selected = new Set(['gender']);
+  const selected = new Set();
+  let allSelected = true;
   const normalize = text => text.replace(/\s+/g, ' ').trim();
   const keys = new Map(choices.map(b => [normalize(b.textContent), b.dataset.slice]));
   const combined = root.querySelector('#slice-all');
@@ -42,8 +43,8 @@
   function render() {
     buttons.forEach(button => {
       const on = button.dataset.slice === 'all'
-        ? selected.size === choices.length
-        : selected.has(button.dataset.slice);
+        ? allSelected
+        : !allSelected && selected.has(button.dataset.slice);
       button.classList.toggle('active-slice', on);
       button.classList.toggle('active', on);
       button.setAttribute('aria-pressed', String(on));
@@ -51,31 +52,36 @@
       button.style.removeProperty('color');
     });
     root.querySelectorAll('.slice-panel').forEach(panel => {
-      panel.style.display = panel === combined && selected.size ? 'block' : 'none';
+      panel.style.display = panel === combined && (allSelected || selected.size) ? 'block' : 'none';
     });
     combined.querySelectorAll('[data-slice-group]').forEach(row => {
-      const all = selected.size === choices.length;
       const closed = collapsed.get(row.closest('tbody'))?.has(row.dataset.sliceGroup);
       const toggle = row.querySelector('.slice-group-toggle');
       if (toggle) {
         toggle.disabled = false;
         toggle.setAttribute('aria-expanded', String(!closed));
       }
-      row.hidden = !selected.has(row.dataset.sliceGroup) || Boolean(closed && !toggle);
+      row.hidden = !(allSelected || selected.has(row.dataset.sliceGroup)) || Boolean(closed && !toggle);
     });
-    status.textContent = selected.size
+    status.textContent = allSelected
+      ? 'Вы можете фильтровать по конкретным значениям'
+      : selected.size
       ? `Выбрано срезов: ${selected.size} из ${choices.length}`
-      : 'Выберите хотя бы один срез, чтобы увидеть результаты.';
+      : 'Вы можете фильтровать по конкретным значениям';
   }
   chips.addEventListener('click', event => {
     const button = event.target.closest('[data-slice]');
     if (!button) return;
     const key = button.dataset.slice;
     if (key === 'all') {
-      if (selected.size === choices.length) selected.clear();
-      else choices.forEach(b => selected.add(b.dataset.slice));
-    } else if (selected.has(key)) selected.delete(key);
-    else selected.add(key);
+      allSelected = !allSelected;
+      selected.clear();
+    } else {
+      if (allSelected) { allSelected = false; selected.clear(); }
+      if (selected.has(key)) selected.delete(key);
+      else selected.add(key);
+      if (selected.size === choices.length) { allSelected = true; selected.clear(); }
+    }
     render();
   });
   window.updateSliceSelection = render;
@@ -167,10 +173,10 @@
       }
       const note = document.createElement('p');
       note.className = 'analytics-table-note';
-      const common = 'Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка по заголовку столбца: по убыванию → по возрастанию → исходный порядок.';
+      const common = 'Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.';
       const explanations = [
         'Срез — результаты части опрошенных, например одного пола или возраста. Цвет ячейки соответствует значению Индекса по шкале выше. ',
-        'Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Ресурса производительности» благоприятнее большее значение, для остальных секторов — меньшее. ',
+        'Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Справляются и остаются» благоприятнее большее значение, для остальных секторов — меньшее. ',
         'Цвет ячейки — по сравнению с другими группами в том же столбце. Для «К психологу» и «Работодатель: достаточно» благоприятнее большее значение, для остальных показателей — меньшее. ',
         'Показана доля группы с низким уровнем навыка. '
       ];
@@ -291,8 +297,8 @@
     }
     const total = table.tBodies[0]?.rows[0];
     if (total) total.classList.add('analytics-total-row');
-    const firstNumeric = table.tHead?.rows[0]?.cells[1];
-    firstNumeric?.querySelector('.th-sort')?.click();
+    const indexHeader = [...(table.tHead?.rows[0]?.cells || [])].find(th => th.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'индекс');
+    indexHeader?.querySelector('.th-sort')?.click();
   });
 })();
 
@@ -419,7 +425,7 @@
     const text = value.textContent.trim();
     if (/^\d+[,.]\d+$/.test(text)) value.textContent = '+' + text;
   });
-  const targets = document.querySelectorAll('.sc-label, .sc-sub-row, .db__label, .metric-block__title, .chart-table tbody th, .analytics-card thead th');
+  const targets = document.querySelectorAll('.sc-label, .db__label, .metric-block__title, .chart-table tbody th, .analytics-card thead th');
   targets.forEach(target => {
     const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
     const nodes = [];
@@ -433,6 +439,17 @@
       node.replaceWith(code, document.createTextNode(' ' + node.textContent.slice(match[0].length)));
       break;
     }
+  });
+  document.querySelectorAll('.structure-component-card .sc-sub-row > span:first-child').forEach(label => {
+    const match = label.textContent.trim().match(/^([АБВABV][1-3])\s*·?\s*(.*)$/);
+    if (!match) return;
+    const code = document.createElement('strong');
+    code.className = 'subindex-code';
+    code.textContent = match[1];
+    const name = document.createElement('span');
+    name.className = 'subindex-label';
+    name.textContent = match[2];
+    label.replaceChildren(code, name);
   });
   document.querySelectorAll('.subpage .dashboard-section > .insight-card, .sd-wrap .dashboard-section > .insight-card').forEach(insight => {
     const section = insight.parentElement;
@@ -482,10 +499,10 @@
     else if (first?.matches('p') && first.firstElementChild?.matches('strong, b')) first.firstElementChild.classList.add('recommendation-title');
   });
   const footers = [
-    'Значение Индекса и субиндексов для каждой группы. Цвет ячейки — по значению Индекса; коды А1–В3 расшифровываются при наведении или касании. Срез — результаты части опрошенных, например одного пола или возраста. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
-    'Какая доля группы попала в каждый сектор карты, %. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Ресурса производительности» благоприятнее большее значение, для остальных секторов — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
-    'Доли группы, %: за последние 12 месяцев обращались к психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Психолог» и «Работодатель: достаточно» благоприятнее большее значение, для остальных показателей — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
-    'Доля группы с низким уровнем навыка (оценка 0–4), %. Показана доля группы с низким уровнем навыка. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.'
+    'Значение Индекса и субиндексов для каждой группы. Цвет ячейки — по значению Индекса; коды А1–В3 расшифровываются при наведении или касании. Срез — результаты части опрошенных, например одного пола или возраста. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка доступна только по столбцу «Индекс».',
+    'Какая доля группы попала в каждый сектор карты, %. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Справляются и остаются» благоприятнее большее значение, для остальных секторов — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.',
+    'Доли группы, %: за последние 12 месяцев обращались к психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Психолог» и «Работодатель: достаточно» благоприятнее большее значение, для остальных показателей — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.',
+    'Доля группы с низким уровнем навыка (оценка 0–4), %. Показана доля группы с низким уровнем навыка. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны.'
   ];
   document.querySelectorAll('.slice-panel').forEach(panel => {
     panel.querySelectorAll('.analytics-table-footer .analytics-table-note').forEach((note,index) => { if (footers[index]) note.textContent = footers[index]; });
