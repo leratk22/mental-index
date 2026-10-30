@@ -356,7 +356,7 @@ section[aria-labelledby="section-skills-title"] .chart-table th:first-child { te
 .page-head { margin-bottom: 24px !important; }
 #screen-home > .home > section[aria-labelledby="section-result-title"] { padding-bottom: 24px !important; }
 #screen-home .index-scale-description { margin-bottom: 0 !important; }
-.dashboard-structure-visual .structure-component-card .sc-btn-sm:hover { background: #EEF1F8 !important; color: var(--text) !important; }
+.dashboard-structure-visual .structure-component-card .sc-btn-sm:hover { background: #F2AE00 !important; color: var(--text) !important; }
 .section-eyebrow, .sp-eyebrow, .sd-eyebrow, .sub-card-ey, .sd-m-ey,
 .sd-g-label, .sd-groups-title, .home-kicker, .qs-head,
 .analytics-subhead, .analytics-card th { color: rgba(34, 38, 59, .6) !important; }
@@ -746,7 +746,7 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
 @media(max-width:760px) { .index-group-note { padding: 0; } .index-group-notes { gap: 20px; } }
 .dashboard-structure-visual .structure-component-card .sc-btn-sm { border: 0 !important; }
 .risk-intent-button { background: #EEF1F8; color: #344079; }
-.risk-intent-button:hover { background: #F2AE00; }
+.risk-intent-button:hover { background: #F2AE00; color: var(--text); }
 .slice-group-toggle { width: min(100%, calc(var(--group-column-width, 30ch + 10px) - 20px)); }
 .analytics-workspace .analytics-card table thead th:first-child[colspan="2"] {
   box-sizing: border-box;

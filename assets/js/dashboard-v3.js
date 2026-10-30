@@ -539,7 +539,7 @@
   const easing = 'cubic-bezier(.2,.7,.3,1)';
   const svgNS = 'http://www.w3.org/2000/svg';
   document.querySelectorAll('.seg-donut, .risk-status-donut').forEach(ring => {
-    const percent = Math.max(0, Math.min(100, parseFloat(getComputedStyle(ring).getPropertyValue('--p')) || 0));
+    const percent = Math.max(0, Math.min(100, parseFloat(ring.style.getPropertyValue('--p') || getComputedStyle(ring).getPropertyValue('--p')) || 0));
     const svg = document.createElementNS(svgNS, 'svg');
     svg.setAttribute('viewBox', '0 0 24 24');
     svg.setAttribute('aria-hidden', 'true');
@@ -579,13 +579,22 @@
       target.classList.add('is-drawn');
     }
   }
-  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+  const observer = 'IntersectionObserver' in window ? new IntersectionObserver(entries => entries.forEach(entry => {
     if (!entry.isIntersecting) return;
     play(entry.target);
     observer.unobserve(entry.target);
-  }), {threshold:.2});
-  targets.forEach(e => { if (!reduce.matches && e.matches('.v3-ring, .waffle')) e.classList.add('motion-pending'); observer.observe(e); });
-  reduce.addEventListener('change', () => { if (reduce.matches) targets.forEach(e => { e.getAnimations({subtree:true}).forEach(a => a.finish()); e.classList.remove('v3-motion-playing'); }); });
+  }), {threshold:0, rootMargin:'0px 0px -10% 0px'}) : null;
+  targets.forEach(e => {
+    if (!reduce.matches && observer && e.matches('.v3-ring, .waffle')) e.classList.add('motion-pending');
+    if (observer) observer.observe(e); else play(e);
+  });
+  reduce.addEventListener('change', () => {
+    if (reduce.matches) targets.forEach(e => {
+      e.getAnimations({subtree:true}).forEach(a => a.finish());
+      e.classList.remove('motion-pending', 'v3-motion-playing');
+      if (e.matches('.stack')) e.classList.add('is-drawn');
+    });
+  });
 })();
 
 /* Mobile answer charts fill the available width as a single 100% band. */
