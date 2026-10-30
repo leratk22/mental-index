@@ -384,7 +384,7 @@
   }
 
   /* ── Сортировка столбцов в «Анализе по группам» ─────────────────
-     Нажатие на заголовок: по убыванию → по возрастанию → исходный порядок.
+     Нажатие на заголовок переключает убывание и возрастание.
      Строка «Все опрошенные» остаётся сверху; во вкладке «Все срезы» группы
      сортируются внутри своего среза; прочерки уходят вниз при любом порядке. */
   function sortTables() {
@@ -410,13 +410,12 @@
         return Number.isNaN(n) ? null : n;
       };
       const sortSection = (rows, c, dir) => rows.sort((a, b) => {
-        if (dir === 0) return a.dataset.order - b.dataset.order;
         const x = value(a, c), y = value(b, c);
         if (x === null || y === null) return x === y ? a.dataset.order - b.dataset.order : (x === null ? 1 : -1);
         return (dir === 1 ? y - x : x - y) || a.dataset.order - b.dataset.order;
       });
       const apply = (hi) => {
-        state.dir = state.col === hi ? (state.dir + 1) % 3 : 1;
+        state.dir = state.col === hi && state.dir === 1 ? 2 : 1;
         state.col = hi;
         heads.forEach((th, i) => th.setAttribute('aria-sort', i === hi && state.dir ? (state.dir === 1 ? 'descending' : 'ascending') : 'none'));
         const rows = Array.from(tbody.rows);

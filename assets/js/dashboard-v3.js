@@ -530,6 +530,28 @@
   });
 })();
 
+/* Keep fixed index bands in the same red–yellow–green gamut as the risk map. */
+(() => {
+  const bands = ['#F7A6A2', '#F9B6AC', '#FAC5B6', '#FDDEBF', '#FFF4D4', '#BACFA2'];
+  document.querySelectorAll('#screen-analytics .analytics-card').forEach(card => {
+    const table = card.querySelector('table');
+    if (!table) return;
+    const firstValue = table.tHead.rows[0].cells[0].colSpan || 1;
+    [...table.tBodies[0].rows].slice(1).forEach(row => {
+      if (row.querySelector('.analytics-subhead')) return;
+      [...row.cells].slice(firstValue).forEach(cell => {
+        const value = parseFloat(cell.textContent.trim().replace('−', '-').replace(',', '.'));
+        if (!Number.isFinite(value)) return;
+        const band = value < 0 ? 0 : value < 10 ? 1 : value < 20 ? 2 : value < 33 ? 3 : value <= 45 ? 4 : 5;
+        cell.style.background = bands[band];
+      });
+    });
+    card.querySelectorAll('.analytics-scale .legend-dot').forEach((dot, index) => {
+      if (bands[index]) dot.style.background = bands[index];
+    });
+  });
+})();
+
 /* Complete chart motion without changing values or geometry. */
 (() => {
   document.querySelectorAll('.sd-wrap .section-eyebrow').forEach(e => {

@@ -455,6 +455,13 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
   .analytics-workspace .slice-chips { margin-top: -20px !important; padding-top: 32px; }
 }
 .analytics-workspace .slice-chips::before { border-radius: 28px 28px 0 0; }
+@media (max-width: 760px) {
+  /* Cover the area above the sticky header during iOS browser overscroll. */
+  .nav { isolation: isolate; }
+  .nav::before { content: ''; position: absolute; left: 0; right: 0; top: -120px; bottom: 0; z-index: -1; background: var(--bg); }
+  .analytics-workspace .slice-chips { background: #fff; }
+  .analytics-workspace .slice-chips::before { border-radius: 0; }
+}
 
 /* Stable left-hand labels in both representations. */
 .chart-switch .db__label,
@@ -559,6 +566,7 @@ section[aria-labelledby="section-risks-title"] .risk-intent-group:first-child { 
 .analytics-workspace .slice-chips { padding-top: 16px; }
 .analytics-workspace .analytics-total-row > td,
 .analytics-workspace .analytics-total-row > th { background: #D8E1F3 !important; color: #252C49 !important; border-color: #C0CCE4 !important; }
+.analytics-workspace table tbody tr:not(.analytics-total-row) > td:not(.analytics-subhead) { font-weight: 400 !important; }
 .analytics-workspace .analytics-subhead { background: #E9EDF5 !important; color: #515B74 !important; }
 .slice-group-toggle { all: unset; box-sizing: border-box; display: flex; align-items: center; justify-content: flex-start; gap: 8px; width: 100%; font: inherit; color: inherit; }
 .slice-group-toggle:not(:disabled) { cursor: pointer; }
