@@ -9,12 +9,28 @@
   const normalize = text => text.replace(/\s+/g, ' ').trim();
   const keys = new Map(choices.map(b => [normalize(b.textContent), b.dataset.slice]));
   const combined = root.querySelector('#slice-all');
+  const collapsed = new WeakMap();
   combined.querySelectorAll('tbody').forEach(body => {
     let key = '';
     [...body.rows].forEach(row => {
       const heading = row.querySelector('.analytics-subhead');
       if (heading) key = keys.get(normalize(heading.textContent)) || '';
       if (key) row.dataset.sliceGroup = key;
+    });
+  });
+  combined.querySelectorAll('.analytics-subhead').forEach(heading => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'slice-group-toggle';
+    button.textContent = heading.textContent;
+    heading.replaceChildren(button);
+    button.addEventListener('click', () => {
+      const body = heading.closest('tbody');
+      const groups = collapsed.get(body) || new Set();
+      const key = heading.parentElement.dataset.sliceGroup;
+      if (groups.has(key)) groups.delete(key); else groups.add(key);
+      collapsed.set(body, groups);
+      render();
     });
   });
   const status = document.createElement('p');
@@ -38,7 +54,14 @@
       panel.style.display = panel === combined && selected.size ? 'block' : 'none';
     });
     combined.querySelectorAll('[data-slice-group]').forEach(row => {
-      row.hidden = !selected.has(row.dataset.sliceGroup);
+      const all = selected.size === choices.length;
+      const closed = collapsed.get(row.closest('tbody'))?.has(row.dataset.sliceGroup);
+      const toggle = row.querySelector('.slice-group-toggle');
+      if (toggle) {
+        toggle.disabled = false;
+        toggle.setAttribute('aria-expanded', String(!closed));
+      }
+      row.hidden = !selected.has(row.dataset.sliceGroup) || Boolean(closed && !toggle);
     });
     status.textContent = selected.size
       ? `Выбрано срезов: ${selected.size} из ${choices.length}`
@@ -363,5 +386,213 @@
     parent.classList.add('sector-subgroup-grid');
     parent.removeAttribute('style');
     source.replaceWith(subgroupCard(source, 'низкое'));
+  });
+})();
+
+/* Index bands have one presentation; retain only their zero reference. */
+(() => {
+  document.querySelectorAll('.index-band-chart').forEach(graph => {
+    const chart = graph.closest('.chart-switch');
+    chart.classList.remove('is-alt');
+    const table = chart.querySelector('[id^="chart-alt-"]');
+    if (table?.id) {
+      document.querySelectorAll('[aria-controls="' + table.id + '"]').forEach(control => {
+        const group = control.closest('.chart-view-switch');
+        const host = (group || control).parentElement;
+        (group || control).remove();
+        if (host?.matches('.chart-tools, .chart-bar') && !host.children.length) host.remove();
+      });
+    }
+    graph.querySelectorAll('.db__track').forEach(track => {
+      const zero = document.createElement('span');
+      zero.className = 'index-band-zero';
+      zero.textContent = '0';
+      zero.setAttribute('aria-hidden', 'true');
+      track.append(zero);
+    });
+  });
+})();
+
+/* Component notation and independent recommendations. */
+(() => {
+  document.querySelectorAll('.structure-component-card .sc-val, .structure-component-card .sc-sub-row > :last-child').forEach(value => {
+    const text = value.textContent.trim();
+    if (/^\d+[,.]\d+$/.test(text)) value.textContent = '+' + text;
+  });
+  const targets = document.querySelectorAll('.sc-label, .sc-sub-row, .db__label, .metric-block__title, .chart-table tbody th, .analytics-card thead th');
+  targets.forEach(target => {
+    const walker = document.createTreeWalker(target, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    for (const node of nodes) {
+      const match = node.textContent.match(/^\s*([АБВABV](?:[1-3])?)\s*(?:·\s*|(?=$))/);
+      if (!match) continue;
+      const code = document.createElement(match[1].length > 1 ? 'strong' : 'span');
+      code.className = match[1].length > 1 ? 'subindex-code' : 'component-code';
+      code.textContent = match[1];
+      node.replaceWith(code, document.createTextNode(' ' + node.textContent.slice(match[0].length)));
+      break;
+    }
+  });
+  document.querySelectorAll('.subpage .dashboard-section > .insight-card, .sd-wrap .dashboard-section > .insight-card').forEach(insight => {
+    const section = insight.parentElement;
+    const standalone = document.createElement('section');
+    standalone.className = 'dashboard-section standalone-insight';
+    standalone.append(...insight.childNodes);
+    section.after(standalone);
+    insight.remove();
+  });
+})();
+
+/* Editorial and navigation refinement across V3. */
+(() => {
+  document.querySelectorAll('.scale-zone, .compact-index-legend .legend-item').forEach(label => {
+    const walker = document.createTreeWalker(label, NodeFilter.SHOW_TEXT);
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      node.textContent = node.textContent.replace(/Низкое/g, 'Низкий').replace(/Среднее/g, 'Средний').replace(/Высокое/g, 'Высокий');
+    }
+  });
+  document.querySelectorAll('.structure-component-description').forEach(e => e.textContent = e.textContent.trim().replace(/\.$/, ''));
+  document.querySelectorAll('.metric-block__title .subindex-code').forEach(e => { e.classList.remove('subindex-code'); e.classList.add('component-code'); });
+  document.querySelectorAll('table .component-code, table .subindex-code').forEach(e => e.replaceWith(document.createTextNode(e.textContent)));
+  document.querySelectorAll('.index-band-chart .db__track').forEach(track => {
+    ['−100', '+100'].forEach((text, index) => {
+      const edge = document.createElement('span');
+      edge.className = 'index-band-zero index-band-edge ' + (index ? 'index-band-edge--end' : 'index-band-edge--start');
+      edge.textContent = text;
+      edge.setAttribute('aria-hidden', 'true');
+      track.append(edge);
+    });
+    const number = Number(track.querySelector('.db__val').textContent.replace('−', '-').replace(',', '.'));
+    const tip = (number <= 19 ? 'Низкий' : number <= 45 ? 'Средний' : 'Высокий') + ' индекс';
+    track.querySelectorAll('[data-tip]').forEach(e => e.dataset.tip = tip);
+  });
+  document.querySelectorAll('.metric-note').forEach(note => {
+    const first = note.textContent.split('. ')[0];
+    note.textContent = first + '. Позитивный ответ говорит о благополучии, негативный — о трудностях.';
+  });
+  document.querySelectorAll('.sector-subgroups').forEach(group => {
+    if (group.previousElementSibling?.matches('.section-intro')) group.previousElementSibling.remove();
+  });
+  document.querySelectorAll('.sd-wrap .chart-caveat').forEach(e => e.remove());
+  document.querySelectorAll('.standalone-insight .ins-list > li').forEach(li => {
+    const first = li.firstElementChild;
+    if (first?.matches('strong, b')) first.classList.add('recommendation-title');
+    else if (first?.matches('p') && first.firstElementChild?.matches('strong, b')) first.firstElementChild.classList.add('recommendation-title');
+  });
+  const footers = [
+    'Значение Индекса и субиндексов для каждой группы. Цвет ячейки — по значению Индекса; коды А1–В3 расшифровываются при наведении или касании. Срез — результаты части опрошенных, например одного пола или возраста. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
+    'Какая доля группы попала в каждый сектор карты, %. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Ресурса производительности» благоприятнее большее значение, для остальных секторов — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
+    'Доли группы, %: за последние 12 месяцев обращались к психологу, принимали успокоительные; считают усилия работодателя достаточными или недостаточными. Цвет ячейки — по сравнению с другими группами в том же столбце. Для «Психолог» и «Работодатель: достаточно» благоприятнее большее значение, для остальных показателей — меньшее. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.',
+    'Доля группы с низким уровнем навыка (оценка 0–4), %. Показана доля группы с низким уровнем навыка. Все результаты взвешены. Для групп меньше 10 человек значения ориентировочные; для групп меньше 5 человек значения не показаны. Сортировка работает по заголовку столбца.'
+  ];
+  document.querySelectorAll('.slice-panel').forEach(panel => {
+    panel.querySelectorAll('.analytics-table-footer .analytics-table-note').forEach((note,index) => { if (footers[index]) note.textContent = footers[index]; });
+    panel.querySelectorAll('.analytics-table-title, .analytics-table-divider').forEach((title,index) => {
+      let head = title.matches('.analytics-table-divider') ? title : title.parentElement;
+      if (head === title) head.classList.add('analytics-table-head');
+      if (!head.matches('.analytics-table-head')) {
+        head = document.createElement('div');
+        head.className = 'analytics-table-head';
+        title.before(head);
+        head.append(title);
+      }
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'section-detail-link';
+      button.textContent = 'Подробнее о разделе →';
+      button.addEventListener('click', () => {
+        go('home');
+        requestAnimationFrame(() => {
+          const sections = document.querySelectorAll('#screen-home .home > .dashboard-section');
+          sections[[1,2,3,4][index]]?.scrollIntoView({behavior:'instant', block:'start'});
+        });
+      });
+      head.append(button);
+    });
+  });
+  document.querySelectorAll('.analytics-card thead .th-sort').forEach(e => {
+    if (e.textContent.replace(/\s+/g, ' ').trim().toLowerCase() === 'к психологу') e.textContent = 'Психолог';
+  });
+})();
+
+/* Complete chart motion without changing values or geometry. */
+(() => {
+  document.querySelectorAll('.sd-wrap .section-eyebrow').forEach(e => {
+    if (e.textContent.trim() === 'Подгруппы сектора') e.remove();
+  });
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  const easing = 'cubic-bezier(.2,.7,.3,1)';
+  const svgNS = 'http://www.w3.org/2000/svg';
+  document.querySelectorAll('.seg-donut, .risk-status-donut').forEach(ring => {
+    const percent = Math.max(0, Math.min(100, parseFloat(getComputedStyle(ring).getPropertyValue('--p')) || 0));
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('aria-hidden', 'true');
+    ['#DCE3F1', 'var(--c, #98A0AE)'].forEach((color, index) => {
+      const circle = document.createElementNS(svgNS, 'circle');
+      for (const [key, value] of Object.entries({cx:12, cy:12, r:10, fill:'none', stroke:color, 'stroke-width':3.5, pathLength:100})) circle.setAttribute(key, value);
+      if (index) {
+        circle.classList.add('v3-ring-fill');
+        circle.setAttribute('stroke-dasharray', '100 100');
+        circle.setAttribute('stroke-dashoffset', 100 - percent);
+        circle.setAttribute('transform', 'rotate(-90 12 12)');
+      }
+      svg.append(circle);
+    });
+    ring.classList.add('v3-ring');
+    ring.replaceChildren(svg);
+  });
+  const targets = document.querySelectorAll('.v3-ring, .waffle, .index-scale-chart, .index-band-chart, .stack');
+  function play(target) {
+    if (reduce.matches) return;
+    target.dataset.motionPlayed = 'true';
+    const timing = {duration:360, easing};
+    if (target.matches('.v3-ring')) {
+      const fill = target.querySelector('.v3-ring-fill');
+      fill.animate([{strokeDashoffset:'100'}, {strokeDashoffset:fill.getAttribute('stroke-dashoffset')}], timing);
+    } else if (target.matches('.waffle')) {
+      target.querySelectorAll('i.on').forEach((dot, i) => dot.animate([{opacity:.15},{opacity:1}], {duration:200,delay:Math.floor(i / 10) * 30,easing}));
+    } else if (target.matches('.index-band-chart')) {
+      target.classList.add('v3-motion-playing');
+      target.querySelectorAll('.db__dot, .db__val').forEach(e => e.animate([{opacity:0},{opacity:1}], timing));
+    } else if (target.matches('.index-scale-chart')) {
+      target.querySelectorAll('.scale-bar, .scale-marker, .scale-value-label').forEach(e => e.animate([{opacity:.15},{opacity:1}], timing));
+    } else if (target.matches('.stack')) {
+      target.classList.add('is-drawn');
+    }
+  }
+  const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    play(entry.target);
+    observer.unobserve(entry.target);
+  }), {threshold:.2});
+  targets.forEach(e => observer.observe(e));
+  reduce.addEventListener('change', () => { if (reduce.matches) targets.forEach(e => { e.getAnimations({subtree:true}).forEach(a => a.finish()); e.classList.remove('v3-motion-playing'); }); });
+})();
+
+/* Mobile answer charts fill the available width as a single 100% band. */
+(() => {
+  document.querySelectorAll('.likert__track').forEach(track => {
+    const segments = [...track.querySelectorAll('.likert__seg')];
+    const widths = segments.map(e => parseFloat(e.style.width) || 0);
+    const total = widths.reduce((a,b) => a+b, 0);
+    let start = 0;
+    segments.forEach((segment,index) => {
+      const width = total ? widths[index] / total * 100 : 0;
+      segment.style.setProperty('--mobile-left', start + '%');
+      segment.style.setProperty('--mobile-width', width + '%');
+      segment.classList.toggle('mobile-small-segment', width < 8);
+      start += width;
+    });
+  });
+  document.querySelectorAll('.chart-table').forEach(table => {
+    const labels = [...table.querySelectorAll('thead th')].map(e => e.textContent.trim());
+    table.querySelectorAll('tbody tr').forEach(row => {
+      [...row.cells].forEach((cell,index) => {
+        if (cell.tagName === 'TD') cell.dataset.mobileLabel = labels[index] || '';
+      });
+    });
   });
 })();
